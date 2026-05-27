@@ -8,6 +8,9 @@ we pledge to follow the [The Carpentries Code of Conduct][coc].
 Instances of abusive, harassing, or otherwise unacceptable behavior
 may be reported by following our [reporting guidelines][coc-reporting].
 
+In the first instance,
+code of conduct reports should be directed to [Ben Morgan][contact].
 
 [coc-reporting]: https://docs.carpentries.org/policies/coc/incident-reporting.html
 [coc]: https://docs.carpentries.org/policies/coc/
+[contact]: mailto:ben.morgan@warwick.ac.uk
