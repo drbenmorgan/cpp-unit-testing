@@ -41,7 +41,7 @@ source: 'https://github.com/drbenmorgan/cpp-unit-testing'
 branch: 'main'
 
 # Who to contact if there are any issues
-contact: 'ben.morgan@warwick.ac.uk' # FIXME
+contact: 'ben.morgan@warwick.ac.uk'
 
 # Navigation ------------------------------------------------
 #
