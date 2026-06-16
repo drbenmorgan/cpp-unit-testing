@@ -1,0 +1,16 @@
+{
+  "R": {
+    "Version": "4.6.0",
+    "Repositories": [
+      {
+        "Name": "CRAN",
+        "URL": "https://packagemanager.posit.co/cran/latest"
+      },
+      {
+        "Name": "carpentries",
+        "URL": "https://carpentries.r-universe.dev"
+      }
+    ]
+  },
+  "Packages": {}
+}
