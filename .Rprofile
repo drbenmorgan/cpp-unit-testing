@@ -5,7 +5,7 @@ local({
 	repos[["carpentries"]] <- "https://carpentries.r-universe.dev"
 
 	if (is.null(repos[["CRAN"]]) || identical(repos[["CRAN"]], "@CRAN@")) {
-		repos[["CRAN"]] <- "https://cran.rstudio.com"
+		repos[["CRAN"]] <- "https://packagemanager.posit.co/cran/latest"
 	}
 
 	options(repos = repos)
