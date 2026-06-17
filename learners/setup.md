@@ -56,7 +56,7 @@ in the rest of the lesson.
 ### Pixi
 
 As we move through the course, we will need additional tools to help us write,
-build, and run our tests efficiently. To do this, we will use the [Pixi](https://pixi.prefix.dev/latest/) package manager to provide an isolated development environment with
+build, and run our tests efficiently. To do this, we will use the [Pixi] package manager to provide an isolated development environment with
 the software we need.
 
 
