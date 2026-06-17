@@ -236,6 +236,11 @@ jobs:
           Rscript /home/rstudio/.workbench/fortify_renv_cache.R
         shell: bash
 
+      - name: "Build Template Zip Archives"
+        run: |
+          Rscript /home/rstudio/lesson/scripts/build-template-zips.R
+        shell: bash
+
       - name: "Validate and Build Markdown"
         id: build-site
         run: |
