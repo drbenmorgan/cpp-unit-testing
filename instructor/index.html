@@ -200,7 +200,52 @@
 <div class="accordion accordion-flush" id="accordionFlush2">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading2">
-        <a href="introduction.html">1. Using Markdown</a>
+        <a href="introduction.html">1. What is unit testing</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush3">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading3">
+        <a href="cmakectest.html">2. Integrating tests in development workflows</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush4">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading4">
+        <a href="googletest.html">3. Introducing GoogleTest</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush5">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading5">
+        <a href="testsuites.html">4. Adding test cases and suites</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush6">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading6">
+        <a href="sanitizers.html">5. Testing with static analysers</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush7">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading7">
+        <a href="microbenchmarks.html">6. Microbenchmarking</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -252,13 +297,34 @@
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link float-end" href="../instructor/introduction.html" rel="next">Next: Using Markdown... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="../instructor/introduction.html" rel="next">Next: What is unit testing... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
     </nav><main id="main-content" class="main-content"><h1 class="schedule-heading">Summary and Schedule</h1>
       
 
-<p>This is a new lesson built with <a href="https://carpentries.github.io/sandpaper-docs" class="external-link">The Carpentries
-Workbench</a>.</p>
+<p>In science, we rely on establishing the behaviour and accuracy of
+experimental devices before making actual measurements, for example
+through calibration. Equally, theoretical calculations make predictions
+that inform experiment design and data analysis decisions, and thus we
+also rely on establishing the correctness of these calculations. The
+same is true of the software we use to simulate, take, and analyse the
+data collected through experiments - it is an theoretical calculation or
+experimental device just as much as any other. We must therefore
+throughly <em>test</em> our software’s accuracy and reliability in order
+that the scientific results we derive from its use are not
+compromised.</p>
+<p>In this lesson, we introduce methods and tooling for <strong>unit
+testing</strong> C++ code. Our “units” here are the lower level
+components of the code, specifically individual functions and/or
+classes. By defining <em>test cases</em>, <em>test suites</em> and
+<em>test fixtures</em>, we’ll see how we can integrate testing as a
+standard part of the software development workflow. The <a href="https://google.github.io/googletest/" class="external-link">GoogleTest</a> framework
+will be introduced to build these elements, a commonly used testing
+system in both science and industry that saves us a lot of otherwise
+boilerplate coding. We’ll finish by looking at how <em>unit</em> testing
+provides a foundation for higher level <em>integration</em> and
+<em>regression</em> testing, and other useful tooling for aspects unit
+testing cannot catch.</p>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
@@ -270,13 +336,59 @@ any links that you are not going to use.
 <span class="visually-hidden">Duration: </span>00h 00m
 </td>
 <td>
- 1. <a href="introduction.html">Using Markdown</a>
+ 1. <a href="introduction.html">What is unit testing</a>
 </td>
 <td>
-How do you write a lesson using Markdown and <a href="https://carpentries.github.io/sandpaper/" class="external-link">sandpaper</a>?
+How do I write a unit test in C++?
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>00h 12m
+</td>
+<td>
+ 2. <a href="cmakectest.html">Integrating tests in development
+workflows</a>
+</td>
+<td>
+How do I automate the build and run of my tests?
+</td>
+</tr><tr><td>
+<span class="visually-hidden">Duration: </span>00h 24m
+</td>
+<td>
+ 3. <a href="googletest.html">Introducing GoogleTest</a>
+</td>
+<td>
+How do I write a unit test using GoogleTest?
+</td>
+</tr><tr><td>
+<span class="visually-hidden">Duration: </span>00h 36m
+</td>
+<td>
+ 4. <a href="testsuites.html">Adding test cases and suites</a>
+</td>
+<td>
+How to organise tests?
+</td>
+</tr><tr><td>
+<span class="visually-hidden">Duration: </span>00h 48m
+</td>
+<td>
+ 5. <a href="sanitizers.html">Testing with static analysers</a>
+</td>
+<td>
+How to use static analysers to assist testing
+</td>
+</tr><tr><td>
+<span class="visually-hidden">Duration: </span>01h 00m
+</td>
+<td>
+ 6. <a href="microbenchmarks.html">Microbenchmarking</a>
+</td>
+<td>
+Using GoogleBenchmark for low level profiling
+</td>
+</tr><tr><td>
+<span class="visually-hidden">Duration: </span>01h 12m
 </td>
 <td>
 Finish
@@ -289,43 +401,38 @@ any links that you are not going to use.
  --></tbody></table><p>
       The actual schedule may vary slightly depending on the topics and exercises chosen by the instructor.
       </p>
-      </section><section id="setup"><p>FIXME: Setup instructions live in this document. Please specify the
-tools and the data sets the Learner needs to have installed.</p>
-<section><h2 class="section-heading" id="data-sets">Data Sets<a class="anchor" aria-label="anchor" href="#data-sets"></a></h2>
-<hr class="half-width"><!--
+      </section><section id="setup"><section><h2 class="section-heading" id="software-installation">Software installation<a class="anchor" aria-label="anchor" href="#software-installation"></a></h2>
+<hr class="half-width"><p>These instructions set out how to obtain and install the software on
+Linux or macOS. It is assumed that you have:</p>
+<ul><li>access to the Bash or Zsh shell on a fairly modern Linux or macOS
+system</li>
+<li>a text editor such as Vim or Emacs, or an IDE such as VSCode</li>
+<li>sufficient disk space (~250MB) to store the software and
+outputs</li>
+</ul><p>You <strong>do not</strong> need root/administrator access.</p>
+<!-- ## Data Sets -->
+<!--
 FIXME: place any data you want learners to use in `episodes/data` and then use
        a relative link ( [data zip file](data/lesson-data.zip) ) to provide a
        link to it, replacing the example.com link.
---><p>Download the <a href="https://example.com/FIXME" class="external-link">data zip file</a>
-and unzip it to your Desktop</p>
-</section><section><h2 class="section-heading" id="software-setup">Software Setup<a class="anchor" aria-label="anchor" href="#software-setup"></a></h2>
-<hr class="half-width"><div id="details" class="callout discussion">
-<div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
-</div>
-<span class="callout-header">Discussion</span>
-<div id="details" class="callout-inner">
-<h3 class="callout-title">Details</h3>
-<div class="callout-content">
-<p>Setup for different systems can be presented in dropdown menus via a
-<code>spoiler</code> tag. They will join to this discussion block, so
-you can give a general overview of the software used in this lesson here
-and fill out the individual operating systems (and potentially add more,
-e.g. online setup) in the solutions blocks.</p>
-</div>
-</div>
-</div>
+-->
+<!--Download the [data zip file](https://example.com/FIXME) and unzip it to your Desktop -->
+<div class="section level3">
+<h3 id="c-compiler">C++ Compiler<a class="anchor" aria-label="anchor" href="#c-compiler"></a></h3>
+<p>As we will be coding in C++ (and the C++17 standard), we will need a
+compiler. We’ll take this from the system for reliability, so it can be
+installed through the appropriate package management system.</p>
 <div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">
   <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
-  Windows
+  Linux
   </h3>
 </button>
 <div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
-<p>Use PuTTY</p>
+<p>Install GCC through your system’s package manager.</p>
 </div>
 </div>
 </div>
@@ -340,7 +447,7 @@ e.g. online setup) in the solutions blocks.</p>
 </button>
 <div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
-<p>Use Terminal.app</p>
+<p>Install Xcode from the App Store.</p>
 </div>
 </div>
 </div>
@@ -350,16 +457,161 @@ e.g. online setup) in the solutions blocks.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
   <h3 class="accordion-header" id="headingSpoiler3">
   <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
-  Linux
+  Windows
   </h3>
 </button>
 <div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
-<p>Use Terminal</p>
+<p>This lesson has not been designed to run on Windows. We would
+recommend using the <a href="https://learn.microsoft.com/en-us/windows/wsl/" class="external-link">Windows Subsystem
+for Linux</a>, and following the instructions for Linux in the rest of
+the lesson.</p>
 </div>
 </div>
 </div>
 </div>
+</div>
+<div class="section level3">
+<h3 id="pixi">Pixi<a class="anchor" aria-label="anchor" href="#pixi"></a></h3>
+<p>As we move through the course, we will need additional tools to help
+us write, build, and run our tests efficiently. To do this, we will use
+the <a href="https://pixi.prefix.dev/latest/" class="external-link">Pixi</a> package manager
+to provide an isolated development environment with the software we
+need.</p>
+<div id="accordionSpoiler4" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler4" aria-expanded="false" aria-controls="collapseSpoiler4">
+  <h3 class="accordion-header" id="headingSpoiler4">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Linux
+  </h3>
+</button>
+<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
+<div class="accordion-body">
+<p>Open a terminal and run:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://pixi.sh/install.sh <span class="kw">|</span> <span class="fu">sh</span></span></code></pre>
+</div>
+<p>or, if you don’t have <code>curl</code> available:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="fu">wget</span> <span class="at">-qO-</span> https://pixi.sh/install.sh <span class="kw">|</span> <span class="fu">sh</span></span></code></pre>
+</div>
+<p>More details on what these do are on <a href="https://pixi.prefix.dev/latest/installation/" class="external-link">Pixi’s installation
+page</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSpoiler5" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler5" aria-expanded="false" aria-controls="collapseSpoiler5">
+  <h3 class="accordion-header" id="headingSpoiler5">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  MacOS
+  </h3>
+</button>
+<div id="collapseSpoiler5" class="accordion-collapse collapse" aria-labelledby="headingSpoiler5" data-bs-parent="#accordionSpoiler5">
+<div class="accordion-body">
+<p>If you have <a href="https://brew.sh" class="external-link">Homebrew</a> installed, then
+it’s recommended to install Pixi with this. Open a terminal and run:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">brew</span> install pixi</span></code></pre>
+</div>
+<p>Otherwise, you should install Pixi directly:</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://pixi.sh/install.sh <span class="kw">|</span> <span class="fu">sh</span></span></code></pre>
+</div>
+<p>More details on what these do are on <a href="https://pixi.prefix.dev/latest/installation/" class="external-link">Pixi’s installation
+page</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="why-pixi" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="why-pixi" class="callout-inner">
+<h3 class="callout-title">Why Pixi?</h3>
+<div class="callout-content">
+<p>If you’re familiar with installing software, you might be asking why
+we’re using Pixi, another package manager, on top of the system ones (or
+similar tools like Homebrew). The answer is in two parts:</p>
+<ol style="list-style-type: decimal"><li>Consistency: we can lock in the versions of the tools used to avoid
+issues in the exercises</li>
+<li>Simplified workflow: We’ll use Pixi’s <a href="https://pixi.prefix.dev/latest/workspace/advanced_tasks/" class="external-link">tasks</a>
+to simplify the configure/build/test workflow so we can concentrate on
+the testing concepts rather the tooling.</li>
+</ol><p>It is also very similar in concept to (and uses packages from) Conda
+which you may be familiar with already.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="software-setup">Software Setup<a class="anchor" aria-label="anchor" href="#software-setup"></a></h2>
+<hr class="half-width"><p>Open a terminal and check that you have the following commands
+available:</p>
+<div id="accordionSpoiler6" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler6" aria-expanded="false" aria-controls="collapseSpoiler6">
+  <h3 class="accordion-header" id="headingSpoiler6">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Linux
+  </h3>
+</button>
+<div id="collapseSpoiler6" class="accordion-collapse collapse" aria-labelledby="headingSpoiler6" data-bs-parent="#accordionSpoiler6">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ex">g++</span> <span class="at">--version</span></span></code></pre>
+</div>
+<p>and</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">pixi</span> <span class="at">--version</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSpoiler7" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler7" aria-expanded="false" aria-controls="collapseSpoiler7">
+  <h3 class="accordion-header" id="headingSpoiler7">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  MacOS
+  </h3>
+</button>
+<div id="collapseSpoiler7" class="accordion-collapse collapse" aria-labelledby="headingSpoiler7" data-bs-parent="#accordionSpoiler7">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="fu">clang</span>++ <span class="at">--version</span></span></code></pre>
+</div>
+<p>and</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="ex">pixi</span> <span class="at">--version</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>More detailed setup information will be provided in each exercise as
+needed.</p>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
@@ -369,7 +621,7 @@ any links that you are not going to use.
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link float-end" href="../instructor/introduction.html" rel="next">Next: Using Markdown... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="../instructor/introduction.html" rel="next">Next: What is unit testing... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
     </nav></div>
 <!-- END  : inst/pkgdown/templates/content-syllabus.html -->
@@ -393,7 +645,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/" class="external-link">sandpaper (0.20.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/" class="external-link">varnish (1.1.1)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.20.2" class="external-link">sandpaper (0.20.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.1" class="external-link">varnish (1.1.1)</a></p>
 		</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -415,8 +667,8 @@ any links that you are not going to use.
   "url": "https://drbenmorgan.github.io/cpp-unit-testing/instructor/index.html",
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/instructor/index.html",
   "dateCreated": "2026-05-27",
-  "dateModified": "2026-06-16",
-  "datePublished": "2026-06-16"
+  "dateModified": "2026-06-17",
+  "datePublished": "2026-06-17"
 }
 
   </script><script>

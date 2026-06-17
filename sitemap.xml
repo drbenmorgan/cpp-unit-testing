@@ -19,6 +19,12 @@
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/citation.html</loc>
   </url>
   <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/cmakectest.html</loc>
+  </url>
+  <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/googletest.html</loc>
+  </url>
+  <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/images.html</loc>
   </url>
   <url>
@@ -43,6 +49,12 @@
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/citation.html</loc>
   </url>
   <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/cmakectest.html</loc>
+  </url>
+  <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/googletest.html</loc>
+  </url>
+  <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/images.html</loc>
   </url>
   <url>
@@ -58,10 +70,19 @@
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/key-points.html</loc>
   </url>
   <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/microbenchmarks.html</loc>
+  </url>
+  <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/profiles.html</loc>
   </url>
   <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/reference.html</loc>
+  </url>
+  <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/sanitizers.html</loc>
+  </url>
+  <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/testsuites.html</loc>
   </url>
   <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor-notes.html</loc>
@@ -73,9 +94,18 @@
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/key-points.html</loc>
   </url>
   <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/microbenchmarks.html</loc>
+  </url>
+  <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/profiles.html</loc>
   </url>
   <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/reference.html</loc>
+  </url>
+  <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/sanitizers.html</loc>
+  </url>
+  <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/testsuites.html</loc>
   </url>
 </urlset>
