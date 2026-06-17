@@ -127,6 +127,11 @@ jobs:
           aws-region: ${{ secrets.AWS_GH_OIDC_REGION }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: "Build Template Zip Archives"
+        run: |
+          Rscript /home/rstudio/lesson/scripts/build-template-zips.R
+        shell: bash
+
       - name: "Run Container and Build Site"
         id: build-and-deploy
         uses: carpentries/actions/build-and-deploy@main
