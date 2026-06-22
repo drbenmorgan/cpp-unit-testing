@@ -73,6 +73,7 @@ episodes:
 - cmakectest.md
 - googletest.md
 - testsuites.md
+- coverage.md
 - sanitizers.md
 
 # Information for Learners
