@@ -151,8 +151,11 @@ and
 ```bash
 pixi --version
 ```
-
 ::::::::::::::::::::::::
 
-More detailed setup information will be provided in each exercise as needed.
 
+## Starter Project
+
+Download the [project zip file](files/ccptepp-test.zip) and unzip it somewhere suitable.
+More detailed setup information will be provided in each exercise as needed, though in all
+cases we will be working in the directory `ccptepp-test/` which the zipfile unzips to.

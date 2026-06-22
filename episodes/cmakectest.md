@@ -12,9 +12,11 @@ exercises: 2 # exercise time in minutes
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Use CMake and CTest to run a basic test.
+- Use CMake and CTest to build and run `test_divide`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
+
+So far, we've been working with a single 
 
 1. Pixi setup
 2. Build _something_ with CMake
