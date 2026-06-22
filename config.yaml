@@ -68,11 +68,12 @@ contact: 'ben.morgan@warwick.ac.uk'
 # Order of episodes in your lesson
 episodes: 
 - introduction.md
+- cppassertions.md
+- codeorganization.md
 - cmakectest.md
 - googletest.md
 - testsuites.md
 - sanitizers.md
-- microbenchmarks.md
 
 # Information for Learners
 learners: 

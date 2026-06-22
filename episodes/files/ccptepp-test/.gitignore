@@ -1,0 +1,11 @@
+# pixi environments
+.pixi/*
+!.pixi/config.toml
+
+# pixi task build
+build/*
+
+# Temporary local files
+a.out
+test_divide
+test_divide.o

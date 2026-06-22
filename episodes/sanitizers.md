@@ -12,15 +12,18 @@ exercises: 2 # exercise time in minutes
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Build with sanitizers
+- Understand how santizers can catch problems that unit testing
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
+Unit testing only catches problems we anticipate. It is also unsuited
+for catching hardware-level or runtime issues.
 
 
-Use `asan`, `tsan` `ubsan`? Maybe FPE if time.
 
-This is sort-of integration/regression level, so maybe that is topic here.
+Use `asan`, `tsan` `ubsan`?
+
+
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
