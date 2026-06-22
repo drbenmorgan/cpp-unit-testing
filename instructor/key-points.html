@@ -249,7 +249,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="cmakectest.html">2. Integrating tests in development workflows</a>
+        <a href="cppassertions.html">2. Unit testing with <code>assert()</code></a>
     </div>
 <!--/div.accordion-header-->
 
@@ -261,7 +261,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="googletest.html">3. Introducing GoogleTest</a>
+        <a href="codeorganization.html">3. Organizing code to assist unit testing</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -273,7 +273,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="testsuites.html">4. Adding test cases and suites</a>
+        <a href="cmakectest.html">4. Integrating tests in development workflows</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -285,7 +285,7 @@
 <div class="accordion accordion-flush" id="accordionFlush6">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading6">
-        <a href="sanitizers.html">5. Testing with static analysers</a>
+        <a href="googletest.html">5. Introducing GoogleTest</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -297,7 +297,31 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="microbenchmarks.html">6. Microbenchmarking</a>
+        <a href="testsuites.html">6. Adding test cases and suites</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush8">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading8">
+        <a href="coverage.html">7. Measuring unit test coverage</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush9">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading9">
+        <a href="sanitizers.html">8. Testing with static analysers</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -364,8 +388,30 @@
 <section id="introduction"><h2 class="section-heading"><a href="introduction.html">What is unit testing</a></h2>
 <hr class="half-width">
 <ul>
-<li>A unit test checks the behaviour of a single function</li>
-</ul></section><section id="cmakectest"><h2 class="section-heading"><a href="cmakectest.html">Integrating tests in development workflows</a></h2>
+<li>Tests check whether the observed result, from running the code, is
+what was expected ahead of time.</li>
+<li>Defensive programming embeds alarm-like systems into software,
+guarding against exceptional bahavior.</li>
+<li>Unit tests try to test the smallest pieces of code possible, usually
+functions and methods.</li>
+<li>Integration tests make sure that code units work together
+properly.</li>
+<li>Regression tests ensure that everything works the same today as it
+did yesterday.</li>
+</ul></section><section id="cppassertions"><h2 class="section-heading"><a href="cppassertions.html">Unit testing with <code>assert()</code></a></h2>
+<hr class="half-width">
+<ul>
+<li>We can use <code>assert</code> and <code>try/catch</code> to
+implement simple unit tests.</li>
+<li>This has limitations:
+<ul>
+<li>Limited information on where/why an assertion failed.</li>
+<li>Execution stops on the first failure.</li>
+<li>Can be completely disabled.</li>
+</ul>
+</li>
+</ul></section><section id="codeorganization"><h2 class="section-heading"><a href="codeorganization.html">Organizing code to assist unit testing</a></h2>
+<hr class="half-width"></section><section id="cmakectest"><h2 class="section-heading"><a href="cmakectest.html">Integrating tests in development workflows</a></h2>
 <hr class="half-width">
 <ul>
 <li>Automate the build and run of your tests within your development
@@ -385,15 +431,11 @@ structure tests</li>
 <li>Organising tests into <em>cases</em> and <em>suites</em> helps
 isolate contracts/failures</li>
 <li>They also form part of the tecnical documentation of the code</li>
-</ul></section><section id="sanitizers"><h2 class="section-heading"><a href="sanitizers.html">Testing with static analysers</a></h2>
+</ul></section><section id="coverage"><h2 class="section-heading"><a href="coverage.html">Measuring unit test coverage</a></h2>
+<hr class="half-width"></section><section id="sanitizers"><h2 class="section-heading"><a href="sanitizers.html">Testing with static analysers</a></h2>
 <hr class="half-width">
 <ul>
 <li>Sanitizers can help identify issues that unit tests may not</li>
-</ul></section><section id="microbenchmarks"><h2 class="section-heading"><a href="microbenchmarks.html">Microbenchmarking</a></h2>
-<hr class="half-width">
-<ul>
-<li>Microbenchmarks can help avoid premature
-optimization/pessimization.</li>
 </ul></section>
 </div>
     </main>
@@ -444,8 +486,8 @@ optimization/pessimization.</li>
   "url": "https://drbenmorgan.github.io/cpp-unit-testing/instructor/key-points.html",
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/instructor/key-points.html",
   "dateCreated": "2026-05-27",
-  "dateModified": "2026-06-17",
-  "datePublished": "2026-06-17"
+  "dateModified": "2026-06-22",
+  "datePublished": "2026-06-22"
 }
 
   </script><script>

@@ -1,0 +1,19 @@
+[workspace]
+authors = ["Ben Morgan <ben.morgan@warwick.ac.uk>"]
+channels = ["conda-forge"]
+name = "ccp-tepp-test"
+platforms = ["osx-arm64", "osx-64", "linux-64", "win-64"]
+version = "0.1.0"
+
+[tasks]
+configure = "cmake -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B build"
+build = { cmd = "ninja -v -C build", depends-on = ["configure"] }
+test = { cmd = "ctest --output-on-failure --test-dir build", depends-on = ["build"] }
+clean = "ninja -v -C build clean"
+purge = "rm -Rf build"
+
+[dependencies]
+cmake = "==4.2"
+gtest = "==1.17"
+ninja = ">=1.13.2,<2"
+gcovr = "==8.2"

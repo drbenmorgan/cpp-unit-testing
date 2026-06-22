@@ -199,6 +199,7 @@
       <div class="accordion-body">
         <ul><li><a href="#software-installation">Software installation</a></li>
 <li><a href="#software-setup">Software Setup</a></li>
+<li><a href="#starter-project">Starter Project</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -217,7 +218,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="cmakectest.html">2. Integrating tests in development workflows</a>
+        <a href="cppassertions.html">2. Unit testing with <code>assert()</code></a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -226,7 +227,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="googletest.html">3. Introducing GoogleTest</a>
+        <a href="codeorganization.html">3. Organizing code to assist unit testing</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -235,7 +236,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="testsuites.html">4. Adding test cases and suites</a>
+        <a href="cmakectest.html">4. Integrating tests in development workflows</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -244,7 +245,7 @@
 <div class="accordion accordion-flush" id="accordionFlush6">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading6">
-        <a href="sanitizers.html">5. Testing with static analysers</a>
+        <a href="googletest.html">5. Introducing GoogleTest</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -253,7 +254,25 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="microbenchmarks.html">6. Microbenchmarking</a>
+        <a href="testsuites.html">6. Adding test cases and suites</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush8">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading8">
+        <a href="coverage.html">7. Measuring unit test coverage</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush9">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading9">
+        <a href="sanitizers.html">8. Testing with static analysers</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -368,7 +387,7 @@ installed through the appropriate package management system.</p>
   Linux
   </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>Install GCC through your system’s package manager.</p>
 </div>
@@ -383,7 +402,7 @@ installed through the appropriate package management system.</p>
   MacOS
   </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
 <div class="accordion-body">
 <p>Install Xcode from the App Store.</p>
 </div>
@@ -398,7 +417,7 @@ installed through the appropriate package management system.</p>
   Windows
   </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
 <div class="accordion-body">
 <p>This lesson has not been designed to run on Windows. We would
 recommend using the <a href="https://learn.microsoft.com/en-us/windows/wsl/" class="external-link">Windows Subsystem
@@ -424,7 +443,7 @@ need.</p>
   Linux
   </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
 <div class="accordion-body">
 <p>Open a terminal and run:</p>
 <div class="codewrapper sourceCode" id="cb1">
@@ -452,7 +471,7 @@ page</a>.</p>
   MacOS
   </h3>
 </button>
-<div id="collapseSpoiler5" class="accordion-collapse collapse" aria-labelledby="headingSpoiler5" data-bs-parent="#accordionSpoiler5">
+<div id="collapseSpoiler5" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler5" aria-labelledby="headingSpoiler5">
 <div class="accordion-body">
 <p>If you have <a href="https://brew.sh" class="external-link">Homebrew</a> installed, then
 it’s recommended to install Pixi with this. Open a terminal and run:</p>
@@ -506,7 +525,7 @@ available:</p>
   Linux
   </h3>
 </button>
-<div id="collapseSpoiler6" class="accordion-collapse collapse" aria-labelledby="headingSpoiler6" data-bs-parent="#accordionSpoiler6">
+<div id="collapseSpoiler6" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler6" aria-labelledby="headingSpoiler6">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -531,7 +550,7 @@ available:</p>
   MacOS
   </h3>
 </button>
-<div id="collapseSpoiler7" class="accordion-collapse collapse" aria-labelledby="headingSpoiler7" data-bs-parent="#accordionSpoiler7">
+<div id="collapseSpoiler7" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler7" aria-labelledby="headingSpoiler7">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -548,8 +567,12 @@ available:</p>
 </div>
 </div>
 </div>
-<p>More detailed setup information will be provided in each exercise as
-needed.</p>
+</section><section><h2 class="section-heading" id="starter-project">Starter Project<a class="anchor" aria-label="anchor" href="#starter-project"></a></h2>
+<hr class="half-width"><p>Download the <a href="files/ccptepp-test.zip">project zip file</a>
+and unzip it somewhere suitable. More detailed setup information will be
+provided in each exercise as needed, though in all cases we will be
+working in the directory <code>ccptepp-test/</code> which the zipfile
+unzips to.</p>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
@@ -605,8 +628,8 @@ any links that you are not going to use.
   "url": "https://drbenmorgan.github.io/cpp-unit-testing/index.html",
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/index.html",
   "dateCreated": "2026-05-27",
-  "dateModified": "2026-06-17",
-  "datePublished": "2026-06-17"
+  "dateModified": "2026-06-22",
+  "datePublished": "2026-06-22"
 }
 
   </script><script>

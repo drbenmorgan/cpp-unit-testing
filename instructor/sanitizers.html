@@ -118,7 +118,7 @@
     <a id="search-button" class="btn btn-primary" href="../instructor/aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
 </nav><aside class="col-md-12 lesson-progress"><div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">67%</div>
+    <div class="progress-bar incubator" role="progressbar" style="width: 88%" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">88%</div>
   </div>
 </aside><div class="container">
       <div class="row">
@@ -208,7 +208,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="cmakectest.html">2. Integrating tests in development workflows</a>
+        <a href="cppassertions.html">2. Unit testing with <code>assert()</code></a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -217,7 +217,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="googletest.html">3. Introducing GoogleTest</a>
+        <a href="codeorganization.html">3. Organizing code to assist unit testing</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -226,7 +226,34 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="testsuites.html">4. Adding test cases and suites</a>
+        <a href="cmakectest.html">4. Integrating tests in development workflows</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush6">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading6">
+        <a href="googletest.html">5. Introducing GoogleTest</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush7">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading7">
+        <a href="testsuites.html">6. Adding test cases and suites</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush8">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading8">
+        <a href="coverage.html">7. Measuring unit test coverage</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -237,18 +264,9 @@
     <div class="accordion-header" id="flush-headingcurrent">
         <span class="visually-hidden">Current Chapter</span>
         <span class="current-chapter">
-        5. Testing with static analysers
+        8. Testing with static analysers
         </span>
       
-    </div><!--/div.accordion-header-->
-
-  </div><!--/div.accordion-item-->
-</div><!--/div.accordion-flush-->
-
-<div class="accordion accordion-flush" id="accordionFlush7">
-  <div class="accordion-item">
-    <div class="accordion-header" id="flush-heading7">
-        <a href="microbenchmarks.html">6. Microbenchmarking</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -296,23 +314,23 @@
         <!-- START: inst/pkgdown/templates/content-instructor.html -->
   <div class="col-xl-8 col-lg-12 primary-content">
     <nav class="lesson-content mx-md-4" aria-label="Previous and Next Chapter Top"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
-        <a class="chapter-link" href="../instructor/testsuites.html" rel="prev"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="../instructor/microbenchmarks.html" rel="next">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link" href="../instructor/coverage.html" rel="prev"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
+        <a class="chapter-link float-end" href="../instructor/index.html" rel="next">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link" href="../instructor/testsuites.html" rel="prev">
+        <a class="chapter-link" href="../instructor/coverage.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: Adding test cases
+          Previous: Measuring unit test
         </a>
-        <a class="chapter-link float-end" href="../instructor/microbenchmarks.html" rel="next">
-          Next: Microbenchmarking...
+        <a class="chapter-link float-end" href="../instructor/index.html" rel="next">
+          Home
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Testing with static analysers</h1>
-        <p>Last updated on 2026-06-17 |
+        <p>Last updated on 2026-06-22 |
 
         <a href="https://github.com/drbenmorgan/cpp-unit-testing/edit/main/episodes/sanitizers.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -341,16 +359,15 @@
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Build with sanitizers</li>
+<ul><li>Understand how santizers can catch problems that unit testing</li>
 </ul></div>
 </div>
 </div>
 </div>
 </div>
-<p>Use <code>asan</code>, <code>tsan</code> <code>ubsan</code>? Maybe
-FPE if time.</p>
-<p>This is sort-of integration/regression level, so maybe that is topic
-here.</p>
+<p>Unit testing only catches problems we anticipate. It is also unsuited
+for catching hardware-level or runtime issues.</p>
+<p>Use <code>asan</code>, <code>tsan</code> <code>ubsan</code>?</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -371,17 +388,17 @@ any links that you are not going to use.
 
       </div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter Bottom"><div class="d-block d-sm-block d-md-none">
-        <a class="chapter-link" href="../instructor/testsuites.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="../instructor/microbenchmarks.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link" href="../instructor/coverage.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
+        <a class="chapter-link float-end" href="../instructor/index.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link" href="../instructor/testsuites.html" rel="prev">
+        <a class="chapter-link" href="../instructor/coverage.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: Adding test cases
+          Previous: Measuring unit test
         </a>
-        <a class="chapter-link float-end" href="../instructor/microbenchmarks.html" rel="next">
-          Next: Microbenchmarking...
+        <a class="chapter-link float-end" href="../instructor/index.html" rel="next">
+          Home
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -429,8 +446,8 @@ any links that you are not going to use.
   "url": "https://drbenmorgan.github.io/cpp-unit-testing/instructor/sanitizers.html",
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/instructor/sanitizers.html",
   "dateCreated": "2026-05-27",
-  "dateModified": "2026-06-17",
-  "datePublished": "2026-06-17"
+  "dateModified": "2026-06-22",
+  "datePublished": "2026-06-22"
 }
 
   </script><script>
