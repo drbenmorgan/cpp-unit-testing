@@ -10,28 +10,29 @@ exercises: 2 # exercise time in minutes
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-## C++ Project Organization
+::::::::::::::::::::::::::::::::::::: objectives
 
-The ISO C++ Standard does _not_ enforce or require a particular directory layout of project
-code for implementation, testing or otherwise. Projects _generally_ separate library/application
-source code from the unit (and other) testing code, though the directory levels at which
-this is done vary widely. This results in a project that:
+- Refactor our `divide` example into a header-only library and test.
 
-1. Builds a _library_ for the implementation code.
-   - _Optionally_ the _end user program_ using this library.
-2. 1-N _unit test programs_ each providing the test cases for the 1-N units in the _library_.
+::::::::::::::::::::::::::::::::::::::::::::::::
 
-To make our `test_device.cpp` code follow this pattern, we only need to:
+## C++ Package Organization
 
-- Factor the `divide` function interface/implementation into a library.
-- Compile and link `test_divide.cpp` against this library.
+At present, we have both the unit of code we want to test and the test code in a single file.
+Practically, the `divide` function is more likely to be part of a larger C++ _project/package_ 
+that compiles a large set of functions and classes into an end-user program or a _library_ of
+reusable, pre-compiled code. Thus we usually separate the program/library _implementation_ code
+from that which _tests_ it. The ISO C++ Standard does _not_ enforce or require a specific
+directory layout of package implementation and testing code, leaving this up to the package
+maintainers.
 
-Just to illustrate the principal for this exercise, we'll make `divide` a _header-only_ library
-since we're still compiling manually. Thus we'll have a header:
+### Splitting `divide` and its tests into a header and program
+
+We'll start to factor `test_divide.cpp` to split the implementation (`divide`) from the test (`test_divide.cpp`). The first step is to create a _header_ file `divide.hpp` alongside `test_divide.cpp` which will hold the implementation of `divide`:
 
 ```cpp
 //! \file divide.hpp
-#pragma once
+#pragma once // header guard
 
 #include <stdexcept>
 
@@ -47,7 +48,12 @@ double divide(double numerator, double denominator)
 }
 ```
 
-and our `test_divide.cpp` becomes:
+::::: callout
+This is an example of a "header-only" _library_ that are now quite common in modern C++. We'll
+see the more usual binary libraries in later exercises.
+:::::::::::::
+
+We can now modify `test_divide.cpp` to simply include this header, this enabling use of `divide`:
 
 ```cpp
 //! \file test_divide.cpp
@@ -85,11 +91,9 @@ int main()
    test_divide_numeric();
    test_divide_error()
 }
-
 ```
 
-If we have `divide.hpp` and `test_divide.cpp` in the same directory, we can compile and run just
-as we did before:
+We can now compile and run this just as before:
 
 :::::::::::::::: spoiler
 ### Linux
@@ -109,7 +113,13 @@ clang++ -std=c++17 test_divide.cpp -o test_divide
 ```
 ::::::::::::::::::::::::
 
-but we have decoupled _what_ we test from _how_ we test it.
+::::: callout
+We've deliberately put `divide.hpp` and `test_divide.cpp` in the same directory so that
+the compiler will find `divide.hpp` easily.
+:::::::::::::
+
+Overall, this isn't much different from what we already have, but we have
+decoupled _what_ we test from _how_ we test it.
 
 
 ## C++ Design to Assist Unit Testing
@@ -121,8 +131,9 @@ but we have decoupled _what_ we test from _how_ we test it.
 - avoid global state
 
 
-::::::::::::::::::::::::::::::::::::: objectives
 
-- Refactor our `divide` example into a header-only library and test.
+::::::::::::::::::::::::::::::::::::: keypoints 
+
+- We should factor our code to help us test.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
