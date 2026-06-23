@@ -9,7 +9,7 @@ assumed that you have:
 
 - access to the Bash or Zsh shell on a fairly modern Linux or macOS system
 - a text editor such as Vim or Emacs, or an IDE such as VSCode
-- sufficient disk space (~250MB) to store the software and outputs
+- sufficient disk space (~300MB) to store the software and outputs
 
 You **do not** need root/administrator access.
 
@@ -56,9 +56,8 @@ in the rest of the lesson.
 ### Pixi
 
 As we move through the course, we will need additional tools to help us write,
-build, and run our tests efficiently. To do this, we will use the [Pixi] package manager to provide an isolated development environment with
-the software we need.
-
+build, and run our tests efficiently. To do this, we will use the [Pixi] package manager
+to provide an isolated development environment with the software we need.
 
 :::::::::::::::: spoiler
 
@@ -130,12 +129,6 @@ Open a terminal and check that you have the following commands available:
 g++ --version
 ```
 
-and
-
-```bash
-pixi --version
-```
-
 ::::::::::::::::::::::::
 
 :::::::::::::::: spoiler
@@ -146,16 +139,69 @@ pixi --version
 clang++ --version
 ```
 
+::::::::::::::::::::::::
+
 and
 
 ```bash
 pixi --version
 ```
-::::::::::::::::::::::::
-
-
-## Starter Project
 
 Download the [project zip file](files/ccptepp-test.zip) and unzip it somewhere suitable.
-More detailed setup information will be provided in each exercise as needed, though in all
-cases we will be working in the directory `ccptepp-test/` which the zipfile unzips to.
+Change into the the unpacked `ccptest-test/` base directory and try setting up the Pixi
+environment (NB: we have shown `$`, the prompt, to distinguish
+the commands to be run from the output you should see. You don't need to type this!):
+
+```bash
+$ cd ccptest-test
+$ ls
+CMakeLists.txt  pixi.lock       pixi.toml       src             test
+$ pixi shell
+```
+
+This will download the packages needed and drop you into a shell with the environment
+setup to use these. Depending on your network connection and system, this may take several
+seconds. You should see your prompt changed to reflect this new environment:
+
+```bash
+$ pixi shell
+
+(ccptepp-test) $
+```
+
+To check you have the tools needed, run the following commands and check they complete
+with the following information:
+
+```bash
+(ccptepp-test) $ cmake --version
+cmake version 4.2.0
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+
+(ccptepp-test) $ ninja --version
+1.13.2
+
+(ccptepp-test) $ gcovr --version
+gcovr 8.2
+
+Copyright (c) 2013-2024 the gcovr authors
+Copyright (c) 2013 Sandia Corporation.
+Under the terms of Contract DE-AC04-94AL85000 with Sandia Corporation,
+the U.S. Government retains certain rights in this software.
+```
+
+To exit the Pixi environment, use `exit` to get back to your default terminal environment:
+
+```bash
+(ccptepp-test) $ exit
+
+Saving session...
+...saving history...truncating history files...
+...completed.
+$
+```
+
+You can also simply close the terminal.
+
+More detailed information on Pixi use will be provided in each exercise as needed, though in all
+cases we will be working in the directory `ccptepp-test/`.

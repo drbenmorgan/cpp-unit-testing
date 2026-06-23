@@ -6,23 +6,35 @@ exercises: 2 # exercise time in minutes
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How to use static analysers to assist testing
+- The tests all pass — so why does the program crash?
+- What classes of bug are invisible to unit tests?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Understand how santizers can catch problems that unit testing
+- Explain what AddressSanitizer and UBSan instrument at compile time.
+- Build the test executable with sanitizer instrumentation.
+- Observe a specific case that all unit tests miss
+- Describe the relationship between unit testing, coverage, and sanitizers as complementary tools
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-Unit testing only catches problems we anticipate. It is also unsuited
-for catching hardware-level or runtime issues.
 
+::::: discussion
+## When to use other sanitizers?
 
+Only look at ASan, when and where could we use the others.
 
-Use `asan`, `tsan` `ubsan`?
+::::: spoiler
 
+## Spoiler!
+
+Some examples of use
+
+::::::::::::::
+
+::::::::::::::::
 
 
 
