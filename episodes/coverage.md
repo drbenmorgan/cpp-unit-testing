@@ -5,15 +5,27 @@ exercises: 2 # exercise time in minutes
 ---
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- What is test coverage?
-- How can we measure it?
+- How do I know which parts of my code my tests actually exercise?
+- What does test coverage tell me, and what doesn't it tell me?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Understand what coverage measures.
-- Setup the project with a `Coverage` build mode.
-- Use `gcovr` to produce and understand coverage metrics.
+- Build the project with `gcov/lcov` instrumentation .
+- Use `gcovr` to generate a coverage report from the outputs.
+- Identify at least one untested branch in the `Histogram` implementation
+- Write a test that increases branch coverage, and verify the improvement
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+
+
+::::::::::::::::::::::::::::::::::::: keypoints 
+
+- Coverage can help you identify untested regions of your code.
+- It does not guarantee that the ran code is correct.
+- Beware of diminishing returns.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::

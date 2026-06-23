@@ -64,7 +64,7 @@ reproducibility of the software, testing also helps us in other aspects:
 ## Types of test
 
 At the most basic level are **smoke tests**, as in "run it and see if it catches on fire"!
-This also includes checking results by eye to a degree, e.g.
+To some extent, this also includes checking results by eye, e.g.
 
 ```cpp
 #include <iostream>
