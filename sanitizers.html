@@ -330,7 +330,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Testing with static analysers</h1>
-        <p>Last updated on 2026-06-22 |
+        <p>Last updated on 2026-06-23 |
 
         <a href="https://github.com/drbenmorgan/cpp-unit-testing/edit/main/episodes/sanitizers.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -349,7 +349,8 @@
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
-<ul><li>How to use static analysers to assist testing</li>
+<ul><li>The tests all pass — so why does the program crash?</li>
+<li>What classes of bug are invisible to unit tests?</li>
 </ul></div>
 </div>
 </div>
@@ -357,15 +358,44 @@
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Understand how santizers can catch problems that unit testing</li>
+<ul><li>Explain what AddressSanitizer and UBSan instrument at compile
+time.</li>
+<li>Build the test executable with sanitizer instrumentation.</li>
+<li>Observe a specific case that all unit tests miss</li>
+<li>Describe the relationship between unit testing, coverage, and
+sanitizers as complementary tools</li>
 </ul></div>
 </div>
 </div>
 </div>
 </div>
-<p>Unit testing only catches problems we anticipate. It is also unsuited
-for catching hardware-level or runtime issues.</p>
-<p>Use <code>asan</code>, <code>tsan</code> <code>ubsan</code>?</p>
+<div id="when-to-use-other-sanitizers" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="when-to-use-other-sanitizers" class="callout-inner">
+<h3 class="callout-title">When to use other sanitizers?</h3>
+<div class="callout-content">
+<p>Only look at ASan, when and where could we use the others.</p>
+<div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
+  <h3 class="accordion-header" id="headingSpoiler1">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Spoiler!
+  </h3>
+</button>
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div class="accordion-body">
+<p>Some examples of use</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -444,7 +474,7 @@ any links that you are not going to use.
   "url": "https://drbenmorgan.github.io/cpp-unit-testing/sanitizers.html",
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/sanitizers.html",
   "dateCreated": "2026-05-27",
-  "dateModified": "2026-06-22",
+  "dateModified": "2026-06-23",
   "datePublished": "2026-06-23"
 }
 

@@ -415,7 +415,9 @@ How to organise tests?
  7. <a href="coverage.html">Measuring unit test coverage</a>
 </td>
 <td>
-What is test coverage?<br>How can we measure it?
+How do I know which parts of my code my tests actually
+exercise?<br>What does test coverage tell me, and what doesn’t it tell
+me?
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>01h 24m
@@ -424,7 +426,8 @@ What is test coverage?<br>How can we measure it?
  8. <a href="sanitizers.html">Testing with static analysers</a>
 </td>
 <td>
-How to use static analysers to assist testing
+The tests all pass — so why does the program crash?<br>What classes of
+bug are invisible to unit tests?
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>01h 36m
@@ -446,7 +449,7 @@ Linux or macOS. It is assumed that you have:</p>
 <ul><li>access to the Bash or Zsh shell on a fairly modern Linux or macOS
 system</li>
 <li>a text editor such as Vim or Emacs, or an IDE such as VSCode</li>
-<li>sufficient disk space (~250MB) to store the software and
+<li>sufficient disk space (~300MB) to store the software and
 outputs</li>
 </ul><p>You <strong>do not</strong> need root/administrator access.</p>
 <!-- ## Data Sets -->
@@ -469,7 +472,7 @@ installed through the appropriate package management system.</p>
   Linux
   </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>Install GCC through your system’s package manager.</p>
 </div>
@@ -484,7 +487,7 @@ installed through the appropriate package management system.</p>
   MacOS
   </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <p>Install Xcode from the App Store.</p>
 </div>
@@ -499,7 +502,7 @@ installed through the appropriate package management system.</p>
   Windows
   </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
 <p>This lesson has not been designed to run on Windows. We would
 recommend using the <a href="https://learn.microsoft.com/en-us/windows/wsl/" class="external-link">Windows Subsystem
@@ -525,7 +528,7 @@ need.</p>
   Linux
   </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
 <div class="accordion-body">
 <p>Open a terminal and run:</p>
 <div class="codewrapper sourceCode" id="cb1">
@@ -553,7 +556,7 @@ page</a>.</p>
   MacOS
   </h3>
 </button>
-<div id="collapseSpoiler5" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler5" aria-labelledby="headingSpoiler5">
+<div id="collapseSpoiler5" class="accordion-collapse collapse" aria-labelledby="headingSpoiler5" data-bs-parent="#accordionSpoiler5">
 <div class="accordion-body">
 <p>If you have <a href="https://brew.sh" class="external-link">Homebrew</a> installed, then
 it’s recommended to install Pixi with this. Open a terminal and run:</p>
@@ -607,18 +610,12 @@ available:</p>
   Linux
   </h3>
 </button>
-<div id="collapseSpoiler6" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler6" aria-labelledby="headingSpoiler6">
+<div id="collapseSpoiler6" class="accordion-collapse collapse" aria-labelledby="headingSpoiler6" data-bs-parent="#accordionSpoiler6">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ex">g++</span> <span class="at">--version</span></span></code></pre>
-</div>
-<p>and</p>
-<div class="codewrapper sourceCode" id="cb6">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">pixi</span> <span class="at">--version</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -632,29 +629,85 @@ available:</p>
   MacOS
   </h3>
 </button>
-<div id="collapseSpoiler7" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler7" aria-labelledby="headingSpoiler7">
+<div id="collapseSpoiler7" class="accordion-collapse collapse" aria-labelledby="headingSpoiler7" data-bs-parent="#accordionSpoiler7">
 <div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="fu">clang</span>++ <span class="at">--version</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>and</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="fu">clang</span>++ <span class="at">--version</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="ex">pixi</span> <span class="at">--version</span></span></code></pre>
 </div>
-<p>and</p>
+<p>Download the <a href="../files/ccptepp-test.zip">project zip file</a>
+and unzip it somewhere suitable. Change into the the unpacked
+<code>ccptest-test/</code> base directory and try setting up the Pixi
+environment (NB: we have shown <code>$</code>, the prompt, to
+distinguish the commands to be run from the output you should see. You
+don’t need to type this!):</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="ex">pixi</span> <span class="at">--version</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="ex">$</span> cd ccptest-test</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="ex">$</span> ls</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a><span class="ex">CMakeLists.txt</span>  pixi.lock       pixi.toml       src             test</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a><span class="ex">$</span> pixi shell</span></code></pre>
 </div>
+<p>This will download the packages needed and drop you into a shell with
+the environment setup to use these. Depending on your network connection
+and system, this may take several seconds. You should see your prompt
+changed to reflect this new environment:</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="ex">$</span> pixi shell</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span></span></code></pre>
 </div>
+<p>To check you have the tools needed, run the following commands and
+check they complete with the following information:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> cmake <span class="at">--version</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a><span class="fu">cmake</span> version 4.2.0</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a><span class="ex">CMake</span> suite maintained and supported by Kitware <span class="er">(</span><span class="ex">kitware.com/cmake</span><span class="kw">)</span><span class="bu">.</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> ninja <span class="at">--version</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a><span class="ex">1.13.2</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> gcovr <span class="at">--version</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a><span class="ex">gcovr</span> 8.2</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a><span class="ex">Copyright</span> <span class="er">(</span><span class="ex">c</span><span class="kw">)</span> <span class="ex">2013-2024</span> the gcovr authors</span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1" aria-label="code-block-10-13"></a><span class="ex">Copyright</span> <span class="er">(</span><span class="ex">c</span><span class="kw">)</span> <span class="ex">2013</span> Sandia Corporation.</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1" aria-label="code-block-10-14"></a><span class="ex">Under</span> the terms of Contract DE-AC04-94AL85000 with Sandia Corporation,</span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1" aria-label="code-block-10-15"></a><span class="ex">the</span> U.S. Government retains certain rights in this software.</span></code></pre>
 </div>
+<p>To exit the Pixi environment, use <code>exit</code> to get back to
+your default terminal environment:</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> exit</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a><span class="ex">Saving</span> session...</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a><span class="ex">...saving</span> history...truncating history files...</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a><span class="ex">...completed.</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1" aria-label="code-block-11-6"></a><span class="ex">$</span></span></code></pre>
 </div>
-</div>
-</section><section><h2 class="section-heading" id="starter-project">Starter Project<a class="anchor" aria-label="anchor" href="#starter-project"></a></h2>
-<hr class="half-width"><p>Download the <a href="../files/ccptepp-test.zip">project zip file</a>
-and unzip it somewhere suitable. More detailed setup information will be
-provided in each exercise as needed, though in all cases we will be
-working in the directory <code>ccptepp-test/</code> which the zipfile
-unzips to.</p>
+<p>You can also simply close the terminal.</p>
+<p>More detailed information on Pixi use will be provided in each
+exercise as needed, though in all cases we will be working in the
+directory <code>ccptepp-test/</code>.</p>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.

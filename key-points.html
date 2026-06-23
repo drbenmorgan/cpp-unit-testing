@@ -409,7 +409,10 @@ implement simple unit tests.</li>
 </ul>
 </li>
 </ul></section><section id="codeorganization"><h2 class="section-heading"><a href="codeorganization.html">Organizing code to assist unit testing</a></h2>
-<hr class="half-width"></section><section id="cmakectest"><h2 class="section-heading"><a href="cmakectest.html">Integrating tests in development workflows</a></h2>
+<hr class="half-width">
+<ul>
+<li>We should factor our code to help us test.</li>
+</ul></section><section id="cmakectest"><h2 class="section-heading"><a href="cmakectest.html">Integrating tests in development workflows</a></h2>
 <hr class="half-width">
 <ul>
 <li>Automate the build and run of your tests within your development
@@ -430,7 +433,12 @@ structure tests</li>
 isolate contracts/failures</li>
 <li>They also form part of the tecnical documentation of the code</li>
 </ul></section><section id="coverage"><h2 class="section-heading"><a href="coverage.html">Measuring unit test coverage</a></h2>
-<hr class="half-width"></section><section id="sanitizers"><h2 class="section-heading"><a href="sanitizers.html">Testing with static analysers</a></h2>
+<hr class="half-width">
+<ul>
+<li>Coverage can help you identify untested regions of your code.</li>
+<li>It does not guarantee that the ran code is correct.</li>
+<li>Beware of diminishing returns.</li>
+</ul></section><section id="sanitizers"><h2 class="section-heading"><a href="sanitizers.html">Testing with static analysers</a></h2>
 <hr class="half-width">
 <ul>
 <li>Sanitizers can help identify issues that unit tests may not</li>
