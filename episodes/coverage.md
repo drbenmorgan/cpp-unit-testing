@@ -1,5 +1,5 @@
 ---
-title: "Measuring unit test coverage"
+title: "Code coverage"
 teaching: 10 # teaching time in minutes
 exercises: 2 # exercise time in minutes
 ---
@@ -12,10 +12,13 @@ exercises: 2 # exercise time in minutes
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Build the project with `gcov/lcov` instrumentation .
-- Use `gcovr` to generate a coverage report from the outputs.
-- Identify at least one untested branch in the `Histogram` implementation
-- Write a test that increases branch coverage, and verify the improvement
+- Build a project with `gcov/lcov` instrumentation .
+- Run gcovr and interpret line and branch coverage reports
+- Identify at least one untested branch in the Histogram implementation from the coverage report
+- Write a test that increases branch coverage and verify the improvement in the report
+
+- Explain the difference between line coverage and branch coverage
+- Describe at least one class of bug that 100% line coverage would not catch
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -24,8 +27,11 @@ exercises: 2 # exercise time in minutes
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Coverage can help you identify untested regions of your code.
-- It does not guarantee that the ran code is correct.
-- Beware of diminishing returns.
+- Coverage measures which lines and branches were executed during testing — not whether they were tested correctly
+- A line shown as covered means it ran; it does not mean the result was checked or that the test would catch a bug there
+- Branch coverage is more informative than line coverage — a line can execute without all its branches being taken
+- Coverage is a lower bound on thoroughness, not an upper bound — 100% coverage is necessary but not sufficient
+- The coverage report is most useful as a guide to where tests are missing, not as a measure of test quality
+- Beware of diminishing returns
 
 ::::::::::::::::::::::::::::::::::::::::::::::::

@@ -1,19 +1,22 @@
 ---
-title: "Organizing code to assist unit testing"
+title: "Organizing code to enable unit testing"
 teaching: 10 # teaching time in minutes
 exercises: 2 # exercise time in minutes
 ---
 ::::::::::::::::::::::::::::::::::::: questions 
 
-- How should we organize C++ code to assist unit testing?
-- How should we design C++ code to assist unit testing?
+- How should we structure C++ code to assist unit testing?
+- What makes a function easy or hard to test?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
-
-- Refactor our `test_invariant_mass` test into a header, implementation file, and test program.
-- Understand separation of concerns and refactoring as key design areas helping us test.
+- Split a single-file C++ program into a header, an implementation file, and a separate test file
+- Explain why separating test code from production code matters
+- Identify properties of a function that make it easy to test: clear inputs, clear outputs, no hidden dependencies
+- Identify at least three structural problems in a given function that make it difficult to test
+- Propose a refactoring of a function with testability problems into smaller, testable units
+- Explain why the question "how would I ensure this refactoring does not change behaviour?" motivates writing tests before refactoring
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -75,32 +78,10 @@ function interface.
 //! \file test_invariant_mass.cpp
 #include "invariant_mass.hpp" // Include the interface for what we're testing
 
-#include <cassert>
-
-// Case 1. Test physical domain
-void test_physical_domain()
-{
-   assert((invariant_mass(100,100) == 0.0) && "mass of photon is not 0");  
-}
-
-// Case 2. Test unphysical energy
-void test_unphysical_energy()
-{
-   try {
-      double bad_result = invariant_mass(-3.14,3.0);
-      assert(false && "std::domain_error not thrown for negative energy");
-   }
-   catch (const std::domain_error&)
-   {
-      // nothing to do!
-   }
-}
-
 // Run the tests
 int main()
 {
-   test_physical_domain();
-   test_unphysical_energy();
+   double photon_mass = invariant_mass(100,100);
 }
 ```
 
@@ -140,9 +121,7 @@ Start by providing a _declaration_ for `invariant_mass` in `invariant_mass.hpp`:
 #include <cmath>
 #include <stdexcept>
 
-// 1. Return invariant mass $m = sqrt(E^2 - p^2) in natural units
-// 2. throws std::domain_error if E < 0
-// 3. throws std::domain_error if E^2 - p^2 < 0
+// declaration
 double invariant_mass(double energy, double momentum);
 
 // implementation (or "definition")
@@ -194,9 +173,6 @@ We then clean up the header to:
 
 #include <stdexcept>
 
-// 1. Return invariant mass $m = sqrt(E^2 - p^2) in natural units
-// 2. throws std::domain_error if E < 0
-// 3. throws std::domain_error if E^2 - p^2 < 0
 double invariant_mass(double energy, double momentum);
 ```
 
@@ -224,7 +200,7 @@ g++ -std=c++17 -I src/ src/invariant_mass.cpp test/test_invariant_mass.cpp -o te
 
 Overall, this isn't much different from what we already have, but we have
 decoupled _what_ we test from _how_ we test it. The price of this has been a more
-complex compilation command, which we will address in the next episode.
+complex compilation command, which we will address in a later episode.
 
 
 ## C++ Design to Assist Unit Testing
@@ -476,6 +452,9 @@ The two snippets together make a useful point to draw out explicitly at the end 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- We should factor our code to help us test.
-
+- Tests live in their own file and are compiled separately from the code under test
+- A function is easy to test if it takes all its inputs as parameters and returns its output as a value
+- Global state, side effects, hidden dependencies, and mixed concerns make functions harder to test and harder to reason about
+- Writing testable code and writing maintainable code are largely the same discipline
+- Refactoring untested code safely requires characterising its existing behaviour first — which requires tests you do not yet have
 ::::::::::::::::::::::::::::::::::::::::::::::::

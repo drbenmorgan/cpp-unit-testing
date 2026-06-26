@@ -40,6 +40,10 @@ Some examples of use
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Sanitizers can help identify issues that unit tests may not
+- Unit tests check that your code does what you intended; sanitizers check for errors your intentions did not anticipate
+- A test suite that is green and fully covered can still contain memory errors and undefined behaviour
+- AddressSanitizer detects out-of-bounds memory access and use-after-free at runtime — errors that produce no compiler warning and may crash only rarely in production
+- Sanitizers diagnose bugs that already exist; a well-chosen test prevents their reintroduction
+- No single tool is sufficient — unit tests, coverage measurement, and sanitizers answer different questions and catch different bugs; together they give you the best practical assurance that your code is correct
 
 ::::::::::::::::::::::::::::::::::::::::::::::::

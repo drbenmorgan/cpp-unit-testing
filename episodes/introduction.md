@@ -13,6 +13,12 @@ exercises: 2 # exercise time in minutes
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
+- Explain what a unit test is in terms of inputs, expected outputs, and assertions
+- Connect the practice of unit testing to the scientific method and scientific integrity
+- Distinguish between verification and validation in the context of scientific software
+- Identify functions in their own code that would be candidates for unit testing
+- Distinguish between unit testing and other forms of verification such as running on known data
+
 - Connect the practice of testing to the scientific method.
 - Explain what a unit test is in terms of inputs and expected results.
 - Distinguish between a unit test and other forms of testing.
@@ -149,9 +155,9 @@ forget about the other types!
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Tests check whether the observed result, from running the code, is what was expected ahead of time.
-- Defensive programming embeds alarm-like systems into software, guarding against exceptional bahavior.
-- Unit tests try to test the smallest pieces of code possible, usually functions and methods.
+- Testing is formalising what you already do informally when you verify your code
+- Verification confirms that code implements a model correctly; validation confirms the model describes nature correctly — unit testing addresses verification
+- Unit tests check that a single function produces the expected output for a given input
 - Integration tests make sure that code units work together properly.
 - Regression tests ensure that everything works the same today as it did yesterday.
 
