@@ -413,7 +413,7 @@ on our calculated mass:
 ```cpp
 #include <cmath>
 #include <random>
-#include "invariant_mass.h"
+#include "invariant_mass.hpp"
 
 /* Estimate the invariant mass resolution by smearing true quantities
    with Gaussian detector resolution */
@@ -441,7 +441,7 @@ double estimate_mass_resolution(double true_energy,
 This function does not share the structural problems of `process_candidates()` — it takes all
 inputs as parameters, there's no I/O, and it returns a value. But it still has testability problems.
 
-1. What would happen if you wrote assert(estimate_mass_resolution(91.2, 0.0) == X) for some value X you computed by hand?
+1. What would happen if you wrote `assert(estimate_mass_resolution(91.2, 0.0) == X)` for some value X you computed by hand?
 2. How would you restructure the function so that a test could produce a reproducible result? What is the minimal change needed?
 3. Even with that fix, what would your test actually be checking? Is that sufficient?
 

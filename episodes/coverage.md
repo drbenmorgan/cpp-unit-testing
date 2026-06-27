@@ -38,13 +38,15 @@ in which we can exactly specify the flags we want to use. Open up your `CMakeLis
 we need to do here is add one line:
 
 ```cmake
-# 2. C++ Standard setup
+...
+# - C++ Standard setup
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# 2a. Coverage Build Type flags for C++ 
+# - Coverage Build Type flags for C++ 
 set(CMAKE_CXX_FLAGS_COVERAGE "-O0 --coverage")
+...
 ```
 
 ::::: callout
@@ -136,9 +138,6 @@ an HTML report:
 
 You can now open `build-coverage/coverage.html` in your browser of choice, and you should
 see:
-
-Let's focus on the 
-
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 

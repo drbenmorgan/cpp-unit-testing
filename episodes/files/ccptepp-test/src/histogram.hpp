@@ -11,9 +11,10 @@
  *
  * All bin widths are equal: (@p x_max - @p x_min) / @p n_bins.
  */
-class Histogram {
-public:
+class Histogram
+{
 
+public:
     /**
      * @brief Construct a histogram with uniform binning.
      *
@@ -82,12 +83,12 @@ public:
     float mean() const;
 
 private:
-    int   n_bins_;
+    int n_bins_;
     float x_min_, x_max_, bin_width_;
     std::vector<float> counts_;
-    int   n_entries_   = 0;
-    int   n_overflow_  = 0;
-    int   n_underflow_ = 0;
-    float value_sum_   = 0.0f;  // sum of x values, unweighted
-    int   in_range_    = 0;
+    int n_entries_ = 0;
+    int n_overflow_ = 0;
+    int n_underflow_ = 0;
+    float value_sum_ = 0.0f;
+    int in_range_ = 0;
 };

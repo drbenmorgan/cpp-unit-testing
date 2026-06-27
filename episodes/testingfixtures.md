@@ -23,6 +23,7 @@ exercises: 2 # exercise time in minutes
 
 
 
+
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
 - A fixture eliminates repeated setup code and makes the intended starting state of each test explicit
