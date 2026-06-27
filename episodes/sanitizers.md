@@ -13,7 +13,7 @@ exercises: 2 # exercise time in minutes
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explain what AddressSanitizer and UBSan instrument at compile time.
+- Explain what AddressSanitizer instrument at compile time.
 - Build the test executable with sanitizer instrumentation.
 - Observe a specific case that all unit tests miss
 - Describe the relationship between unit testing, coverage, and sanitizers as complementary tools

@@ -23,9 +23,9 @@ exercises: 2 # exercise time in minutes
 ## C++ Package Organization
 
 At present, we have both the unit of code we want to test and the test code in a single file.
-Practically, the `invariant_mass` function is more likely to be part of a larger C++ _project/package_  
-that compiles a large set of functions and classes into an end-user program or a _library_ of
-reusable, pre-compiled code. 
+Practically, the `invariant_mass` function is more likely to be part of a larger C++ 
+_project/package_ that compiles a large set of functions and classes into an end-user program or a 
+_library_ of reusable, pre-compiled code. 
 
 In terms of testing, this means that we want to separate the program/library _interface and implementation_ code
 from that which _tests_ it. Unlike some languages, the ISO C++ Standard does _not_ enforce 
@@ -205,13 +205,11 @@ complex compilation command, which we will address in a later episode.
 
 ## C++ Design to Assist Unit Testing
 
-- pure functions
-- separation of concerns (e.g. don't mix I/O and math)
-- avoid mega-functions/loops.
-  - basic factoring.
-- avoid global state
+We often write code iteratively based on developing or urgent research needs. This is not
+_bad_ practice per se, but without care it can lead to code that becomes very difficult to
+test. Let's say we've been working on an analysis to identify Z boson candidates. We've written
+`invariant_mass` to help us, and we've now got to the point that our code looks like this:
 
-::::: challenge
 ```cpp
 #include <iostream>
 #include <fstream>
@@ -262,50 +260,56 @@ void process_candidates(const std::string& filename) {
 }
 ```
 
+::::: challenge
+## Part 1 — Identify the problems
+For each of the following properties, decide whether `process_candidates()` has it and explain in 
+one sentence why it matters for testing:
 
-Part 1 — Identify the problems
-"For each of the following properties, decide whether process_candidates() has it and explain in one sentence why it matters for testing:"
+1. Does the function depend only on its explicit parameters?
+2. Does it separate mathematical computation from file I/O and output?
+3. Does it do one thing, or several?
+4. Does it depend on any state defined outside the function?
+5. Are all the values that control its behaviour visible in its signature?
 
-Does the function depend only on its explicit parameters?
-Does it separate mathematical computation from file I/O and output?
-Does it do one thing, or several?
-Does it depend on any state defined outside the function?
-Are all the values that control its behaviour visible in its signature?
+::::: solution
+1. **No**. The result depends on `g_energy_scale`, which is not a parameter. A test cannot control or predict the output without also setting the global, and any other code that modifies the global between tests will silently change the result.
 
-Instructor notes / model answers
-Does it depend only on its explicit parameters?
+2. **No**. File reading, arithmetic, and printing are all interleaved in the same loop. To test the mass calculation you must provide a real or carefully constructed file, and to check the result you must capture stdout — neither of which is straightforward.
 
-No. The result depends on g_energy_scale, which is not a parameter. A test cannot control or predict the output without also setting the global, and any other code that modifies the global between tests will silently change the result.
-Does it separate computation from I/O?
+3. **No**. It reads a file, applies an energy correction, computes momenta, calls invariant_mass(), applies a mass window cut, accumulates statistics, and prints a summary. Each of these is a candidate for an independent unit.
 
-No. File reading, arithmetic, and printing are all interleaved in the same loop. To test the mass calculation you must provide a real or carefully constructed file, and to check the result you must capture stdout — neither of which is straightforward.
-Does it do one thing?
+4. **Yes**. It needs the global `g_energy_scale`. See above.
 
-No. It reads a file, applies an energy correction, computes momenta, calls invariant_mass(), applies a mass window cut, accumulates statistics, and prints a summary. Each of these is a candidate for an independent unit.
-Does it depend on external state?
-
-Yes — g_energy_scale. See above.
-Are all controlling values visible in the signature?
-
-No. The mass window bounds 70.0 and 110.0 are hardcoded in the body. A test cannot vary them without editing the source, and a reader of the function signature has no indication they exist.
-
-Part 2 — Consequences for testing
-"For each problem you identified, describe a concrete testing difficulty it causes. Try to be specific: what test would you want to write, and why can you not write it cleanly against the current code?"
-Model answers
-
-Global state: "I want to test the effect of applying a scale factor of 1.1 to the energy. I cannot do this without setting g_energy_scale = 1.1 before the call and resetting it afterwards — and if two tests run concurrently, or another function modifies it, my test result is unreliable."
-File I/O entangled with computation: "I want to test that a particle with energy 100 GeV and momentum 50 GeV produces a mass of approximately 86.6 GeV. To do this I must write those values to a temporary file, pass the filename to the function, and parse stdout to check the result. This is fragile, slow, and tests far more than the mass calculation."
-Mega-function: "I want to test the Z candidate selection independently — specifically, that a mass of 69.9 GeV is not selected and 70.1 GeV is. There is no way to call just that logic; I must run the entire pipeline to exercise it."
-Magic numbers: "I want to test the mass window boundary conditions. The values 70.0 and 110.0 are buried in the source — I cannot pass different values in a test without editing the code, which means I am testing a different program than the one in production."
+5. **No**. The mass window cuts `70.0` and `110.0` are hardcoded in the body. A test cannot vary them without editing the source, and a reader of the function signature has no indication they exist.
+::::::::::::::
+::::::::::::::
 
 
-Part 3 — Propose a restructuring
-"Sketch a set of smaller functions that together reproduce the behaviour of process_candidates(), but where each part can be tested independently. Function signatures and a one-sentence description of what you would test for each are sufficient — you do not need to write the implementations."
-Model answer
+::::: challenge
+## Part 2 — Consequences for testing
 
+For each problem you identified, describe a concrete testing difficulty it causes. Try to be specific: what test would you want to write, and why can you not write it cleanly against the current code?
+
+::::: solution
+1. **Global state**: We want to test the effect of applying a scale factor of 1.1 to the energy. We cannot do this without setting `g_energy_scale = 1.1` before the call and resetting it afterwards — and if two tests run concurrently, or another function modifies it, the test result is unreliable.
+
+2. **File I/O entangled with computation**: We want to test that a particle with energy $100 GeV$ and momentum $50 GeV$ produces a mass of approximately $86.6 GeV$. To do this we must write those values to a temporary file, pass the filename to the function, and parse stdout to check the result. This is fragile, slow, and tests far more than the mass calculation.
+
+3. **Mega-function**: We want to test the Z candidate selection independently — specifically, that a mass of $69.9 GeV$ is not selected and $70.1$ GeV is. There is no way to call just that logic; we must run the entire pipeline to exercise it.
+
+4. **Magic numbers**: We want to test the mass window boundary conditions. The values `70.0` and `110.0` are buried in the source — we cannot pass different values in a test without editing the code, which means we would be testing a different program than the one in production.
+::::::::::::::
+::::::::::::::
+
+::::: challenge
+## Part 3 — Propose a restructuring
+
+Sketch a set of smaller functions that together reproduce the behaviour of `process_candidates()`, but where each part can be tested independently. Function signatures and a one-sentence description of what you would test for each are sufficient — you do not need to write the implementations.
+
+::::: solution
 ```cpp
-cpp// Pure mathematical unit — already extracted in the lesson
-// double invariant_mass(double energy, double momentum);
+// Pure mathematical unit — we already have this!
+double invariant_mass(double energy, double momentum);
 
 // Pure mathematical unit: magnitude of 3-momentum
 // Test: momentum_magnitude(3.0, 4.0, 0.0) == 5.0 (Pythagorean triple)
@@ -352,33 +356,62 @@ void process_candidates(const std::string& filename,
                         double mass_max);
 ```
 
+::::: instructor
 Points worth drawing out in discussion:
 
-momentum_magnitude() is worth extracting even though it is a single line — it has a name, a clear contract, and can be tested with exact Pythagorean triples
-is_z_candidate() makes the boundary conditions explicit and testable; students should notice the question mark in the comment about whether the upper bound is inclusive or exclusive, and recognise this as a specification decision that needs to be made and documented
-analyse_candidates() now takes all its inputs as parameters and returns all its outputs as values — it can be tested without any files or output capture
-process_candidates() still exists but is now just a thin I/O wrapper; the principle is not to eliminate I/O but to push it to the boundary
-
-Part 4 — Preserving behaviour
-"If you refactored process_candidates() into the functions you proposed, how would you verify that the refactoring did not change the behaviour of the program? What would you want to have in place before you started, and what would you check at each step?"
-Model answer
-Before starting: characterise the existing behaviour with at least one end-to-end check — run process_candidates() on a known input file and record the output. This becomes the reference to check against after each refactoring step.
-During refactoring: extract one function at a time, keeping the overall program runnable after each extraction. Check after each step that the end-to-end output is unchanged.
-After refactoring: the new unit tests for the extracted functions verify correctness at the unit level; the end-to-end check verifies that composition of the units produces the same overall behaviour as the original.
-The honest observation to make here: if process_candidates() had no tests before the refactoring, you are in a difficult position. The end-to-end check helps, but it only covers the cases you thought to include in your reference file. This is why it is easier to write testable code from the start than to recover testability from legacy code — and why the lesson is teaching these habits now rather than after students have written ten thousand lines of analysis code.
-
-
-"Look at what process_candidates() has become after the refactoring. We have unit tests for momentum_magnitude(), apply_energy_scale(), invariant_mass(), and is_z_candidate() — each in isolation. But we do not have a unit test for process_candidates() itself, and that is intentional. Its job is no longer to contain logic; it is to connect units together and talk to the file system. A test that calls process_candidates() with a real input file and checks the output is not a unit test — it is an integration test. It is checking that the units compose correctly, and that the I/O boundary works as expected. Both kinds of test are valuable, but they are answering different questions. Unit tests tell you which component is broken; integration tests tell you that the components work together. If your integration test fails but all your unit tests pass, the bug is almost certainly in the way the units are connected — which is a much smaller place to look."
-
-
-::::: solution
+- `momentum_magnitude()` is worth extracting even though it is a single line — it has a name, a clear contract, and can be tested with exact Pythagorean triples
+- `is_z_candidate()` makes the boundary conditions explicit and testable; students should notice the question mark in the comment about whether the upper bound is inclusive or exclusive, and recognise this as a specification decision that needs to be made and documented
+- `analyse_candidates()` now takes all its inputs as parameters and returns all its outputs as values — it can be tested without any files or output capture.
+- `process_candidates()` still exists but is now just a thin I/O wrapper; the principle is not to eliminate I/O but to push it to the boundary. 
+  - we _don't have a unit test for it, and that's intentional: it connects units together, so
+    becomes an effective _integration test_.
+  - this is exactly what we described in the first episode: Unit tests tell you which component is 
+    broken; integration tests tell you that the components work together. If your integration test fails but all your unit tests pass, the bug is almost certainly in the way the units are connected, which is a much smaller place to look. 
+  - we haven't completely eliminated the global energy scale: we might still need to get this from
+    a global variable, but our code no longer _depends_ on it.
+- This is _mostly_ good software design practice, but thinking about it terms of testing can
+help make design decisions.
 ::::::::::::::
-:::::::::::::::
-
+::::::::::::::
+::::::::::::::
 
 ::::: challenge
+## Part 4 — Preserving behaviour
+
+If you refactored `process_candidates()` into the functions as above, how would you verify that the refactoring did not change the behaviour of the program? What would you want to have in place before you started, and what would you check at each step?
+
+::::: solution
+
+- **Before starting**: characterise the existing behaviour with at least one end-to-end check — run `process_candidates()` on a known input file and record the output. This becomes the reference to check against after each refactoring step. We are using this as an _integration test_ **and** as
+a _regression test_.
+
+- **During refactoring**: extract _one_ function at a time and keep the overall program runnable after each extraction. Check after each step that the end-to-end output is unchanged, i.e. we
+check that the new units _integrate_ and do not introduce a _regression_.
+
+- **After refactoring**: the new unit tests for the extracted functions verify correctness at the unit level; the end-to-end check verifies that composition of the units produces the same overall behaviour as the original.
+
+It's an unfortunate fact that if `process_candidates()` had no tests before the refactoring, **you are in this difficult position**. The end-to-end check helps, but it only covers the cases you thought to include in your reference file. This is why it is easier to write testable code from the start than to recover testability from legacy code.
+
+::::::::::::::
+::::::::::::::
+
+
+::::: instructor
+Important to highlight that to have a feasible exercise to demonstrate the concepts, or examples are
+somewhat contrived. Nevertheless, we want to highlight what practices and habits to adopt now
+rather than after writing thousands of lines of code. Equally, be honest and note that they may
+have to work with legacy code in research, but these techniques can help to mitigate problems.
+::::::::::::::::
+
+
+## Dealing with randomness
+
+Let's say we add a function to our analysis to model the effect of detector resolution
+on our calculated mass: 
+
+
 ```cpp
-cpp#include <cmath>
+#include <cmath>
 #include <random>
 #include "invariant_mass.h"
 
@@ -390,13 +423,13 @@ double estimate_mass_resolution(double true_energy,
                                 int    n_trials   = 10000) {
 
     std::random_device rd;
-    std::mt19937 gen(rd());
+    std::mt19937 get_random(rd());
     std::normal_distribution<double> smear(0.0, resolution);
 
     double sum_sq = 0.0;
     for (int i = 0; i < n_trials; ++i) {
-        double smeared_energy   = true_energy   * (1.0 + smear(gen));
-        double smeared_momentum = true_momentum * (1.0 + smear(gen));
+        double smeared_energy   = true_energy   * (1.0 + smear(get_random));
+        double smeared_momentum = true_momentum * (1.0 + smear(get_random));
         double mass = invariant_mass(smeared_energy, smeared_momentum);
         sum_sq += mass * mass;
     }
@@ -404,54 +437,68 @@ double estimate_mass_resolution(double true_energy,
 }
 ```
 
-Questions
-"This function does not share the structural problems of process_candidates() — it takes all its inputs as parameters, does no I/O, and returns a value. But it still has a testability problem. Can you identify it?"
-"What would happen if you wrote assert(estimate_mass_resolution(91.2, 0.0) == X) for some value X you computed by hand? Run the function twice and compare the results."
-"How would you restructure the function so that a test could produce a reproducible result? What is the minimal change needed?"
-"Even with that fix, what would your test actually be checking? Is that sufficient?"
+::::: challenge
+This function does not share the structural problems of `process_candidates()` — it takes all
+inputs as parameters, there's no I/O, and it returns a value. But it still has testability problems.
 
-Model answers
-Identify the problem:
+1. What would happen if you wrote assert(estimate_mass_resolution(91.2, 0.0) == X) for some value X you computed by hand?
+2. How would you restructure the function so that a test could produce a reproducible result? What is the minimal change needed?
+3. Even with that fix, what would your test actually be checking? Is that sufficient?
 
-std::random_device seeds the Mersenne Twister from a hardware entropy source, so the sequence of random numbers is different on every call. Two calls to estimate_mass_resolution() with identical arguments will return different values. No fixed expected value exists to assert against.
-What would happen with assert:
+::::: solution
 
-The assertion would pass or fail unpredictably depending on the random seed. Worse, it might pass nine times out of ten and fail occasionally — the hardest kind of bug to diagnose, because the failure is not reproducible.
-Minimal fix — accept the generator as a parameter:
+1. `std::random_device` seeds the Mersenne Twister random number generator from a hardware entropy
+   source, so the sequence of random numbers is different on every execution. 
+   In addition, sequential calls to `estimate_mass_resolution()` with identical arguments will return different values. 
 
-```cpp
-double estimate_mass_resolution(double true_energy,
-                                double true_momentum,
-                                std::mt19937& gen,
-                                double resolution = 0.05,
-                                int    n_trials   = 10000);
-```
+   No fixed expected value exists to assert against. The assertion would pass or fail unpredictable 
+   depending on the random seed. Worse, it might pass nine times out of ten and fail occasionally 
+   — the hardest kind of bug to diagnose, because the failure is not reproducible.
 
 
-A test can now pass a generator seeded with a fixed value and get a deterministic result:
+2. The minimal fix is accept the random number generator as a parameter:
 
-```cpp
-std::mt19937 gen(42);  // fixed seed
-double result = estimate_mass_resolution(91.2, 0.0, gen);
-// result is now the same on every run
-```
+   ```cpp
+   double estimate_mass_resolution(double true_energy,
+                                   double true_momentum,
+                                   std::mt19937& gen,
+                                   double resolution = 0.05,
+                                   int    n_trials   = 10000);
+   ```
 
-The production caller constructs its generator however it likes — from std::random_device, from a run number, from a command-line argument — and passes it in. The function no longer makes that decision for its caller.
-What does the test actually check:
+   A test can now pass a generator seeded with a fixed value and get a deterministic result:
 
-With a fixed seed, the test checks that the function produces a specific numerical result for that seed. It does not check that the result is statistically correct — for that you would need to verify that the distribution of outputs over many seeds has the right mean and width, which is a different and harder kind of test. The honest answer is that testing stochastic functions thoroughly is genuinely difficult, and fixing the seed is a pragmatic first step that at least guarantees reproducibility. Students who notice this tension are thinking carefully — it is worth acknowledging rather than glossing over.
+   ```cpp
+   std::mt19937 gen(42);  // fixed seed
+   double result = estimate_mass_resolution(91.2, 0.0, gen);
+   // result is now the same on every run
+   ```
 
-Closing observation for the instructor
-The two snippets together make a useful point to draw out explicitly at the end of the exercise: process_candidates() and estimate_mass_resolution() have different kinds of testability problem, and the fix in each case is different. But both fixes follow the same underlying principle — make all dependencies explicit in the function signature. Global state, file handles, and random number generators are all the same kind of problem: hidden inputs that the function's caller cannot see or control. A function whose entire input is visible in its signature is a function you can reason about, test, and trust.
+   The caller constructs its generator however it likes — from `std::random_device`, from a run number, from a command-line argument — and passes it in. The function no longer makes that decision for its caller.
 
 
+3. With a fixed seed, the test checks that the function produces a specific numerical result 
+   for that seed. It does not check that the result is statistically correct — for that you would need to verify that the distribution of outputs over many seeds has the right mean and width, which is a different and harder kind of test. The honest answer is that testing stochastic functions thoroughly is genuinely difficult, and fixing the seed is a pragmatic first step that at least guarantees reproducibility. 
+
+::::::::::::::
 :::::::::::::::
+   
 
+::::: instructor
+The tension in part 3 of the challenge is deliberate - this _is_ a hard problem, and we acknowledge
+it.
 
+The two snippets together make a useful point to draw out explicitly at the end of the exercise: 
+process_candidates() and estimate_mass_resolution() have different kinds of testability problem, and 
+the fix in each case is different. But both fixes follow the same underlying principle — make all 
+dependencies explicit in the function signature. Global state, file handles, and random number 
+generators are all the same kind of problem: hidden inputs that the function's caller cannot see or 
+control. A function whose entire input is visible in its signature is a function you can reason 
+about, test, and trust.
+::::::::::::::::
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
-
 - Tests live in their own file and are compiled separately from the code under test
 - A function is easy to test if it takes all its inputs as parameters and returns its output as a value
 - Global state, side effects, hidden dependencies, and mixed concerns make functions harder to test and harder to reason about

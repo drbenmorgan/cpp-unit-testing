@@ -13,10 +13,10 @@ exercises: 2 # exercise time in minutes
 ::::::::::::::::::::::::::::::::::::: objectives
 
 - Identify repeated setup code across tests as a signal that a fixture is appropriate
-- Write a TEST_F() fixture class with a SetUp() method for Histogram
-- Explain that SetUp() runs fresh before every test and that tests do not share state
+- Write a `TEST_F()` fixture class with a `SetUp()` method for Histogram
+- Explain that `SetUp()` runs fresh before every test and that tests do not share state
 - Refactor existing Histogram tests to use a fixture where appropriate
-- Decide which tests belong in the fixture and which should remain as plain TEST() cases
+- Decide which tests belong in the fixture and which should remain as plain `TEST()` cases
 - Explain why construction tests should remain outside the fixture
 
 ::::::::::::::::::::::::::::::::::::::::::::::::

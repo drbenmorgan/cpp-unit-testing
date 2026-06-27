@@ -7,17 +7,17 @@ exercises: 2 # exercise time in minutes
 :::::::::::::::::::::::::::::::::::::: questions 
 
 - How do build and run my tests automatically?
-- How does a build system help me keep tests organised as a project grows?
+- How does a build system benefit testing as a project grows?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Understand the friction of manual compilation as the number of test files grows
-- Write a CMakeLists.txt that builds a test executable and registers it with CTest
-- Run tests using ctest with `-V` and `--output-on-failure` to analyse test failure outputs.
-- Explain why assert() is disabled by NDEBUG and demonstrate this in a release build
-- Explain why automating the build and run of tests reduces the barrier to running them frequently
+- Understand the friction of manual compilation as the number of test files grows.
+- Write a `CMakeLists.txt` that builds a test executable and registers it with CTest.
+- Run tests using `ctest` with `-V` and `--output-on-failure` to analyse test failure outputs.
+- Understand the limitation of `assert()` in release builds.
+- Explain why automating the build and run of tests reduces the barrier to running them easiely and frequently.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -26,19 +26,19 @@ exercises: 2 # exercise time in minutes
 We've naturally used a very simple code to begin learning about unit testing, but
 practical projects will be composed of many functions and classes (our units), each
 of which will have its own unit test program. Even with our simple code, the compilation
-command is quite complex, and different on different platforms:
+command is already quite complex, and different on different platforms:
 
 ```bash
+# ... or clang++ ...
 g++ -std=c++17 -I src/ src/invariant_mass.cpp test/test_invariant_mass.cpp -o test_invariant_mass 
 ```
 
-Imagine that we add more functions and these start to use (i.e. _depend_ on) each other, and we also
+Imagine that we add more functions and these start to use (i.e. _depend_ on) each other, and we
 have test programs for each of these. Our current manual "compile the test program, run it" won't
-scale here, and is also mistake prone. Imagine that we forget to recompile something that we are
-testing, or that what we are testing depends on - the tests still pass but this isn't testing the
-_current_ state of the code. Furthermore, the barrier to building and running tests is high, even
-for ourselves, and we want testing to be _frequently run_ (ideally after every recompile!) and thus
-it needs to be _easy to run_.
+scale here, and is also mistake prone. We could easily forget to recompile something that we are
+testing, or something that what we are testing depends on - the tests would then still pass but 
+this wouldn't be testing the _current_ state of the code. Furthermore, the barrier to building
+and running tests is high, even for ourselves, and we want testing to be _frequently run_ (ideally after every recompile!) and thus it needs to be _easy to build and run_.
 
 This is where a good **buildsystem** can help us. These are essentially _workflow managers_ for the
 specific task of "configuring, building (i.e. compiling), and testing software". We specify the 
@@ -52,15 +52,15 @@ doing this scripting and workflow manually already:
 3. Run `test_invariant_mass` and confirm it runs successfully.
 
 Buildsystems help us make this process automated, portable, and most importantly _reproducible_, 
-as their scripts become part of our codebase.
+as their scripts become part of our codebase and thus version control (e.g. Git).
 
 ## Introducing CMake and CTest
 
 Whilst there are many buildsystems out there, [CMake](https://cmake.org) has become
 the primary go-to system for C++ software (it can also compile C, Fortran, CUDA and HIP).
 CMake is actually a _metabuildsystem_ in that it doesn't actually implement the full
-workflow management itself, but generates scripts for existing tools like Make, Ninja,
-Xcode and Visual Studio. We won't need to worry about this in this lesson, and the
+workflow management itself, but _generates_ scripts for [existing tools like Make, Ninja,
+Xcode and Visual Studio](https://cmake.org/cmake/help/v4.2/manual/cmake-generators.7.html). We won't need to worry about this in this lesson, as the
 `cmake` program will take care on running these tools for us. 
 
 ::::: prereq
@@ -69,7 +69,7 @@ The exercises in this episode require the `pixi` package which you installed in 
 
 From now on, we'll be working in a _development environment_ setup for us by the `pixi`
 tool. This will ensure all of the software we need for the remainder of the episodes is 
-present (except for the C++ compiler,which we take from the system) and setup for immediate use. 
+present (except for the C++ compiler, which we take from the system) and setup for immediate use.
 To do this, make sure you're in the `ccptepp-test/` directory and run:
 
 ```bash
@@ -108,6 +108,15 @@ cmake version 4.2.0
 CMake suite maintained and supported by Kitware (kitware.com/cmake).
 ```
 
+Like all good programs, you can get help on running CMake either directly on the command line
+with:
+
+```bash
+(ccptepp-test) $ cmake --help
+```
+
+or from its [comprehensive documentation](https://cmake.org/cmake/help/v4.2/).
+
 
 ## Building `test_invariant_mass` with CMake
 
@@ -116,32 +125,31 @@ to tell CMake how to do this. Open the file `CMakeLists.txt` in `ccptepp-test`
 and add the following lines:
 
 ```cmake
-# 1. CMake setup
+# - CMake setup
 cmake_minimum_required(VERSION 3.26...4.2)
 project(CCPTEPPTest)
 
-# 2. C++ Standard setup
+# - C++ Standard setup
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# 4. Build a library
+# - Build a library
 add_library(ccptepp src/invariant_mass.cpp)
 target_include_directories(ccptepp PUBLIC src/)
 
-# 3. Build test_invariant_mass from the source file, link to
-#    the library providing invariant_mass
+# - Build test_invariant_mass
 add_executable(test_invariant_mass test/test_invariant_mass.cpp)
 target_link_libraries(test_invariant_mass ccptepp)
 ```
 
 ::::: checklist
 ### Key points about this file
-1. The file is named `CMakeLists.txt` with capital `C` and `L` and the `.txt` extension.
+1. The file is named `CMakeLists.txt` with capital `C` and `L`, plural `s`, and the `.txt` extension.
 2. Comments in CMake scripts begin with a `#`.
-3. Relative paths like `test/test_invariant_mass.cpp` are relative the directory
+3. Relative paths like `src/invariant_mass.cpp` are relative the directory
    of the `CMakeLists.txt` file.
-4. CMake scripting is command-based, and [full documentation is available](https://cmake.org/cmake/help/v4.2/manual/cmake-commands.7.html)
+4. CMake scripting is command-based, and [full documentation on all commands is available](https://cmake.org/cmake/help/v4.2/manual/cmake-commands.7.html)
 :::::::::::::::
 
 The first two lines are doing the main heavy lifting: first to configure CMake to support the
@@ -150,20 +158,21 @@ C/C++ compilers available. If the CMake we run with is _less_ than the minimum v
 specify, we will get an error. The maximum version is just an indication that "we haven't tried
 versions beyond this yet" (CMake is generally good with backward compatibility).
 
-The `CMAKE_CXX_...` are _variables_ that tell CMake how to configure the C++ compiler so
-that it uses the C++17 standard throughout, that the compiler _must_ support this standard,
-and that it should not use any compiler extensions to the language.
+The `CMAKE_CXX_...` are _variables_, in this case that tell CMake how to configure the
+C++ compiler so that it uses the C++17 standard throughout, that the compiler _must_ support this standard, and that it should not use any compiler extensions to the language. CMake
+variables are defined and manipulated with the `set()` command, and _reserved_ variables used
+by CMake are [listed in its documentation](https://cmake.org/cmake/help/v4.2/manual/cmake-variables.7.html).
 
-We move on to the actual build, starting by building a _library_ for `invariant_mass`:
+We then move on to the actual build, starting by building a _library_ for `invariant_mass`:
 
 - `add_library()` declares a _library_ called `ccptepp` and lists the sources to build it from.
   - Building a library can be thought of as the _binary_ companion to the _source_ division
     we did to `invariant_mass` and `test_invariant_mass`.
   - It means we compile `invariant_mass.cpp` only once, with any code needing `invariant_mass` only
-    needs to link to it.
+    needing to link to the _library_.
 - `target_include_directories()` is CMake's equivalent to the `-I` flag we used when manually compiling.
    - It is simply declaring to CMake that _"any compilation of files for `ccptepp` needs to have the following paths added as `-I` flags"_.
-   - The `PUBLIC` argument means that any compilation/link operation that _uses_ `ccptepp` should
+   - The `PUBLIC` qualifier means that any compilation/link operation that _uses_ `ccptepp` should
      also have these same flags used.
 
 We then complete the build of `test_invariant_mass`:
@@ -236,7 +245,8 @@ Run Build Command(s): /tmp/ccptepp-test/.pixi/envs/default/bin/ninja -v
 ```
 
 which shows that `test_invariant_mass` has been compiled using the right flags and should be present
-at `build/test_invariant_mass`.
+at `build/test_invariant_mass`. CMake has essentially replicated what we were doing manually, but
+we have now written it down clearly in a script that will replicate it.
 
 ::::: callout
 
@@ -283,6 +293,11 @@ will always output warning/error messages for compile/link problems.
 
    Thus if we make a change to the code were _testing_, CMake is ensuring that the rebuild
    updates the _program that tests it_ (strictly "depends on it") automatically.
+
+
+Use of CMake might have seemed overkill for our case, but you can see that it's actually doing
+a lot more checks and balances that our manual approach is not capable of. Plus, we no
+longer have to worry about whether we're running on macOS, Linux, or any other system.
 ::::::::::::::
 :::::::::::::::
 
@@ -290,33 +305,32 @@ will always output warning/error messages for compile/link problems.
 ## Running `test_invariant_mass` with CTest
 
 We've seen we have `test_invariant_mass` available to run directly. For one test that's
-simple enough, but as a project grows with multiple tests, we want to automate this:
+simple enough, we could continue to run it manually, but as a project grows with multiple tests, we want to automate this:
 
 - so we don't forget to run them ourselves,
 - so others can run them easily.
 
-CMake provides scripting commands and a dedicated program, `ctest`, that provide this
-capability so we don't need to write out own scripts here. We can support for CTest and automatic running very simply to our `CMakeLists.txt`:
+CMake comes with scripting commands and a dedicated program, `ctest`, that provide this
+capability so we don't need to write our own scripts here. We can support for CTest and automatic running very simply to our `CMakeLists.txt`:
 
 ```cmake
 # ...
 
-# 3. Build test_invariant_mass from the source file, link to
-#    the library providing invariant_mass
+# - Build test_invariant_mass
 add_executable(test_invariant_mass test/test_invariant_mass.cpp)
 target_link_libraries(test_invariant_mass ccptepp)
 
-# 4. Setup CTest
+# - Setup CTest
 enable_testing()
 
-# 5. Declare tests
+# - Declare tests
 add_test(NAME TestInvariantMass COMMAND test_invariant_mass)
 ```
 
 ::::: checklist
 ### Key points about these commands
 1. The [`enable_testing()`](https://cmake.org/cmake/help/v4.2/command/enable_testing.html) command sets up CMake to generate scripts for CTest to run.
-2. The `add_test(https://cmake.org/cmake/help/v4.2/command/add_test.html#command:add_test)` command declares a test to CMake/CTest
+2. The [`add_test()`](https://cmake.org/cmake/help/v4.2/command/add_test.html#command:add_test) command declares a test to CMake/CTest
 :::::::::::::::
 
 The `COMMAND` argument in `add_test` is "what to run", and note CMake is being quite clever here.
@@ -340,7 +354,7 @@ can take command line arguments if needed.
 :::::::::::::
 
 We _could_ now run `cmake` again to configure, but as we have already done that once, all we need
-to do now is run
+to do is run
 
 ```bash
 (ccptepp-test) $ cmake --build ./build
@@ -351,7 +365,7 @@ to do now is run
 ninja: no work to do.
 ```
 
-CMake builds _dependencies on its own inputs_ into the workflow just as it does for C++ files,
+CMake builds _dependencies on its own inputs into the workflow_ just as it does for C++ files,
 so you don't need to start from scratch reconfiguring everytime - simply rebuild! However, we do
 still need to run the test, and for this we have to switch to use the `ctest` program.
 
@@ -383,11 +397,15 @@ Output from these tests are in: /tmp/ccptepp-test/build/Testing/Temporary/LastTe
 Use "--rerun-failed --output-on-failure" to re-run the failed cases verbosely.
 ```
 
-By default, CTest _does not_ report any output created by either failing or passing tests.
+Here the benefit of having test programs that return a non-zero exit code to indicate failure
+comes in - this enables CTest to detect that a failure has happened!
+However, by default CTest _does not_ report any _output_ created by either failing or passing tests.
 That might not seem helpful, but many projects have hundreds of unit test programs, so seeing
 a high level overview of passes/failures as the default is not unreasonable.
 
 ::::: challenge
+## Getting more information from CTest
+
 1. Run `ctest -V --test-dir ./build` and compare the output to our initial run
 2. Run `ctest --output-on-failure --test-dir ./build` and compare the output to `-V`
 
@@ -450,6 +468,8 @@ Test project /tmp/ccptepp-test/build-debug
 
 ::::: challenge
 
+## Testing in `Release` builds
+
 Try repeating the above exercise of configuring, building and running tests for a `Release` build.
 
 1. What flags do you see added?
@@ -489,10 +509,22 @@ Try repeating the above exercise of configuring, building and running tests for 
    > If `NDEBUG` is defined as a macro name at the point in the source code where `<cassert>` or `<assert.h>` is included, the assertion is disabled: assert does nothing.
 
    This is not a disaster for use of `assert`, but we need to be aware of this when
-   using it to test.
+   using it to test, or as a tool for defensive programming.
 
 ::::::::::::::
 :::::::::::::::
+
+## What have we gained?
+This might have seemed like a long episode for not much gain, but we've actually simplified
+_building and running our tests_ quite a bit. Whether we are on Linux, macOS or something else
+all we now need to do in our development and testing workflow is:
+
+1. Run `cmake -GNinja -S. -B build` one to set things up.
+2. Run `cmake --build build` to compile everything.
+3. Run `ctest --test-dir test` to test everything.
+4. Edit/modify code.
+5. Goto 2.
+
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
