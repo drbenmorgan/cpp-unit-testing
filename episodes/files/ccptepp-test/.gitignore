@@ -4,8 +4,8 @@
 
 # pixi task build
 build/*
+build-*/*
 
 # Temporary local files
 a.out
-test_divide
-test_divide.o
+test_invariant_mass
