@@ -208,7 +208,7 @@
 <div class="accordion accordion-flush" id="accordionFlush2">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading2">
-        <a href="introduction.html">1. What is unit testing</a>
+        <a href="introduction.html">1. What is unit testing?</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -217,7 +217,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="cppassertions.html">2. Unit testing with <code>assert()</code></a>
+        <a href="codeorganization.html">2. Organizing code to enable unit testing</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -226,7 +226,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="codeorganization.html">3. Organizing code to assist unit testing</a>
+        <a href="cppassertions.html">3. Unit testing with <code>assert()</code></a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -235,7 +235,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="cmakectest.html">4. Integrating tests in development workflows</a>
+        <a href="cmakectest.html">4. Integrating tests into a build system</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -253,7 +253,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="testsuites.html">6. Adding test cases and suites</a>
+        <a href="testingfloatingpoint.html">6. Floating point comparisons</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -262,7 +262,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="coverage.html">7. Measuring unit test coverage</a>
+        <a href="testingexceptions.html">7. Testing exceptional behaviour</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -271,7 +271,34 @@
 <div class="accordion accordion-flush" id="accordionFlush9">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading9">
-        <a href="sanitizers.html">8. Testing with static analysers</a>
+        <a href="testingclasses.html">8. Testing stateful classes</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush10">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading10">
+        <a href="testingfixtures.html">9. Test fixtures</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush11">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading11">
+        <a href="coverage.html">10. Code coverage</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush12">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading12">
+        <a href="sanitizers.html">11. Testing with static analysers</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -323,7 +350,7 @@
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link float-end" href="introduction.html" rel="next">Next: What is unit testing... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="introduction.html" rel="next">Next: What is unit... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
     </nav><main id="main-content" class="main-content"><h1 class="schedule-heading">Summary and Setup</h1>
       
@@ -386,7 +413,7 @@ installed through the appropriate package management system.</p>
   Linux
   </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>Install GCC through your system’s package manager.</p>
 </div>
@@ -401,7 +428,7 @@ installed through the appropriate package management system.</p>
   MacOS
   </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <p>Install Xcode from the App Store.</p>
 </div>
@@ -416,7 +443,7 @@ installed through the appropriate package management system.</p>
   Windows
   </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
 <p>This lesson has not been designed to run on Windows. We would
 recommend using the <a href="https://learn.microsoft.com/en-us/windows/wsl/" class="external-link">Windows Subsystem
@@ -442,7 +469,7 @@ need.</p>
   Linux
   </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
 <div class="accordion-body">
 <p>Open a terminal and run:</p>
 <div class="codewrapper sourceCode" id="cb1">
@@ -470,7 +497,7 @@ page</a>.</p>
   MacOS
   </h3>
 </button>
-<div id="collapseSpoiler5" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler5" aria-labelledby="headingSpoiler5">
+<div id="collapseSpoiler5" class="accordion-collapse collapse" aria-labelledby="headingSpoiler5" data-bs-parent="#accordionSpoiler5">
 <div class="accordion-body">
 <p>If you have <a href="https://brew.sh" class="external-link">Homebrew</a> installed, then
 it’s recommended to install Pixi with this. Open a terminal and run:</p>
@@ -524,7 +551,7 @@ available:</p>
   Linux
   </h3>
 </button>
-<div id="collapseSpoiler6" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler6" aria-labelledby="headingSpoiler6">
+<div id="collapseSpoiler6" class="accordion-collapse collapse" aria-labelledby="headingSpoiler6" data-bs-parent="#accordionSpoiler6">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -543,7 +570,7 @@ available:</p>
   MacOS
   </h3>
 </button>
-<div id="collapseSpoiler7" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler7" aria-labelledby="headingSpoiler7">
+<div id="collapseSpoiler7" class="accordion-collapse collapse" aria-labelledby="headingSpoiler7" data-bs-parent="#accordionSpoiler7">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -631,7 +658,7 @@ any links that you are not going to use.
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link float-end" href="introduction.html" rel="next">Next: What is unit testing... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="introduction.html" rel="next">Next: What is unit... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
     </nav></div>
 <!-- END  : inst/pkgdown/templates/content-syllabus.html -->
@@ -677,8 +704,8 @@ any links that you are not going to use.
   "url": "https://drbenmorgan.github.io/cpp-unit-testing/index.html",
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/index.html",
   "dateCreated": "2026-05-27",
-  "dateModified": "2026-06-23",
-  "datePublished": "2026-06-23"
+  "dateModified": "2026-06-27",
+  "datePublished": "2026-06-27"
 }
 
   </script><script>

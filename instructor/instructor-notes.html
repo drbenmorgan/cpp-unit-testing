@@ -237,7 +237,7 @@
 <div class="accordion accordion-flush" id="accordionFlush2">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading2">
-        <a href="introduction.html">1. What is unit testing</a>
+        <a href="introduction.html">1. What is unit testing?</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -249,7 +249,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="cppassertions.html">2. Unit testing with <code>assert()</code></a>
+        <a href="codeorganization.html">2. Organizing code to enable unit testing</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -261,7 +261,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="codeorganization.html">3. Organizing code to assist unit testing</a>
+        <a href="cppassertions.html">3. Unit testing with <code>assert()</code></a>
     </div>
 <!--/div.accordion-header-->
 
@@ -273,7 +273,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="cmakectest.html">4. Integrating tests in development workflows</a>
+        <a href="cmakectest.html">4. Integrating tests into a build system</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -297,7 +297,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="testsuites.html">6. Adding test cases and suites</a>
+        <a href="testingfloatingpoint.html">6. Floating point comparisons</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -309,7 +309,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="coverage.html">7. Measuring unit test coverage</a>
+        <a href="testingexceptions.html">7. Testing exceptional behaviour</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -321,7 +321,43 @@
 <div class="accordion accordion-flush" id="accordionFlush9">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading9">
-        <a href="sanitizers.html">8. Testing with static analysers</a>
+        <a href="testingclasses.html">8. Testing stateful classes</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush10">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading10">
+        <a href="testingfixtures.html">9. Test fixtures</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush11">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading11">
+        <a href="coverage.html">10. Code coverage</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush12">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading12">
+        <a href="sanitizers.html">11. Testing with static analysers</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -393,13 +429,83 @@ any links that you are not going to use.
  -->
 
 
-      <section id="aggregate-instructor-notes"><section id="introduction"><h2 class="section-heading"><a href="introduction.html">What is unit testing</a></h2>
-<hr class="half-width"></section><section id="cppassertions"><h2 class="section-heading"><a href="cppassertions.html">Unit testing with <code>assert()</code></a></h2>
-<hr class="half-width"></section><section id="codeorganization"><h2 class="section-heading"><a href="codeorganization.html">Organizing code to assist unit testing</a></h2>
-<hr class="half-width"></section><section id="cmakectest"><h2 class="section-heading"><a href="cmakectest.html">Integrating tests in development workflows</a></h2>
+      <section id="aggregate-instructor-notes"><section id="introduction"><h2 class="section-heading"><a href="introduction.html">What is unit testing?</a></h2>
+<hr class="half-width"></section><section id="codeorganization"><h2 class="section-heading"><a href="codeorganization.html">Organizing code to enable unit testing</a></h2>
+<hr class="half-width">
+<h3 id="codeorganization-headingInstructor1">
+<a href="codeorganization.html#headingInstructor1">Instructor Note</a><a class="anchor" aria-label="anchor" href="#codeorganization-headingInstructor1"></a>
+</h3>
+<p>Points worth drawing out in discussion:</p>
+<ul>
+<li>
+<code>momentum_magnitude()</code> is worth extracting even though it
+is a single line — it has a name, a clear contract, and can be tested
+with exact Pythagorean triples</li>
+<li>
+<code>is_z_candidate()</code> makes the boundary conditions explicit
+and testable; students should notice the question mark in the comment
+about whether the upper bound is inclusive or exclusive, and recognise
+this as a specification decision that needs to be made and
+documented</li>
+<li>
+<code>analyse_candidates()</code> now takes all its inputs as
+parameters and returns all its outputs as values — it can be tested
+without any files or output capture.</li>
+<li>
+<code>process_candidates()</code> still exists but is now just a
+thin I/O wrapper; the principle is not to eliminate I/O but to push it
+to the boundary.
+<ul>
+<li>we _don’t have a unit test for it, and that’s intentional: it
+connects units together, so becomes an effective <em>integration
+test</em>.</li>
+<li>this is exactly what we described in the first episode: Unit tests
+tell you which component is broken; integration tests tell you that the
+components work together. If your integration test fails but all your
+unit tests pass, the bug is almost certainly in the way the units are
+connected, which is a much smaller place to look.</li>
+<li>we haven’t completely eliminated the global energy scale: we might
+still need to get this from a global variable, but our code no longer
+<em>depends</em> on it.</li>
+</ul>
+</li>
+<li>This is <em>mostly</em> good software design practice, but thinking
+about it terms of testing can help make design decisions.</li>
+</ul>
+<hr>
+<br><h3 id="codeorganization-headingInstructor2">
+<a href="codeorganization.html#headingInstructor2">Instructor Note</a><a class="anchor" aria-label="anchor" href="#codeorganization-headingInstructor2"></a>
+</h3>
+<p>Important to highlight that to have a feasible exercise to
+demonstrate the concepts, or examples are somewhat contrived.
+Nevertheless, we want to highlight what practices and habits to adopt
+now rather than after writing thousands of lines of code. Equally, be
+honest and note that they may have to work with legacy code in research,
+but these techniques can help to mitigate problems.</p>
+<hr>
+<br><h3 id="codeorganization-headingInstructor3">
+<a href="codeorganization.html#headingInstructor3">Instructor Note</a><a class="anchor" aria-label="anchor" href="#codeorganization-headingInstructor3"></a>
+</h3>
+<p>The tension in part 3 of the challenge is deliberate - this
+<em>is</em> a hard problem, and we acknowledge it.</p>
+<p>The two snippets together make a useful point to draw out explicitly
+at the end of the exercise: process_candidates() and
+estimate_mass_resolution() have different kinds of testability problem,
+and the fix in each case is different. But both fixes follow the same
+underlying principle — make all dependencies explicit in the function
+signature. Global state, file handles, and random number generators are
+all the same kind of problem: hidden inputs that the function’s caller
+cannot see or control. A function whose entire input is visible in its
+signature is a function you can reason about, test, and trust.</p>
+<hr>
+<br></section><section id="cppassertions"><h2 class="section-heading"><a href="cppassertions.html">Unit testing with <code>assert()</code></a></h2>
+<hr class="half-width"></section><section id="cmakectest"><h2 class="section-heading"><a href="cmakectest.html">Integrating tests into a build system</a></h2>
 <hr class="half-width"></section><section id="googletest"><h2 class="section-heading"><a href="googletest.html">Introducing GoogleTest</a></h2>
-<hr class="half-width"></section><section id="testsuites"><h2 class="section-heading"><a href="testsuites.html">Adding test cases and suites</a></h2>
-<hr class="half-width"></section><section id="coverage"><h2 class="section-heading"><a href="coverage.html">Measuring unit test coverage</a></h2>
+<hr class="half-width"></section><section id="testingfloatingpoint"><h2 class="section-heading"><a href="testingfloatingpoint.html">Floating point comparisons</a></h2>
+<hr class="half-width"></section><section id="testingexceptions"><h2 class="section-heading"><a href="testingexceptions.html">Testing exceptional behaviour</a></h2>
+<hr class="half-width"></section><section id="testingclasses"><h2 class="section-heading"><a href="testingclasses.html">Testing stateful classes</a></h2>
+<hr class="half-width"></section><section id="testingfixtures"><h2 class="section-heading"><a href="testingfixtures.html">Test fixtures</a></h2>
+<hr class="half-width"></section><section id="coverage"><h2 class="section-heading"><a href="coverage.html">Code coverage</a></h2>
 <hr class="half-width"></section><section id="sanitizers"><h2 class="section-heading"><a href="sanitizers.html">Testing with static analysers</a></h2>
 <hr class="half-width"></section></section>
 </div>
@@ -451,8 +557,8 @@ any links that you are not going to use.
   "url": "https://drbenmorgan.github.io/cpp-unit-testing/instructor/instructor-notes.html",
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/instructor/instructor-notes.html",
   "dateCreated": "2026-05-27",
-  "dateModified": "2026-06-23",
-  "datePublished": "2026-06-23"
+  "dateModified": "2026-06-27",
+  "datePublished": "2026-06-27"
 }
 
   </script><script>

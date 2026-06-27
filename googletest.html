@@ -118,7 +118,7 @@
     <a id="search-button" class="btn btn-primary" href="aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
 </nav><aside class="col-md-12 lesson-progress"><div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">50%</div>
+    <div class="progress-bar incubator" role="progressbar" style="width: 36%" aria-valuenow="36" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">36%</div>
   </div>
 </aside><div class="container">
       <div class="row">
@@ -199,7 +199,7 @@
 <div class="accordion accordion-flush" id="accordionFlush2">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading2">
-        <a href="introduction.html">1. What is unit testing</a>
+        <a href="introduction.html">1. What is unit testing?</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -208,7 +208,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="cppassertions.html">2. Unit testing with <code>assert()</code></a>
+        <a href="codeorganization.html">2. Organizing code to enable unit testing</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -217,7 +217,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="codeorganization.html">3. Organizing code to assist unit testing</a>
+        <a href="cppassertions.html">3. Unit testing with <code>assert()</code></a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -226,7 +226,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="cmakectest.html">4. Integrating tests in development workflows</a>
+        <a href="cmakectest.html">4. Integrating tests into a build system</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -235,12 +235,22 @@
 <div class="accordion accordion-flush" id="accordionFlushcurrent">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-headingcurrent">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsecurrent" aria-expanded="true" aria-controls="flush-collapsecurrent">
         <span class="visually-hidden">Current Chapter</span>
         <span class="current-chapter">
         5. Introducing GoogleTest
         </span>
-      
+      </button>
     </div><!--/div.accordion-header-->
+
+    <div id="flush-collapsecurrent" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushcurrent">
+      <div class="accordion-body">
+        <ul><li><a href="#limitations-of-using-assert">Limitations of using <code>assert</code></a></li>
+<li><a href="#unit-testing-frameworks-googletest">Unit testing frameworks: GoogleTest</a></li>
+<li><a href="#using-test-for-test-cases">Using <code>TEST</code> for test cases</a></li>
+<li><a href="#assert_eq-and-expect_eq-for-checking"><code>ASSERT_EQ</code> and <code>EXPECT_EQ</code> for checking</a></li>
+        </ul></div><!--/div.accordion-body-->
+    </div><!--/div.accordion-collapse-->
 
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
@@ -248,7 +258,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="testsuites.html">6. Adding test cases and suites</a>
+        <a href="testingfloatingpoint.html">6. Floating point comparisons</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -257,7 +267,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="coverage.html">7. Measuring unit test coverage</a>
+        <a href="testingexceptions.html">7. Testing exceptional behaviour</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -266,7 +276,34 @@
 <div class="accordion accordion-flush" id="accordionFlush9">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading9">
-        <a href="sanitizers.html">8. Testing with static analysers</a>
+        <a href="testingclasses.html">8. Testing stateful classes</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush10">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading10">
+        <a href="testingfixtures.html">9. Test fixtures</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush11">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading11">
+        <a href="coverage.html">10. Code coverage</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush12">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading12">
+        <a href="sanitizers.html">11. Testing with static analysers</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -315,22 +352,22 @@
   <div class="col-xl-8 col-lg-12 primary-content">
     <nav class="lesson-content mx-md-4" aria-label="Previous and Next Chapter Top"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="cmakectest.html" rel="prev"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="testsuites.html" rel="next">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="testingfloatingpoint.html" rel="next">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
         <a class="chapter-link" href="cmakectest.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: Integrating tests in
+          Previous: Integrating tests
         </a>
-        <a class="chapter-link float-end" href="testsuites.html" rel="next">
-          Next: Adding test cases...
+        <a class="chapter-link float-end" href="testingfloatingpoint.html" rel="next">
+          Next: Floating point...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Introducing GoogleTest</h1>
-        <p>Last updated on 2026-06-17 |
+        <p>Last updated on 2026-06-27 |
 
         <a href="https://github.com/drbenmorgan/cpp-unit-testing/edit/main/episodes/googletest.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -349,7 +386,9 @@
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
-<ul><li>How do I write a unit test using GoogleTest?</li>
+<ul><li>What are the remaining limitations of <code>assert()</code> that
+prevent it scaling to a real test suite?</li>
+<li>How does a testing framework address those limitations?</li>
 </ul></div>
 </div>
 </div>
@@ -357,21 +396,146 @@
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Write a simple unit test using GoogleTest</li>
+<ul><li>Explain the limitations of <code>assert()</code> with respect to
+test output and boilerplate, and why we should use a dedicated testing
+framework.</li>
+<li>Add GoogleTest to a CMake project using
+<code>find_package</code>.</li>
+<li>Refactor an existing <code>assert()</code>-based test into a
+GoogleTest <code>TEST()</code> case.</li>
+<li>Run tests via CTest and interpret the output of a passing and a
+failing GoogleTest test.</li>
+<li>Explain what additional information GoogleTest provides compared to
+<code>assert()</code> on failure.</li>
+<li>Distinguish between <code>EXPECT_*</code> and <code>ASSERT_*</code>
+and explain when each is appropriate.</li>
 </ul></div>
 </div>
 </div>
 </div>
 </div>
-<ol style="list-style-type: decimal"><li>Pixi setup</li>
-<li>Add <code>find_package</code> for GTest</li>
-<li>Write test</li>
-<li>Build/integrate with CTest</li>
-</ol><p>Writing tests clearly involves a lot of boilerplate coding. Since
+<section><h2 class="section-heading" id="limitations-of-using-assert">Limitations of using <code>assert</code>
+<a class="anchor" aria-label="anchor" href="#limitations-of-using-assert"></a></h2>
+<hr class="half-width"><p>Whilst we’ve got a decent unit test for <code>invariant_mass</code>
+working using <code>assert</code>, we’ve already run into a couple of
+friction points:</p>
+<ol style="list-style-type: decimal"><li>
+<p>We get a report on which assertion failed but not <em>why</em>.
+For example, an assertion might print</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">Assertion</span> failed: <span class="er">(</span><span class="kw">(</span><span class="ex">invariant_mass</span><span class="er">(</span><span class="ex">100,100</span><span class="kw">)</span> <span class="ex">==</span> 0.0<span class="kw">)</span> <span class="kw">&amp;&amp;</span> <span class="st">"photon mass should be 0"</span><span class="kw">)</span></span></code></pre>
+</div>
+<p>but we don’t <em>actually</em> know what
+<code>invariant_mass(100,100)</code> returned here, so we don’t have
+much to go on to solve the issue.</p>
+</li>
+<li><p>When we get a failure the program immediately terminates and no
+further tests run - which might give us additional information to solve
+the issue.</p></li>
+</ol><div id="challenge1" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<ol style="list-style-type: decimal"><li>How could you write a unit test using <code>assert()</code> to get
+more information printed when a failure occurs?</li>
+<li>How would this scale as more tests are added?</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<ol style="list-style-type: decimal"><li>
+<p>As we know that <code>expression</code> in
+<code>assert(expression)</code> should evaluate to <code>false</code>
+for a failing test, we <em>could</em> wrap the actual test in another
+function:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="dt">bool</span> expect_invariant_mass<span class="op">(</span><span class="dt">double</span> energy<span class="op">,</span> <span class="dt">double</span> momentum<span class="op">,</span> <span class="dt">double</span> expectation<span class="op">)</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a><span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a>   <span class="dt">double</span> res <span class="op">=</span> invariant_mass<span class="op">(</span>energy<span class="op">,</span> momentum<span class="op">);</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a>   <span class="cf">if</span> <span class="op">(</span>res <span class="op">!=</span> expectation<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a>     <span class="bu">std::</span>cerr <span class="op">&lt;&lt;</span> <span class="st">"error: expected invariant_mass("</span> <span class="op">&lt;&lt;</span> energy <span class="op">&lt;&lt;</span> <span class="st">", "</span> <span class="op">&lt;&lt;</span> momentum <span class="op">&lt;&lt;</span> <span class="st">") == "</span> <span class="op">&lt;&lt;</span> expectation <span class="op">&lt;&lt;</span> <span class="st">" but got "</span> <span class="op">&lt;&lt;</span> res <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1" aria-label="code-block-2-6"></a>     <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span> </span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1" aria-label="code-block-2-7"></a>   <span class="op">}</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1" aria-label="code-block-2-9"></a>   <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1" aria-label="code-block-2-10"></a><span class="op">}</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1" aria-label="code-block-2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1" aria-label="code-block-2-12"></a><span class="dt">void</span> test_physical_domain<span class="op">()</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1" aria-label="code-block-2-13"></a><span class="op">{</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1" aria-label="code-block-2-14"></a>   <span class="ot">assert</span><span class="op">(</span>expect_invariant_mass<span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="st">"mass of photon is not 0"</span><span class="op">);</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1" aria-label="code-block-2-15"></a><span class="op">}</span></span></code></pre>
+</div>
+</li>
+<li>
+<p><strong>It wouldn’t scale</strong>, for several reasons.</p>
+<ul><li>It’s locked to one function, so we’d need a new function for every
+unit with the same logic but different arguments and internal calls and
+output.</li>
+<li>We’d also need more functions to express other expectations like
+“less than” “not equal to”</li>
+<li>In the spirit of testing, how do you <em>test</em>
+<code>expect_invariant_mass</code> itself?</li>
+</ul></li>
+</ol><p>The bottom line is that <code>assert</code> is good as a defensive
+programming tool but for anything beyond trivial unit tests we quickly
+run into the need more code to handle these cases. What we actually need
+is a <em>unit testing framework</em>.</p>
+<div id="caution1" class="callout caution">
+<div class="callout-square">
+<i class="callout-icon" data-feather="alert-triangle"></i>
+</div>
+<span class="callout-header">Caution</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>You may find some scientific codes that have basically ended up
+implementing such a framework themselves. This almost universally a
+<em>bad</em> practice and is better served by using a professional
+framwork.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="unit-testing-frameworks-googletest">Unit testing frameworks: GoogleTest<a class="anchor" aria-label="anchor" href="#unit-testing-frameworks-googletest"></a></h2>
+<hr class="half-width"><p>Writing tests clearly involves a lot of boilerplate coding. Since
 it’s such a common need there are a lot of C++ packages out there that
-provide all of this for us. We’ve chosen the <a href="https://google.github.io/googletest/" class="external-link">GoogleTest</a> unit testing
-framework for this course because of its general wide use (and author
-familiarity), but others are available, e.g.</p>
+provide all of this for us. Not only does this free us from having to
+write this so we can focus on the actual task of testing, we don’t have
+to worry about the “testing code to test the testing code” recursion
+loop.</p>
+<div id="caution2" class="callout caution">
+<div class="callout-square">
+<i class="callout-icon" data-feather="alert-triangle"></i>
+</div>
+<span class="callout-header">Caution</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>This obviously implies that we should choose a well maintained,
+widely trusted framework! Even testing frameworks can have bugs of
+course - this is why we talk about mitigation not solution.</p>
+</div>
+</div>
+</div>
+<p>We’ve chosen the <a href="https://google.github.io/googletest/" class="external-link">GoogleTest</a> unit testing
+framework for this lesson because of its general wide use and well
+maintained nature (it is also one of the most commonly used for C++ in
+scientific software), but others are available, e.g.</p>
 <ul><li>
 <a href="https://catch2.org" class="external-link">Catch2</a> is probably the most popular
 after GoogleTest</li>
@@ -384,7 +548,505 @@ lightweight, header only, allows “tests alongside code” model used in
 languages like Rust</li>
 </ul><p>All have similar concepts, so adapting what you learn here to
 projects that use a different framework is generally just a
-dialect/terminology difference.</p>
+dialect/terminology difference. Throughout this episode and subsequent
+ones, have the <a href="https://google.github.io/googletest/primer.html" class="external-link">GoogleTest
+Docs</a> open in case you want to look up anythin in more detail.</p>
+<div id="checklist1" class="callout checklist">
+<div class="callout-square">
+<i class="callout-icon" data-feather="check-square"></i>
+</div>
+<span class="callout-header">Checklist</span>
+<div class="callout-inner">
+<div class="callout-content">
+<ol style="list-style-type: decimal"><li>
+<a href="https://google.github.io/googletest/primer.html" class="external-link">The
+GoogleTest Primer</a> gives an excellent high level overview.</li>
+<li>
+<a href="https://google.github.io/googletest/reference/testing.html" class="external-link">The
+Testing Reference</a> covers test cases and test suites.</li>
+<li>
+<a href="https://google.github.io/googletest/reference/assertions.html" class="external-link">The
+Assertions Reference</a> covers the testing assertions that we use in
+the test cases.</li>
+</ol></div>
+</div>
+</div>
+<p>To get familiar with GoogleTest, we’ll start by reimplementing our
+unit tests for <code>invariant_mass</code>. GoogleTest comes as a header
+and library, just as we have built for <code>ccptepp</code>, and we have
+preinstalled it in the <code>pixi</code> development environment. Let’s
+start by updating our <code>CMakeLists.txt</code> file as follows:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="co"># ...</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a><span class="co"># - Find GoogleTest or fail</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a><span class="kw">find_package</span>(<span class="im">GTest</span> <span class="ot">REQUIRED</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a><span class="co"># - Build test_invariant_mass</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a><span class="kw">add_executable</span>(<span class="bn">test_invariant_mass</span> test/test_invariant_mass.cpp)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a><span class="kw">target_link_libraries</span>(<span class="bn">test_invariant_mass</span> ccptepp <span class="bn">GTest::gtest_main</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1" aria-label="code-block-3-10"></a>...</span></code></pre>
+</div>
+<div id="what-has-changed" class="callout checklist">
+<div class="callout-square">
+<i class="callout-icon" data-feather="check-square"></i>
+</div>
+<span class="callout-header">Checklist</span>
+<div id="what-has-changed" class="callout-inner">
+<h3 class="callout-title">What has changed?</h3>
+<div class="callout-content">
+<ol style="list-style-type: decimal"><li>We use CMake’s <a href="https://cmake.org/cmake/help/v4.2/command/find_package.html" class="external-link"><code>find_package</code></a>
+command to find GoogleTest’s header and library and make them available
+to the build.</li>
+<li>GoogleTest names their package <code>GTest</code> for some
+reason!</li>
+<li>We use <code>REQUIRED</code> so that CMake will exit with an error
+if it cannot find GoogleTest.</li>
+<li>We link the GoogleTest <em>library</em> to
+<code>test_invariant_mass</code> so this can use the header and
+library.</li>
+<li>The odd <code>::</code> is a CMake convention to distinguish
+<em>imported libraries</em> (i.e. those from outside the project) form
+those the project builds itself.</li>
+</ol></div>
+</div>
+</div>
+<p>Before we can build, we need to update
+<code>test_invariant_mass.cpp</code> to use GoogleTest. Open up this
+file and modify it to:</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="co">//! </span><span class="an">\file</span><span class="co"> </span><span class="cv">test_invariant_mass.cpp</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="pp">#include </span><span class="im">"invariant_mass.hpp"</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="pp">#include </span><span class="im">&lt;gtest/gtest.h&gt;</span></span></code></pre>
+</div>
+<p>Yes, that’s really all there is to it! GoogleTest actually provides a
+default <code>main()</code> program for us that handles registering and
+running <em>test cases</em> which we’ll see how to write in next. First
+let’s just confirm we can still configure, build and run as follows:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> cmake <span class="at">--build</span> build</span></code></pre>
+</div>
+<p>We should see output similar to:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">[0/1]</span> Re-running CMake...</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="ex">--</span> Found GTest: /tmp/ccptepp-test/.pixi/envs/default/lib/cmake/GTest/GTestConfig.cmake <span class="er">(</span><span class="ex">found</span> version <span class="st">"1.17.0"</span><span class="kw">)</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="ex">--</span> Configuring done <span class="er">(</span><span class="ex">0.5s</span><span class="kw">)</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a><span class="ex">--</span> Generating done <span class="er">(</span><span class="ex">0.0s</span><span class="kw">)</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a><span class="ex">--</span> Build files have been written to: /tmp/ccptepp-test/build</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1" aria-label="code-block-6-6"></a><span class="ex">[3/3]</span> Linking CXX executable test_invariant_mass</span></code></pre>
+</div>
+<p>So we can see that CMake has found the GTest (GoogleTest) package and
+has recompiled and relinked it against this.</p>
+<div id="challenge2" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<ol style="list-style-type: decimal"><li>Run <code>ctest --test-dir build</code>. What do you see?</li>
+<li>Run again with the <code>-V</code> flag this time. What do you
+notice?</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div class="accordion-body">
+<ol style="list-style-type: decimal"><li>
+<p>You should get output similar to:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> ctest <span class="at">--test-dir</span> build            </span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a><span class="ex">Test</span> project /tmp/ccptepp-test/build</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a>    <span class="ex">Start</span> 1: TestInvariantMass</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a><span class="ex">1/1</span> Test <span class="co">#1: TestInvariantMass ................   Passed    0.15 sec</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a><span class="ex">100%</span> tests passed, 0 tests failed out of 1</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1" aria-label="code-block-7-8"></a><span class="ex">Total</span> Test time <span class="er">(</span><span class="ex">real</span><span class="kw">)</span> <span class="ex">=</span>   0.15 sec</span></code></pre>
+</div>
+<p>The test has actually passed, which isn’t really what we want when we
+start developing.</p>
+</li>
+<li>
+<p>You should get output similar to:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> ctest <span class="at">--test-dir</span> build <span class="at">-V</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="ex">UpdateCTestConfiguration</span>  from :/tmp/ccptepp-test/build/DartConfiguration.tcl</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a><span class="ex">Test</span> project /tmp/ccptepp-test/build</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a><span class="ex">Constructing</span> a list of tests</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a><span class="ex">Done</span> constructing a list of tests</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a><span class="ex">Updating</span> test list for fixtures</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a><span class="ex">Added</span> 0 tests to meet fixture requirements</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a><span class="ex">Checking</span> test dependency graph...</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a><span class="ex">Checking</span> test dependency graph end</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1" aria-label="code-block-8-10"></a><span class="bu">test</span> 1</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1" aria-label="code-block-8-11"></a>    <span class="ex">Start</span> 1: TestInvariantMass</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1" aria-label="code-block-8-12"></a></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1" aria-label="code-block-8-13"></a><span class="ex">1:</span> Test command: /tmp/ccptepp-test/build/test_invariant_mass</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1" aria-label="code-block-8-14"></a><span class="ex">1:</span> Working Directory: /tmp/ccptepp-test/build</span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1" aria-label="code-block-8-15"></a><span class="ex">1:</span> Test timeout computed to be: 10000000</span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1" aria-label="code-block-8-16"></a><span class="ex">1:</span> Running main<span class="er">(</span><span class="kw">)</span> <span class="ex">from</span> /Users/runner/miniforge3/conda-bld/gtest-split_1748319995326/work/googletest/src/gtest_main.cc</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1" aria-label="code-block-8-17"></a><span class="ex">1:</span> This test program does NOT link in any test case. Please make sure this is intended.</span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1" aria-label="code-block-8-18"></a><span class="ex">1:</span> <span class="pp">[</span><span class="ss">==========</span><span class="pp">]</span> Running 0 tests from 0 test suites.</span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1" aria-label="code-block-8-19"></a><span class="ex">1:</span> <span class="pp">[</span><span class="ss">==========</span><span class="pp">]</span> 0 tests from 0 test suites ran. <span class="er">(</span><span class="ex">0</span> ms total<span class="kw">)</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1" aria-label="code-block-8-20"></a><span class="ex">1:</span> [  PASSED  ] 0 tests.</span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1" aria-label="code-block-8-21"></a><span class="ex">1/1</span> Test <span class="co">#1: TestInvariantMass ................   Passed    0.01 sec</span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1" aria-label="code-block-8-22"></a></span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1" aria-label="code-block-8-23"></a><span class="ex">100%</span> tests passed, 0 tests failed out of 1</span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1" aria-label="code-block-8-24"></a></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1" aria-label="code-block-8-25"></a><span class="ex">Total</span> Test time <span class="er">(</span><span class="ex">real</span><span class="kw">)</span> <span class="ex">=</span>   0.01 sec</span></code></pre>
+</div>
+<p>Here’s where <code>-V</code> comes in useful - we can see that things
+run and GoogleTest is actually giving us some output. That’s telling us,
+not surprisingly that we don’t have any tests implemented yet.</p>
+</li>
+</ol></div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="using-test-for-test-cases">Using <code>TEST</code> for test cases<a class="anchor" aria-label="anchor" href="#using-test-for-test-cases"></a></h2>
+<hr class="half-width"><p>We now need to start reimplementing the test cases we had before.
+GoogleTest uses <a href="https://en.cppreference.com/cpp/preprocessor/replace" class="external-link"><em>C++
+macros</em></a> to define <em>test cases</em> (like our functions
+before) within <em>test suites</em>. Open up
+<code>test_invariant_mass.cpp</code> and add the following lines:</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="co">//! </span><span class="an">\file</span><span class="co"> </span><span class="cv">test_invariant_mass.cpp</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a><span class="pp">#include </span><span class="im">"invariant_mass.hpp"</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a><span class="pp">#include </span><span class="im">&lt;gtest/gtest.h&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a><span class="co">// Case 1. Test physical domain</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a>TEST<span class="op">(</span>InvariantMass<span class="op">,</span> PhysicalDomain<span class="op">)</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a><span class="op">{</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1" aria-label="code-block-9-9"></a>  FAIL<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">"Not implemented yet"</span><span class="op">;</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1" aria-label="code-block-9-10"></a><span class="op">}</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1" aria-label="code-block-9-11"></a></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1" aria-label="code-block-9-12"></a><span class="co">// Case 2. Test unphysical energies</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1" aria-label="code-block-9-13"></a>TEST<span class="op">(</span>InvariantMass<span class="op">,</span> UnphysicalEnergy<span class="op">)</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1" aria-label="code-block-9-14"></a><span class="op">{</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1" aria-label="code-block-9-15"></a>  FAIL<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">"Not implemented yet"</span><span class="op">;</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1" aria-label="code-block-9-16"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>Here we’ve basically replicated the structure we had originally. We
+use the <code>TEST</code> macro to declare each test case, with the
+arguments being the name of the test suite and the name of the test case
+respectively.</p>
+<div id="caution3" class="callout caution">
+<div class="callout-square">
+<i class="callout-icon" data-feather="alert-triangle"></i>
+</div>
+<span class="callout-header">Caution</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>These names must be valid <a href="https://en.cppreference.com/cpp/language/identifiers" class="external-link">C/C++
+identifiers</a>, but <strong>cannot</strong> include underscores.</p>
+</div>
+</div>
+</div>
+<p>What the suite name does won’t become obvious until we look at
+<em>test fixtures</em> in a later episode. Whilst <code>TEST</code> is a
+macro, for all intents and purposes you can wriet everything between the
+curly braces as you would a normal function.</p>
+<p>We’ve implemented both cases using just the <code>FAIL()</code>
+assertion. This, and other assertions, are also macros, but again behave
+for all intents and purposes like normal functions. <code>FAIL()</code>
+will explicitly fail the test case, and we follow it with the
+<code>&lt;&lt;</code> streaming operator to output a custom failure
+message.</p>
+<div id="challenge3" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<p>Use CMake and CTest to build and run the updated test. Use
+<code>--output-on-failure</code> to see the failure messages.</p>
+<ol style="list-style-type: decimal"><li>What is the same as when we used <code>assert()</code> to trigger a
+failure?</li>
+<li>What is different?</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
+</button>
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div class="accordion-body">
+<p>You should get output similar to:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">[macbook]$</span> ctest <span class="at">--test-dir</span> build <span class="at">--output-on-failure</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a><span class="ex">Test</span> project /tmp/ccptepp-test/build</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a>    <span class="ex">Start</span> 1: TestInvariantMass</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a><span class="ex">1/1</span> Test <span class="co">#1: TestInvariantMass ................***Failed    0.01 sec</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a><span class="ex">Running</span> main<span class="er">(</span><span class="kw">)</span> <span class="ex">from</span> /Users/runner/miniforge3/conda-bld/gtest-split_1748319995326/work/googletest/src/gtest_main.cc</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a><span class="ex">[==========]</span> Running 2 tests from 1 test suite.</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a><span class="ex">[----------]</span> Global test environment set-up.</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a><span class="ex">[----------]</span> 2 tests from InvariantMass</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a><span class="bu">[</span> RUN      <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a><span class="ex">/tmp/ccptepp-test/test/test_invariant_mass.cpp:10:</span> Failure</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a><span class="ex">Failed</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a><span class="ex">Not</span> implemented yet</span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1" aria-label="code-block-10-13"></a></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1" aria-label="code-block-10-14"></a><span class="bu">[</span>  FAILED  <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span> <span class="er">(</span><span class="ex">0</span> ms<span class="kw">)</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1" aria-label="code-block-10-15"></a><span class="bu">[</span> RUN      <span class="bu">]</span> <span class="ex">InvariantMass.UnphysicalEnergy</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1" aria-label="code-block-10-16"></a><span class="ex">/tmp/ccptepp-test/test/test_invariant_mass.cpp:16:</span> Failure</span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1" aria-label="code-block-10-17"></a><span class="ex">Failed</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1" aria-label="code-block-10-18"></a><span class="ex">Not</span> implemented yet</span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1" aria-label="code-block-10-19"></a></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1" aria-label="code-block-10-20"></a><span class="bu">[</span>  FAILED  <span class="bu">]</span> <span class="ex">InvariantMass.UnphysicalEnergy</span> <span class="er">(</span><span class="ex">0</span> ms<span class="kw">)</span></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1" aria-label="code-block-10-21"></a><span class="ex">[----------]</span> 2 tests from InvariantMass <span class="er">(</span><span class="ex">0</span> ms total<span class="kw">)</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1" aria-label="code-block-10-22"></a></span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1" aria-label="code-block-10-23"></a><span class="ex">[----------]</span> Global test environment tear-down</span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1" aria-label="code-block-10-24"></a><span class="ex">[==========]</span> 2 tests from 1 test suite ran. <span class="er">(</span><span class="ex">0</span> ms total<span class="kw">)</span></span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1" aria-label="code-block-10-25"></a><span class="bu">[</span>  PASSED  <span class="bu">]</span> <span class="ex">0</span> tests.</span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1" aria-label="code-block-10-26"></a><span class="bu">[</span>  FAILED  <span class="bu">]</span> <span class="ex">2</span> tests, listed below:</span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1" aria-label="code-block-10-27"></a><span class="bu">[</span>  FAILED  <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span></span>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1" aria-label="code-block-10-28"></a><span class="bu">[</span>  FAILED  <span class="bu">]</span> <span class="ex">InvariantMass.UnphysicalEnergy</span></span>
+<span id="cb10-29"><a href="#cb10-29" tabindex="-1" aria-label="code-block-10-29"></a></span>
+<span id="cb10-30"><a href="#cb10-30" tabindex="-1" aria-label="code-block-10-30"></a> <span class="ex">2</span> FAILED TESTS</span>
+<span id="cb10-31"><a href="#cb10-31" tabindex="-1" aria-label="code-block-10-31"></a></span>
+<span id="cb10-32"><a href="#cb10-32" tabindex="-1" aria-label="code-block-10-32"></a></span>
+<span id="cb10-33"><a href="#cb10-33" tabindex="-1" aria-label="code-block-10-33"></a><span class="ex">0%</span> tests passed, 1 tests failed out of 1</span>
+<span id="cb10-34"><a href="#cb10-34" tabindex="-1" aria-label="code-block-10-34"></a></span>
+<span id="cb10-35"><a href="#cb10-35" tabindex="-1" aria-label="code-block-10-35"></a><span class="ex">Total</span> Test time <span class="er">(</span><span class="ex">real</span><span class="kw">)</span> <span class="ex">=</span>   0.01 sec</span>
+<span id="cb10-36"><a href="#cb10-36" tabindex="-1" aria-label="code-block-10-36"></a></span>
+<span id="cb10-37"><a href="#cb10-37" tabindex="-1" aria-label="code-block-10-37"></a><span class="ex">The</span> following tests FAILED:</span>
+<span id="cb10-38"><a href="#cb10-38" tabindex="-1" aria-label="code-block-10-38"></a>	  <span class="ex">1</span> <span class="at">-</span> TestInvariantMass <span class="er">(</span><span class="ex">Failed</span><span class="kw">)</span></span>
+<span id="cb10-39"><a href="#cb10-39" tabindex="-1" aria-label="code-block-10-39"></a><span class="ex">Errors</span> while running CTest</span></code></pre>
+</div>
+<ol style="list-style-type: decimal"><li>We still get an error message that points to the line in
+<code>test_invariant_mass.cpp</code> where the failure happened, and our
+custom error message.</li>
+<li>
+<strong>Both test cases ran</strong>: the failure of one didn’t
+prevent the other from running!</li>
+</ol><p>This is great - we can ensure that all tests run even if one
+fails.</p>
+</div>
+</div>
+</div>
+</div>
+<p>It’s good practice to start writing test cases with
+<code>FAIL()</code> as a marker/reminder to implement them later.</p>
+</section><section><h2 class="section-heading" id="assert_eq-and-expect_eq-for-checking">
+<code>ASSERT_EQ</code> and <code>EXPECT_EQ</code> for checking<a class="anchor" aria-label="anchor" href="#assert_eq-and-expect_eq-for-checking"></a></h2>
+<hr class="half-width"><p>Let’s start reimplementing the <code>PhysicalDomain</code> test case
+use the <code>ASSERT_EQ</code> macro to see what happens when we put in
+a deliberately failing test. Open up
+<code>test_invariant_mass.cpp</code> and update this test case with the
+following lines:</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="co">// Case 1. Test physical domain</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a>TEST<span class="op">(</span>InvariantMass<span class="op">,</span> PhysicalDomain<span class="op">)</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a><span class="op">{</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a>  ASSERT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">),</span> <span class="fl">10.1</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"at rest particle does not have correct mass"</span><span class="op">;</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a>  ASSERT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">),</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"massless particle not massless"</span><span class="op">;</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1" aria-label="code-block-11-6"></a><span class="op">}</span></span></code></pre>
+</div>
+<p><code>ASSERT_EQ</code> is the closest thing is GoogleTest to the raw
+<code>assert()</code> we used earlier, and we can see the arguments
+largely map, but we don’t have write the conditional or messaging
+ourself. This is basically what we tried to do in the first challenge -
+but GoogleTest is doing it better and more generally than we could.</p>
+<div id="how-does-assert_eq-affect-which-tests-and-assertions-run" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="how-does-assert_eq-affect-which-tests-and-assertions-run" class="callout-inner">
+<h3 class="callout-title">How does <code>ASSERT_EQ</code> affect which
+tests and assertions run?</h3>
+<div class="callout-content">
+<p>Rebuild and retest with <code>--output-on-failure</code>.</p>
+<ol style="list-style-type: decimal"><li>What extra information do we now have compared to
+<code>assert</code>?</li>
+<li>Have both assertions been tested?</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
+  <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
+</button>
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div class="accordion-body">
+<ol style="list-style-type: decimal"><li>
+<p>After rebuilding and retesting, you should get output similar
+to:</p>
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">[macbook]$</span> ctest <span class="at">--test-dir</span> build <span class="at">--output-on-failure</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a><span class="ex">Test</span> project /tmp/ccptepp-test/build</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a>    <span class="ex">Start</span> 1: TestInvariantMass</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a><span class="ex">1/1</span> Test <span class="co">#1: TestInvariantMass ................***Failed    0.15 sec</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1" aria-label="code-block-12-5"></a><span class="ex">Running</span> main<span class="er">(</span><span class="kw">)</span> <span class="ex">from</span> /Users/runner/miniforge3/conda-bld/gtest-split_1748319995326/work/googletest/src/gtest_main.cc</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1" aria-label="code-block-12-6"></a><span class="ex">[==========]</span> Running 2 tests from 1 test suite.</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1" aria-label="code-block-12-7"></a><span class="ex">[----------]</span> Global test environment set-up.</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1" aria-label="code-block-12-8"></a><span class="ex">[----------]</span> 2 tests from InvariantMass</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1" aria-label="code-block-12-9"></a><span class="bu">[</span> RUN      <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1" aria-label="code-block-12-10"></a><span class="ex">/tmp/ccptepp-test/test/test_invariant_mass.cpp:10:</span> Failure</span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1" aria-label="code-block-12-11"></a><span class="ex">Expected</span> equality of these values:</span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1" aria-label="code-block-12-12"></a>  <span class="ex">invariant_mass</span><span class="er">(</span><span class="ex">10,</span> 0.0<span class="kw">)</span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1" aria-label="code-block-12-13"></a>    <span class="ex">Which</span> is: 10</span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1" aria-label="code-block-12-14"></a>  <span class="ex">10.1</span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1" aria-label="code-block-12-15"></a><span class="ex">at</span> rest particle does not have correct mass</span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1" aria-label="code-block-12-16"></a></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1" aria-label="code-block-12-17"></a><span class="bu">[</span>  FAILED  <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span> <span class="er">(</span><span class="ex">0</span> ms<span class="kw">)</span></span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1" aria-label="code-block-12-18"></a><span class="bu">[</span> RUN      <span class="bu">]</span> <span class="ex">InvariantMass.UnphysicalEnergy</span></span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1" aria-label="code-block-12-19"></a><span class="ex">/tmp//ccptepp-test/test/test_invariant_mass.cpp:17:</span> Failure</span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1" aria-label="code-block-12-20"></a><span class="ex">Failed</span></span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1" aria-label="code-block-12-21"></a><span class="ex">Not</span> implemented yet</span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1" aria-label="code-block-12-22"></a></span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1" aria-label="code-block-12-23"></a><span class="bu">[</span>  FAILED  <span class="bu">]</span> <span class="ex">InvariantMass.UnphysicalEnergy</span> <span class="er">(</span><span class="ex">0</span> ms<span class="kw">)</span></span>
+<span id="cb12-24"><a href="#cb12-24" tabindex="-1" aria-label="code-block-12-24"></a><span class="ex">[----------]</span> 2 tests from InvariantMass <span class="er">(</span><span class="ex">0</span> ms total<span class="kw">)</span></span>
+<span id="cb12-25"><a href="#cb12-25" tabindex="-1" aria-label="code-block-12-25"></a></span>
+<span id="cb12-26"><a href="#cb12-26" tabindex="-1" aria-label="code-block-12-26"></a><span class="ex">[----------]</span> Global test environment tear-down</span>
+<span id="cb12-27"><a href="#cb12-27" tabindex="-1" aria-label="code-block-12-27"></a><span class="ex">[==========]</span> 2 tests from 1 test suite ran. <span class="er">(</span><span class="ex">0</span> ms total<span class="kw">)</span></span>
+<span id="cb12-28"><a href="#cb12-28" tabindex="-1" aria-label="code-block-12-28"></a><span class="bu">[</span>  PASSED  <span class="bu">]</span> <span class="ex">0</span> tests.</span>
+<span id="cb12-29"><a href="#cb12-29" tabindex="-1" aria-label="code-block-12-29"></a><span class="bu">[</span>  FAILED  <span class="bu">]</span> <span class="ex">2</span> tests, listed below:</span>
+<span id="cb12-30"><a href="#cb12-30" tabindex="-1" aria-label="code-block-12-30"></a><span class="bu">[</span>  FAILED  <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span></span>
+<span id="cb12-31"><a href="#cb12-31" tabindex="-1" aria-label="code-block-12-31"></a><span class="bu">[</span>  FAILED  <span class="bu">]</span> <span class="ex">InvariantMass.UnphysicalEnergy</span></span>
+<span id="cb12-32"><a href="#cb12-32" tabindex="-1" aria-label="code-block-12-32"></a></span>
+<span id="cb12-33"><a href="#cb12-33" tabindex="-1" aria-label="code-block-12-33"></a><span class="ex">2</span> FAILED TESTS</span>
+<span id="cb12-34"><a href="#cb12-34" tabindex="-1" aria-label="code-block-12-34"></a></span>
+<span id="cb12-35"><a href="#cb12-35" tabindex="-1" aria-label="code-block-12-35"></a></span>
+<span id="cb12-36"><a href="#cb12-36" tabindex="-1" aria-label="code-block-12-36"></a><span class="ex">0%</span> tests passed, 1 tests failed out of 1</span>
+<span id="cb12-37"><a href="#cb12-37" tabindex="-1" aria-label="code-block-12-37"></a></span>
+<span id="cb12-38"><a href="#cb12-38" tabindex="-1" aria-label="code-block-12-38"></a><span class="ex">Total</span> Test time <span class="er">(</span><span class="ex">real</span><span class="kw">)</span> <span class="ex">=</span>   0.16 sec</span>
+<span id="cb12-39"><a href="#cb12-39" tabindex="-1" aria-label="code-block-12-39"></a></span>
+<span id="cb12-40"><a href="#cb12-40" tabindex="-1" aria-label="code-block-12-40"></a><span class="ex">The</span> following tests FAILED:</span>
+<span id="cb12-41"><a href="#cb12-41" tabindex="-1" aria-label="code-block-12-41"></a>     <span class="ex">1</span> <span class="at">-</span> TestInvariantMass <span class="er">(</span><span class="ex">Failed</span><span class="kw">)</span></span></code></pre>
+</div>
+<p>We now have the <em>result</em> of the call to
+<code>invariant_mass</code> printed as well as what we were comparing it
+to, and our custom error message.</p>
+</li>
+<li>
+<p><strong>No</strong>. We would have expected the second assertion
+to have reported failure as well if it had run.</p>
+<p>In this sense <code>ASSERT_EQ</code> in GoogleTest behave like
+<code>assert</code> in that they <em>stop execution of the current test
+case</em>. It <em>doesn’t</em> prevent other tests cases like
+<code>UnphysicalEnergy</code> from executing.</p>
+</li>
+</ol></div>
+</div>
+</div>
+</div>
+<div id="comparing-with-use-of-expect_eq" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="comparing-with-use-of-expect_eq" class="callout-inner">
+<h3 class="callout-title">Comparing with use of
+<code>EXPECT_EQ</code>
+</h3>
+<div class="callout-content">
+<ol style="list-style-type: decimal"><li>Change <code>ASSERT_EQ</code> to <code>EXPECT_EQ</code> in the
+<code>PhysicalDomain</code> test case, then rebuild and retest with
+<code>--output-on-failure</code>.</li>
+<li>What do you notice as different before?</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution5" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
+  <h4 class="accordion-header" id="headingSolution5"> Show me the solution </h4>
+</button>
+<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
+<div class="accordion-body">
+<ol style="list-style-type: decimal"><li>
+<p>After building and retesting, the output should now contain:</p>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="ex">[----------]</span> 2 tests from InvariantMass</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1" aria-label="code-block-13-2"></a><span class="bu">[</span> RUN      <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a><span class="ex">/tmp/ccptepp-test/test/test_invariant_mass.cpp:10:</span> Failure</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1" aria-label="code-block-13-4"></a><span class="ex">Expected</span> equality of these values:</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1" aria-label="code-block-13-5"></a>  <span class="ex">invariant_mass</span><span class="er">(</span><span class="ex">10,</span> 0.0<span class="kw">)</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1" aria-label="code-block-13-6"></a>    <span class="ex">Which</span> is: 10</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1" aria-label="code-block-13-7"></a>  <span class="ex">10.1</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1" aria-label="code-block-13-8"></a><span class="ex">at</span> rest particle does not have correct mass</span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1" aria-label="code-block-13-9"></a></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1" aria-label="code-block-13-10"></a><span class="ex">/tmp/ccptepp-test/test/test_invariant_mass.cpp:11:</span> Failure</span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1" aria-label="code-block-13-11"></a><span class="ex">Expected</span> equality of these values:</span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1" aria-label="code-block-13-12"></a>  <span class="ex">invariant_mass</span><span class="er">(</span><span class="ex">100,</span> 100<span class="kw">)</span></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1" aria-label="code-block-13-13"></a>    <span class="ex">Which</span> is: 0</span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1" aria-label="code-block-13-14"></a>  <span class="ex">0.1</span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1" aria-label="code-block-13-15"></a><span class="ex">massless</span> particle not massless</span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1" aria-label="code-block-13-16"></a></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1" aria-label="code-block-13-17"></a><span class="bu">[</span>  FAILED  <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span> <span class="er">(</span><span class="ex">0</span> ms<span class="kw">)</span></span></code></pre>
+</div>
+</li>
+<li><p>Both assertions now ran, and both reported the failure log. The
+<code>UnphysicalEnergy</code> case still ran as before.</p></li>
+</ol></div>
+</div>
+</div>
+</div>
+<p>Most GoogleTest assertions come in <code>EXPECT_*</code> and
+<code>ASSERT_*</code> forms. Both still “fail” if what they are
+asserting doesn’t happen, but only the later stops the <em>test
+case</em> from continuing, not the whole <em>test suite</em>. In the
+case of <code>invariant_mass</code> we should use <code>EXPECT_*</code>
+because the success of an assertion does not impact that of any later
+ones - by running these as well, we get more data points that could help
+us locate the source of a bug.</p>
+<p>We’d use <code>ASSERT_*</code> if subsequent assertions would be
+meaningless or impossible to run. The classic use case here is if we
+were testing memory management:</p>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a>TEST<span class="op">(</span>ParticleMaker<span class="op">,</span> HasCorrectProperties<span class="op">)</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a><span class="op">{</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a>   Particle<span class="op">*</span> p <span class="op">=</span> make_particle<span class="op">(</span><span class="st">"electron"</span><span class="op">);</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a>   ASSERT_NOT_EQ<span class="op">(</span>p<span class="op">,</span> <span class="kw">nullptr</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"got a nullptr!"</span><span class="op">;</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1" aria-label="code-block-14-5"></a></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1" aria-label="code-block-14-6"></a>   EXPECT_EQ<span class="op">(</span>p<span class="op">-&gt;</span>GetName<span class="op">(),</span> <span class="st">"electron"</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"incorrect name"</span><span class="op">;</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1" aria-label="code-block-14-7"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>It would be pointless to run the <code>EXPECT_EQ</code> assertion as
+we know that trying this with a null pointer would result in a crash.
+Other cases can require a little more thought to decide when
+<code>EXPECT_*</code> or <code>ASSERT_*</code> is appropriate, but in
+general starting with <code>EXPECT_*</code> is the right choice.</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -392,10 +1054,16 @@ dialect/terminology difference.</p>
 <span class="callout-header">Key Points</span>
 <div class="callout-inner">
 <div class="callout-content">
-<ul><li>Always use an existing testing framework to reduce complexity and
-maintenance</li>
-<li>A good framework like GoogleTest makes it easy to write and
-structure tests</li>
+<ul><li>assert() gives you an abort; GoogleTest tells you which test failed,
+what the actual value was, and what the expected value was</li>
+<li>GoogleTest integrates with CMake/CTest so your existing build
+workflow does not change</li>
+<li>A failing <code>TEST</code> does not prevent further
+<code>TEST</code>s from running.</li>
+<li>
+<code>EXPECT_*</code> continues after a failure;
+<code>ASSERT_*</code> stops the current <code>TEST</code> — use
+<code>ASSERT_*</code> when continuing would be meaningless.</li>
 </ul></div>
 </div>
 </div>
@@ -403,22 +1071,19 @@ structure tests</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-
-
-
-      </div> <!-- / div.lesson-content -->
+</section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter Bottom"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="cmakectest.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="testsuites.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="testingfloatingpoint.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
         <a class="chapter-link" href="cmakectest.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: Integrating tests in
+          Previous: Integrating tests
         </a>
-        <a class="chapter-link float-end" href="testsuites.html" rel="next">
-          Next: Adding test cases...
+        <a class="chapter-link float-end" href="testingfloatingpoint.html" rel="next">
+          Next: Floating point...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -466,8 +1131,8 @@ any links that you are not going to use.
   "url": "https://drbenmorgan.github.io/cpp-unit-testing/googletest.html",
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/googletest.html",
   "dateCreated": "2026-05-27",
-  "dateModified": "2026-06-17",
-  "datePublished": "2026-06-23"
+  "dateModified": "2026-06-27",
+  "datePublished": "2026-06-27"
 }
 
   </script><script>

@@ -236,7 +236,7 @@
 <div class="accordion accordion-flush" id="accordionFlush2">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading2">
-        <a href="introduction.html">1. What is unit testing</a>
+        <a href="introduction.html">1. What is unit testing?</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -248,7 +248,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="cppassertions.html">2. Unit testing with <code>assert()</code></a>
+        <a href="codeorganization.html">2. Organizing code to enable unit testing</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -260,7 +260,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="codeorganization.html">3. Organizing code to assist unit testing</a>
+        <a href="cppassertions.html">3. Unit testing with <code>assert()</code></a>
     </div>
 <!--/div.accordion-header-->
 
@@ -272,7 +272,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="cmakectest.html">4. Integrating tests in development workflows</a>
+        <a href="cmakectest.html">4. Integrating tests into a build system</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -296,7 +296,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="testsuites.html">6. Adding test cases and suites</a>
+        <a href="testingfloatingpoint.html">6. Floating point comparisons</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -308,7 +308,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="coverage.html">7. Measuring unit test coverage</a>
+        <a href="testingexceptions.html">7. Testing exceptional behaviour</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -320,7 +320,43 @@
 <div class="accordion accordion-flush" id="accordionFlush9">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading9">
-        <a href="sanitizers.html">8. Testing with static analysers</a>
+        <a href="testingclasses.html">8. Testing stateful classes</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush10">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading10">
+        <a href="testingfixtures.html">9. Test fixtures</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush11">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading11">
+        <a href="coverage.html">10. Code coverage</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush12">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading12">
+        <a href="sanitizers.html">11. Testing with static analysers</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -383,65 +419,157 @@
     <main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Key Points</h1>
         
-<section id="introduction"><h2 class="section-heading"><a href="introduction.html">What is unit testing</a></h2>
+<section id="introduction"><h2 class="section-heading"><a href="introduction.html">What is unit testing?</a></h2>
 <hr class="half-width">
 <ul>
-<li>Tests check whether the observed result, from running the code, is
-what was expected ahead of time.</li>
-<li>Defensive programming embeds alarm-like systems into software,
-guarding against exceptional bahavior.</li>
-<li>Unit tests try to test the smallest pieces of code possible, usually
-functions and methods.</li>
+<li>Testing is formalising what you already do informally when you
+verify your code</li>
+<li>Verification confirms that code implements a model correctly;
+validation confirms the model describes nature correctly — unit testing
+addresses verification</li>
+<li>Unit tests check that a single function produces the expected output
+for a given input</li>
 <li>Integration tests make sure that code units work together
 properly.</li>
 <li>Regression tests ensure that everything works the same today as it
 did yesterday.</li>
+</ul></section><section id="codeorganization"><h2 class="section-heading"><a href="codeorganization.html">Organizing code to enable unit testing</a></h2>
+<hr class="half-width">
+<ul>
+<li>Tests live in their own file and are compiled separately from the
+code under test</li>
+<li>A function is easy to test if it takes all its inputs as parameters
+and returns its output as a value</li>
+<li>Global state, side effects, hidden dependencies, and mixed concerns
+make functions harder to test and harder to reason about</li>
+<li>Writing testable code and writing maintainable code are largely the
+same discipline</li>
+<li>Refactoring untested code safely requires characterising its
+existing behaviour first — which requires tests you do not yet have</li>
 </ul></section><section id="cppassertions"><h2 class="section-heading"><a href="cppassertions.html">Unit testing with <code>assert()</code></a></h2>
 <hr class="half-width">
 <ul>
-<li>We can use <code>assert</code> and <code>try/catch</code> to
-implement simple unit tests.</li>
-<li>This has limitations:
+<li>Documentation and testing are symbiotic:
 <ul>
-<li>Limited information on where/why an assertion failed.</li>
-<li>Execution stops on the first failure.</li>
-<li>Can be completely disabled.</li>
+<li>Documentation records our expections of the code’s behaviour.</li>
+<li>Tests encode the <em>verification</em> of this behaviour in <em>test
+cases</em>.</li>
 </ul>
 </li>
-</ul></section><section id="codeorganization"><h2 class="section-heading"><a href="codeorganization.html">Organizing code to assist unit testing</a></h2>
+<li>
+<code>assert(expression)</code> aborts the program if
+<code>expression</code> is false — silence means the test passed</li>
+<li>Failure of an assertion results in an error message and program
+termination, providing a clear <em>test failure</em> condition.</li>
+<li>A failing assert() tells you something went wrong, and where in the
+sode, but not directly <em>how</em>.</li>
+<li>Manual compilation of multiple test files does not scale.</li>
+</ul></section><section id="cmakectest"><h2 class="section-heading"><a href="cmakectest.html">Integrating tests into a build system</a></h2>
 <hr class="half-width">
 <ul>
-<li>We should factor our code to help us test.</li>
-</ul></section><section id="cmakectest"><h2 class="section-heading"><a href="cmakectest.html">Integrating tests in development workflows</a></h2>
-<hr class="half-width">
-<ul>
-<li>Automate the build and run of your tests within your development
-workflows</li>
-<li>CMake and CTest provide a simple system to do this for C++ across
-all platforms</li>
+<li>A build system like CMake ensures tests are always compiled against
+the current code before they are run.</li>
+<li>CTest is a test runner — it does not care how tests are written,
+only whether the executable exits cleanly</li>
+<li>Tests you have to run manually are tests you will forget to run —
+automation removes that risk</li>
+<li>Keeping the barrier to running tests low is as important as writing
+the tests themselves</li>
+<li>assert() is disabled when NDEBUG is defined — in a CMake release
+build your entire test suite silently disappears</li>
 </ul></section><section id="googletest"><h2 class="section-heading"><a href="googletest.html">Introducing GoogleTest</a></h2>
 <hr class="half-width">
 <ul>
-<li>Always use an existing testing framework to reduce complexity and
-maintenance</li>
-<li>A good framework like GoogleTest makes it easy to write and
-structure tests</li>
-</ul></section><section id="testsuites"><h2 class="section-heading"><a href="testsuites.html">Adding test cases and suites</a></h2>
+<li>assert() gives you an abort; GoogleTest tells you which test failed,
+what the actual value was, and what the expected value was</li>
+<li>GoogleTest integrates with CMake/CTest so your existing build
+workflow does not change</li>
+<li>A failing <code>TEST</code> does not prevent further
+<code>TEST</code>s from running.</li>
+<li>
+<code>EXPECT_*</code> continues after a failure;
+<code>ASSERT_*</code> stops the current <code>TEST</code> — use
+<code>ASSERT_*</code> when continuing would be meaningless.</li>
+</ul></section><section id="testingfloatingpoint"><h2 class="section-heading"><a href="testingfloatingpoint.html">Floating point comparisons</a></h2>
 <hr class="half-width">
 <ul>
-<li>Organising tests into <em>cases</em> and <em>suites</em> helps
-isolate contracts/failures</li>
-<li>They also form part of the tecnical documentation of the code</li>
-</ul></section><section id="coverage"><h2 class="section-heading"><a href="coverage.html">Measuring unit test coverage</a></h2>
+<li>Floating point arithmetic is not exact — two calculations that are
+mathematically equal may not be numerically equal</li>
+<li>
+<code>EXPECT_EQ</code> is appropriate for floating point only when
+the value is</li>
+<li>
+<code>EXPECT_NEAR(a, b, tol)</code> checks that
+<code>|a - b| &lt; tol</code> — the tolerance should reflect the
+expected numerical error from the specific type of calculation, not be
+chosen arbitrarily.</li>
+</ul></section><section id="testingexceptions"><h2 class="section-heading"><a href="testingexceptions.html">Testing exceptional behaviour</a></h2>
 <hr class="half-width">
 <ul>
-<li>Coverage can help you identify untested regions of your code.</li>
-<li>It does not guarantee that the ran code is correct.</li>
-<li>Beware of diminishing returns.</li>
+<li>Testing what your code refuses to do is as important as testing what
+it does</li>
+<li>EXPECT_THROW checks both that an exception was raised and that it
+was the right type — the type is part of the contract</li>
+<li>Boundary conditions are where bugs most commonly live — zero, empty,
+equal, and just-outside-range inputs deserve explicit tests</li>
+<li>A function’s error handling is part of its specification and should
+be documented and tested like any other behaviour</li>
+<li>With invariant_mass() now fully tested, we have seen the complete
+range of GoogleTest assertion types — the remaining episodes apply these
+tools to more complex code</li>
+</ul></section><section id="testingclasses"><h2 class="section-heading"><a href="testingclasses.html">Testing stateful classes</a></h2>
+<hr class="half-width">
+<ul>
+<li>A stateful class is testable if its state is explicit and controlled
+through a well-defined interface — the difficulty arises from hidden or
+global state, not from state itself.</li>
+<li>Reading the specification before writing tests is not optional — it
+determines what the tests should assert makes any ambiguities
+obvious.</li>
+<li>Each test case should verify one behaviour — if a test needs “and”
+in its name it is probably two tests</li>
+<li>GoogleTest provides helpers in GMock for more complex checks.</li>
+</ul></section><section id="testingfixtures"><h2 class="section-heading"><a href="testingfixtures.html">Test fixtures</a></h2>
+<hr class="half-width">
+<ul>
+<li>A fixture eliminates repeated setup code and makes the intended
+starting state of each test explicit</li>
+<li>SetUp() runs before every individual test — each test starts from a
+clean, identical state regardless of what other tests do</li>
+<li>Fixtures do not change what is being tested, only how the starting
+state is prepared</li>
+<li>Construction tests belong outside the fixture — the fixture assumes
+construction succeeds and tests behaviour from that point</li>
+</ul></section><section id="coverage"><h2 class="section-heading"><a href="coverage.html">Code coverage</a></h2>
+<hr class="half-width">
+<ul>
+<li>Coverage measures which lines and branches were executed during
+testing — not whether they were tested correctly</li>
+<li>A line shown as covered means it ran; it does not mean the result
+was checked or that the test would catch a bug there</li>
+<li>Branch coverage is more informative than line coverage — a line can
+execute without all its branches being taken</li>
+<li>Coverage is a lower bound on thoroughness, not an upper bound — 100%
+coverage is necessary but not sufficient</li>
+<li>The coverage report is most useful as a guide to where tests are
+missing, not as a measure of test quality</li>
+<li>Beware of diminishing returns</li>
 </ul></section><section id="sanitizers"><h2 class="section-heading"><a href="sanitizers.html">Testing with static analysers</a></h2>
 <hr class="half-width">
 <ul>
-<li>Sanitizers can help identify issues that unit tests may not</li>
+<li>Unit tests check that your code does what you intended; sanitizers
+check for errors your intentions did not anticipate</li>
+<li>A test suite that is green and fully covered can still contain
+memory errors and undefined behaviour</li>
+<li>AddressSanitizer detects out-of-bounds memory access and
+use-after-free at runtime — errors that produce no compiler warning and
+may crash only rarely in production</li>
+<li>Sanitizers diagnose bugs that already exist; a well-chosen test
+prevents their reintroduction</li>
+<li>No single tool is sufficient — unit tests, coverage measurement, and
+sanitizers answer different questions and catch different bugs; together
+they give you the best practical assurance that your code is
+correct</li>
 </ul></section>
 </div>
     </main>
@@ -492,8 +620,8 @@ isolate contracts/failures</li>
   "url": "https://drbenmorgan.github.io/cpp-unit-testing/key-points.html",
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/key-points.html",
   "dateCreated": "2026-05-27",
-  "dateModified": "2026-06-23",
-  "datePublished": "2026-06-23"
+  "dateModified": "2026-06-27",
+  "datePublished": "2026-06-27"
 }
 
   </script><script>

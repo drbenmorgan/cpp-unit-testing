@@ -118,7 +118,7 @@
     <a id="search-button" class="btn btn-primary" href="aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
 </nav><aside class="col-md-12 lesson-progress"><div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 12%" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">12%</div>
+    <div class="progress-bar incubator" role="progressbar" style="width: 18%" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">18%</div>
   </div>
 </aside><div class="container">
       <div class="row">
@@ -199,7 +199,16 @@
 <div class="accordion accordion-flush" id="accordionFlush2">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading2">
-        <a href="introduction.html">1. What is unit testing</a>
+        <a href="introduction.html">1. What is unit testing?</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush3">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading3">
+        <a href="codeorganization.html">2. Organizing code to enable unit testing</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -211,26 +220,19 @@
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsecurrent" aria-expanded="true" aria-controls="flush-collapsecurrent">
         <span class="visually-hidden">Current Chapter</span>
         <span class="current-chapter">
-        2. Unit testing with <code>assert()</code>
+        3. Unit testing with <code>assert()</code>
         </span>
       </button>
     </div><!--/div.accordion-header-->
 
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
-        <ul><li><a href="#basic-use-of-assert-to-implement-unit-tests">Basic use of <code>assert</code> to implement unit tests</a></li>
-<li><a href="#limitations-of-using-assert">Limitations of using <code>assert</code></a></li>
+        <ul><li><a href="#what-should-we-test">What should we test?</a></li>
+<li><a href="#how-should-we-test">How should we test?</a></li>
+<li><a href="#basic-use-of-assert-to-implement-unit-tests">Basic use of <code>assert</code> to implement unit tests</a></li>
+<li><a href="#limitations-of-our-approach-so-far">Limitations of our approach so far</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
-
-  </div><!--/div.accordion-item-->
-</div><!--/div.accordion-flush-->
-
-<div class="accordion accordion-flush" id="accordionFlush4">
-  <div class="accordion-item">
-    <div class="accordion-header" id="flush-heading4">
-        <a href="codeorganization.html">3. Organizing code to assist unit testing</a>
-    </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
@@ -238,7 +240,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="cmakectest.html">4. Integrating tests in development workflows</a>
+        <a href="cmakectest.html">4. Integrating tests into a build system</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -256,7 +258,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="testsuites.html">6. Adding test cases and suites</a>
+        <a href="testingfloatingpoint.html">6. Floating point comparisons</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -265,7 +267,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="coverage.html">7. Measuring unit test coverage</a>
+        <a href="testingexceptions.html">7. Testing exceptional behaviour</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -274,7 +276,34 @@
 <div class="accordion accordion-flush" id="accordionFlush9">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading9">
-        <a href="sanitizers.html">8. Testing with static analysers</a>
+        <a href="testingclasses.html">8. Testing stateful classes</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush10">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading10">
+        <a href="testingfixtures.html">9. Test fixtures</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush11">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading11">
+        <a href="coverage.html">10. Code coverage</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush12">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading12">
+        <a href="sanitizers.html">11. Testing with static analysers</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -322,23 +351,23 @@
         <!-- START: inst/pkgdown/templates/content-instructor.html -->
   <div class="col-xl-8 col-lg-12 primary-content">
     <nav class="lesson-content mx-md-4" aria-label="Previous and Next Chapter Top"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
-        <a class="chapter-link" href="introduction.html" rel="prev"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="codeorganization.html" rel="next">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link" href="codeorganization.html" rel="prev"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
+        <a class="chapter-link float-end" href="cmakectest.html" rel="next">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link" href="introduction.html" rel="prev">
+        <a class="chapter-link" href="codeorganization.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: What is unit testing
+          Previous: Organizing code to
         </a>
-        <a class="chapter-link float-end" href="codeorganization.html" rel="next">
-          Next: Organizing code to...
+        <a class="chapter-link float-end" href="cmakectest.html" rel="next">
+          Next: Integrating tests...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Unit testing with <code>assert()</code></h1>
-        <p>Last updated on 2026-06-22 |
+        <p>Last updated on 2026-06-27 |
 
         <a href="https://github.com/drbenmorgan/cpp-unit-testing/edit/main/episodes/cppassertions.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -358,6 +387,8 @@
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul><li>How can we implement unit tests in C++?</li>
+<li>What are the limitations of using <code>assert()</code> for
+testing?</li>
 </ul></div>
 </div>
 </div>
@@ -365,95 +396,144 @@
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Write a simple unit test case using <code>assert()</code>.</li>
-<li>Understand the limits of this approach.</li>
+<ul><li>Understand how testing documents our intent and encodes this in
+tests.</li>
+<li>Write a test for a pure function using assert()</li>
+<li>Explain what happens at runtime when an assert() passes and when it
+fails</li>
+<li>Compile and run a test program manually and interpret the
+output</li>
+<li>Recognise that assert() cannot easily test for exceptions or produce
+informative failure output</li>
 </ul></div>
 </div>
 </div>
 </div>
 </div>
-<section><h2 class="section-heading" id="basic-use-of-assert-to-implement-unit-tests">Basic use of <code>assert</code> to implement unit tests<a class="anchor" aria-label="anchor" href="#basic-use-of-assert-to-implement-unit-tests"></a></h2>
-<hr class="half-width"><p>Recall that <strong>Unit Tests</strong> check the behaviour of code
-<em>units</em> (functions, classes, or data structures) individually
-across the range of inputs/outputs and exceptional circumstances. We
-already have a “unit” in the <code>divide</code> function, so let’s
-write some unit tests for it! To do this, we’ll use the C library <a href="https://en.cppreference.com/cpp/error/assert" class="external-link"><code>assert</code>
-macro</a>. This wraps a C++ conditional statement which must not be
-equal to <code>0</code> otherwise a message will be written to standard
-error, and <code>std::abort()</code> called to terminate the program.
-Thus by writing suitable conditionals, we can use this to compose unit
-tests:</p>
+<section><h2 class="section-heading" id="what-should-we-test">What should we test?<a class="anchor" aria-label="anchor" href="#what-should-we-test"></a></h2>
+<hr class="half-width"><p>Let’s revisit our <code>invariant_mass()</code> function that we’ve
+sketched out. It’s rather trivial, so as smart scientists we might think
+“that’s obviously correct”, to which the obvious (scientific!) response
+is <em>how do you know</em>? We actually need to take a slight side step
+into <em>documentation</em> here because the first part of “how do you
+know?” is “<em>what <strong>contract</strong> is this function supposed
+to offer?</em>” because this what we want to verify:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="co">//! </span><span class="an">\file</span><span class="co"> </span><span class="cv">test_divide.cpp</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="pp">#include </span><span class="im">&lt;cassert&gt;</span><span class="pp"> </span><span class="co">// For assert()</span></span>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="co">//! </span><span class="an">\file</span><span class="co"> </span><span class="cv">test_invariant_mass.cpp</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="pp">#include </span><span class="im">&lt;stdexcept&gt;</span></span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a><span class="co">/* Return result of dividing numerator by denominator */</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a><span class="dt">double</span> divide<span class="op">(</span><span class="dt">double</span> numerator<span class="op">,</span> <span class="dt">double</span> denominator<span class="op">)</span></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a><span class="op">{</span></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a>   <span class="cf">if</span><span class="op">(</span>denominator <span class="op">==</span> <span class="fl">0.0</span><span class="op">)</span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a>   <span class="op">{</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1" aria-label="code-block-1-10"></a>      <span class="cf">throw</span> <span class="bu">std::</span>invalid_argument<span class="op">(</span><span class="st">"division by zero"</span><span class="op">);</span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1" aria-label="code-block-1-11"></a>   <span class="op">}</span></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1" aria-label="code-block-1-12"></a></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1" aria-label="code-block-1-13"></a>   <span class="cf">return</span> numerator <span class="op">/</span> denominator<span class="op">;</span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1" aria-label="code-block-1-14"></a><span class="op">}</span></span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1" aria-label="code-block-1-15"></a></span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1" aria-label="code-block-1-16"></a><span class="co">/* Unit tests for divide (numeric cases)*/</span></span>
-<span id="cb1-17"><a href="#cb1-17" tabindex="-1" aria-label="code-block-1-17"></a><span class="dt">void</span> test_divide_numeric<span class="op">()</span></span>
-<span id="cb1-18"><a href="#cb1-18" tabindex="-1" aria-label="code-block-1-18"></a><span class="op">{</span></span>
-<span id="cb1-19"><a href="#cb1-19" tabindex="-1" aria-label="code-block-1-19"></a>   <span class="co">// Our test - assert will fail if the condition evaluates to `0` (or `false`)</span></span>
-<span id="cb1-20"><a href="#cb1-20" tabindex="-1" aria-label="code-block-1-20"></a>   <span class="ot">assert</span><span class="op">(</span>divide<span class="op">(</span><span class="dv">4</span><span class="op">,</span><span class="dv">2</span><span class="op">)</span> <span class="op">==</span> <span class="dv">2</span><span class="op">);</span></span>
-<span id="cb1-21"><a href="#cb1-21" tabindex="-1" aria-label="code-block-1-21"></a></span>
-<span id="cb1-22"><a href="#cb1-22" tabindex="-1" aria-label="code-block-1-22"></a>   <span class="co">// We can add a message about the failure, but involves a trick with the conditional</span></span>
-<span id="cb1-23"><a href="#cb1-23" tabindex="-1" aria-label="code-block-1-23"></a>   <span class="ot">assert</span><span class="op">(</span>divide<span class="op">(</span><span class="dv">3</span><span class="op">,</span><span class="dv">2</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1.5</span> <span class="op">&amp;&amp;</span> <span class="st">"3/2 is not equal to 1.5"</span><span class="op">);</span></span>
-<span id="cb1-24"><a href="#cb1-24" tabindex="-1" aria-label="code-block-1-24"></a><span class="op">}</span></span>
-<span id="cb1-25"><a href="#cb1-25" tabindex="-1" aria-label="code-block-1-25"></a></span>
-<span id="cb1-26"><a href="#cb1-26" tabindex="-1" aria-label="code-block-1-26"></a><span class="co">/* Unit tests for divide (error cases)*/</span></span>
-<span id="cb1-27"><a href="#cb1-27" tabindex="-1" aria-label="code-block-1-27"></a><span class="dt">void</span> test_divide_error<span class="op">()</span></span>
-<span id="cb1-28"><a href="#cb1-28" tabindex="-1" aria-label="code-block-1-28"></a><span class="op">{</span></span>
-<span id="cb1-29"><a href="#cb1-29" tabindex="-1" aria-label="code-block-1-29"></a>  <span class="co">// We can check that an exception is thrown.</span></span>
-<span id="cb1-30"><a href="#cb1-30" tabindex="-1" aria-label="code-block-1-30"></a>   <span class="cf">try</span></span>
-<span id="cb1-31"><a href="#cb1-31" tabindex="-1" aria-label="code-block-1-31"></a>   <span class="op">{</span></span>
-<span id="cb1-32"><a href="#cb1-32" tabindex="-1" aria-label="code-block-1-32"></a>      <span class="dt">int</span> no_result <span class="op">=</span> divide<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
-<span id="cb1-33"><a href="#cb1-33" tabindex="-1" aria-label="code-block-1-33"></a>      <span class="ot">assert</span><span class="op">(</span><span class="kw">false</span> <span class="op">&amp;&amp;</span> <span class="st">"No exception thrown"</span><span class="op">);</span></span>
-<span id="cb1-34"><a href="#cb1-34" tabindex="-1" aria-label="code-block-1-34"></a>   <span class="op">}</span></span>
-<span id="cb1-35"><a href="#cb1-35" tabindex="-1" aria-label="code-block-1-35"></a>   <span class="cf">catch</span> <span class="op">(</span><span class="at">const</span> <span class="bu">std::</span>invalid_argument<span class="op">&amp;)</span></span>
-<span id="cb1-36"><a href="#cb1-36" tabindex="-1" aria-label="code-block-1-36"></a>   <span class="op">{</span> <span class="co">// Nothing to do </span></span>
-<span id="cb1-37"><a href="#cb1-37" tabindex="-1" aria-label="code-block-1-37"></a>   <span class="op">}</span></span>
-<span id="cb1-38"><a href="#cb1-38" tabindex="-1" aria-label="code-block-1-38"></a><span class="op">}</span></span>
-<span id="cb1-39"><a href="#cb1-39" tabindex="-1" aria-label="code-block-1-39"></a></span>
-<span id="cb1-40"><a href="#cb1-40" tabindex="-1" aria-label="code-block-1-40"></a><span class="co">/* main() just runs the tests... */</span></span>
-<span id="cb1-41"><a href="#cb1-41" tabindex="-1" aria-label="code-block-1-41"></a><span class="dt">int</span> main<span class="op">()</span></span>
-<span id="cb1-42"><a href="#cb1-42" tabindex="-1" aria-label="code-block-1-42"></a><span class="op">{</span></span>
-<span id="cb1-43"><a href="#cb1-43" tabindex="-1" aria-label="code-block-1-43"></a>   test_divide_numeric<span class="op">();</span></span>
-<span id="cb1-44"><a href="#cb1-44" tabindex="-1" aria-label="code-block-1-44"></a>   test_divide_error<span class="op">()</span></span>
-<span id="cb1-45"><a href="#cb1-45" tabindex="-1" aria-label="code-block-1-45"></a><span class="op">}</span></span></code></pre>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a><span class="co">// 1. Return invariant mass $m = sqrt(E^2 - p^2) in natural units</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a><span class="co">// 2. throws std::domain_error if E &lt; 0</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a><span class="co">// 3. throws std::domain_error if E^2 - p^2 &lt; 0</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a><span class="dt">double</span> invariant_mass<span class="op">(</span><span class="dt">double</span> energy<span class="op">,</span> <span class="dt">double</span> momentum<span class="op">)</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a><span class="op">{</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1" aria-label="code-block-1-10"></a>   <span class="cf">if</span> <span class="op">(</span>energy <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1" aria-label="code-block-1-11"></a>   <span class="op">{</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1" aria-label="code-block-1-12"></a>      <span class="cf">throw</span> <span class="bu">std::</span>domain_error<span class="op">(</span><span class="st">"unphysical negative energy"</span><span class="op">);</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1" aria-label="code-block-1-13"></a>   <span class="op">}</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1" aria-label="code-block-1-14"></a>   <span class="dt">double</span> mass_squared <span class="op">=</span> energy<span class="op">*</span>energy <span class="op">-</span> momentum<span class="op">*</span>momentum<span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1" aria-label="code-block-1-15"></a>   <span class="cf">if</span> <span class="op">(</span>mass_squared <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1" aria-label="code-block-1-16"></a>   <span class="op">{</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1" aria-label="code-block-1-17"></a>      <span class="cf">throw</span> <span class="bu">std::</span>domain_error<span class="op">(</span><span class="st">"unphysical mass^2"</span><span class="op">);</span>  </span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1" aria-label="code-block-1-18"></a>   <span class="op">}</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1" aria-label="code-block-1-19"></a>   <span class="cf">return</span> <span class="bu">std::</span>sqrt<span class="op">(</span>mass_squared<span class="op">);</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1" aria-label="code-block-1-20"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>You should think of <em>documentation</em> and <em>testing</em> being
+symbiotic - the former helps you reason and record (for “future you” as
+much as for users of your code) <em>what</em> the code should do, and
+this provides a written specification for <em>what we need to
+test</em>.</p>
+<div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>This is the ideal case - you may need to work with code that isn’t
+documented like this! Adding a specification like we’ve done is always a
+good first step if you find yourself in this position, because it will
+either complement any existing tests, or provide a foundation for
+writing them if they don’t.</p>
+<p>Documenting code for developers and users is a huge topic itself, and
+like testing is best formalised through dedicated tools for the job,
+like <a href="https://www.doxygen.nl" class="external-link">Doxygen</a>.</p>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="how-should-we-test">How should we test?<a class="anchor" aria-label="anchor" href="#how-should-we-test"></a></h2>
+<hr class="half-width"><p>Now that we know what the code is supposed to do, we can write unit
+tests to verify that it actually does this instead of our minimal smoke
+test. An extremely common method here is the Mk1 human eye:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="co">//! </span><span class="an">\file</span><span class="co"> </span><span class="cv">test_invariant_mass.cpp</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a><span class="pp">#include </span><span class="im">"invariant_mass.hpp"</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1" aria-label="code-block-2-6"></a><span class="co">// Case 1. Test physical domain</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1" aria-label="code-block-2-7"></a><span class="dt">void</span> test_physical_domain<span class="op">()</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a><span class="op">{</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1" aria-label="code-block-2-9"></a>   <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">"photon mass should be zero: "</span> <span class="op">&lt;&lt;</span> invariant_mass<span class="op">(</span><span class="dv">100</span><span class="op">,</span><span class="dv">100</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1" aria-label="code-block-2-10"></a><span class="op">}</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1" aria-label="code-block-2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1" aria-label="code-block-2-12"></a><span class="co">// Case 2. Test unphysical energy</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1" aria-label="code-block-2-13"></a><span class="dt">void</span> test_unphysical_energy<span class="op">()</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1" aria-label="code-block-2-14"></a><span class="op">{</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1" aria-label="code-block-2-15"></a>   <span class="cf">try</span> <span class="op">{</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1" aria-label="code-block-2-16"></a>      <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">"negative energy should throw exception: "</span><span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1" aria-label="code-block-2-17"></a>      <span class="dt">double</span> bad_result <span class="op">=</span> invariant_mass<span class="op">(-</span><span class="fl">3.14</span><span class="op">,</span><span class="fl">3.0</span><span class="op">);</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1" aria-label="code-block-2-18"></a>      <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">"fail"</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1" aria-label="code-block-2-19"></a>   <span class="op">}</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1" aria-label="code-block-2-20"></a>   <span class="cf">catch</span> <span class="op">(</span><span class="at">const</span> <span class="bu">std::</span>domain_error<span class="op">&amp;)</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1" aria-label="code-block-2-21"></a>   <span class="op">{</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1" aria-label="code-block-2-22"></a>      <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">"pass"</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1" aria-label="code-block-2-23"></a>   <span class="op">}</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1" aria-label="code-block-2-24"></a><span class="op">}</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1" aria-label="code-block-2-25"></a></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1" aria-label="code-block-2-26"></a><span class="co">// Run the tests</span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1" aria-label="code-block-2-27"></a><span class="dt">int</span> main<span class="op">()</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1" aria-label="code-block-2-28"></a><span class="op">{</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1" aria-label="code-block-2-29"></a>   test_physical_domain<span class="op">();</span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1" aria-label="code-block-2-30"></a>   test_unphysical_energy<span class="op">();</span></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1" aria-label="code-block-2-31"></a><span class="op">}</span></span></code></pre>
 </div>
 <p>Whilst we’re working with <em>very</em> simple code here, we can see
 the basic structure that we’ll continue with (but gradually
 refactor):</p>
-<ol style="list-style-type: decimal"><li>The “unit” we want to test.</li>
+<ol style="list-style-type: decimal"><li>The “unit” we want to test - <code>invariant_mass</code>.</li>
 <li>Function(s) that implement the tests for that unit, divided into so
-called <em>test cases</em>.</li>
+called <strong>test cases</strong>.</li>
+<li>We explicitly check both normal operation and failure modes.</li>
 <li>The overall unit test is a program that runs all of the test
 cases.</li>
-</ol><div id="adding-a-failing-assertion" class="callout challenge">
+</ol><p>If we compile and run this, then we’ll get output:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="co"># use clang++ if on macOS</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a><span class="ex">g++</span> <span class="at">-std</span><span class="op">=</span>c++17 <span class="at">-I</span> src/ src/invariant_mass.cpp test/test_invariant_mass.cpp <span class="at">-o</span> test_invariant_mass    </span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a><span class="ex">./test_invariant_mass</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a><span class="ex">photon</span> mass should be zero: 0</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a><span class="ex">negative</span> energy should throw exception: pass</span></code></pre>
+</div>
+<div id="challenge1" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="adding-a-failing-assertion" class="callout-inner">
-<h3 class="callout-title">Adding a failing assertion</h3>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
 <div class="callout-content">
-<p>Update your <code>test_divide.cpp</code> as above, and try adding an
-<code>assert</code> in <code>test_divide_numeric</code> that you know
-will fail. Compile and run to check that you do indeed get the
-assertion. When you get the assertion, what is the exit code of the
-application?</p>
-</div>
+<ol style="list-style-type: decimal"><li>How do we identify a failing test?</li>
+<li>Do you think this approach will scale as we add more tests?</li>
+</ol></div>
 </div>
 </div>
 <div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
@@ -463,44 +543,89 @@ application?</p>
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<p>The simplest way to do this is with a deliberately wrong answer:</p>
-<div class="codewrapper sourceCode" id="cb2">
+<ol style="list-style-type: decimal"><li>We have to <em>look</em> at the outputs. The program always executes
+successfully, so it relies on use correctly identifiying a failing
+case.</li>
+<li>
+<strong>No</strong>. Imagine you have to check 10 test cases across
+10 test programs</li>
+</ol><p>Both issues can be addressed in the testing code: if we know what the
+result should be, we can get the computer to compare the calculations
+with our expected values, and fail the test, i.e.  emit an error, if
+these don’t match.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="basic-use-of-assert-to-implement-unit-tests">Basic use of <code>assert</code> to implement unit tests<a class="anchor" aria-label="anchor" href="#basic-use-of-assert-to-implement-unit-tests"></a></h2>
+<hr class="half-width"><p>We could use C++ conditional blocks to write the tests, but the
+underlying C library provides a macro that can help us here: <a href="https://en.cppreference.com/cpp/error/assert" class="external-link"><code>assert</code>
+macro</a>. This wraps a C++ statement which must not be equal to
+<code>0</code> otherwise a message will be written to standard error,
+and <code>std::abort()</code> called to terminate the program.</p>
+<div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a>   <span class="ot">assert</span><span class="op">(</span>divide<span class="op">(</span><span class="dv">2</span><span class="op">,</span><span class="dv">2</span><span class="op">)</span> <span class="op">==</span> <span class="dv">4</span> <span class="op">&amp;&amp;</span> <span class="st">"2/2 is not equal to 4"</span><span class="op">);</span> <span class="co">// Yes this is dumb!</span></span></code></pre>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="co">//! </span><span class="an">\file</span><span class="co"> </span><span class="cv">test_invariant_mass.cpp</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="pp">#include </span><span class="im">"invariant_mass.hh"</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="pp">#include </span><span class="im">&lt;cassert&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1" aria-label="code-block-4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1" aria-label="code-block-4-7"></a><span class="co">// Case 1. Test physical domain</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1" aria-label="code-block-4-8"></a><span class="dt">void</span> test_physical_domain<span class="op">()</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1" aria-label="code-block-4-9"></a><span class="op">{</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1" aria-label="code-block-4-10"></a>   <span class="ot">assert</span><span class="op">((</span>invariant_mass<span class="op">(</span><span class="dv">100</span><span class="op">,</span><span class="dv">100</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.0</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="st">"mass of photon is not 0"</span><span class="op">);</span>  </span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1" aria-label="code-block-4-11"></a><span class="op">}</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1" aria-label="code-block-4-12"></a></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1" aria-label="code-block-4-13"></a><span class="co">// Case 2. Test unphysical energy</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1" aria-label="code-block-4-14"></a><span class="dt">void</span> test_unphysical_energy<span class="op">()</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1" aria-label="code-block-4-15"></a><span class="op">{</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1" aria-label="code-block-4-16"></a>   <span class="cf">try</span> <span class="op">{</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1" aria-label="code-block-4-17"></a>      <span class="dt">double</span> bad_result <span class="op">=</span> invariant_mass<span class="op">(-</span><span class="fl">3.14</span><span class="op">,</span><span class="fl">3.0</span><span class="op">);</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1" aria-label="code-block-4-18"></a>      <span class="ot">assert</span><span class="op">(</span><span class="kw">false</span> <span class="op">&amp;&amp;</span> <span class="st">"std::domain_error not thrown for negative energy"</span><span class="op">);</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1" aria-label="code-block-4-19"></a>   <span class="op">}</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1" aria-label="code-block-4-20"></a>   <span class="cf">catch</span> <span class="op">(</span><span class="at">const</span> <span class="bu">std::</span>domain_error<span class="op">&amp;)</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1" aria-label="code-block-4-21"></a>   <span class="op">{</span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1" aria-label="code-block-4-22"></a>      <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="st">"pass"</span> <span class="op">&lt;&lt;</span> <span class="bu">std::</span>endl<span class="op">;</span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1" aria-label="code-block-4-23"></a>   <span class="op">}</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1" aria-label="code-block-4-24"></a><span class="op">}</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1" aria-label="code-block-4-25"></a></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1" aria-label="code-block-4-26"></a><span class="co">// Run the tests</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1" aria-label="code-block-4-27"></a><span class="dt">int</span> main<span class="op">()</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1" aria-label="code-block-4-28"></a><span class="op">{</span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1" aria-label="code-block-4-29"></a>   test_physical_domain<span class="op">();</span></span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1" aria-label="code-block-4-30"></a>   test_unphysical_energy<span class="op">();</span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1" aria-label="code-block-4-31"></a><span class="op">}</span></span></code></pre>
 </div>
-<p>When you compile this and run you would see something like</p>
-<div class="codewrapper sourceCode" id="cb3">
+<p>Now we compile and run again:</p>
+<div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">Assertion</span> failed: <span class="er">(</span><span class="ex">divide</span><span class="er">(</span><span class="ex">2,2</span><span class="kw">)</span> <span class="ex">==</span> 4 <span class="kw">&amp;&amp;</span> <span class="st">"2/2 is not equal to 4"</span><span class="kw">)</span><span class="ex">,</span> function test_divide, file test_divide.cpp, line 24.</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="co"># use clang++ if on macOS</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="ex">g++</span> <span class="at">-std</span><span class="op">=</span>c++17 <span class="at">-I</span> src/ src/invariant_mass.cpp test/test_invariant_mass.cpp <span class="at">-o</span> test_invariant_mass    </span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a><span class="ex">./test_invariant_mass</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a><span class="ex">pass</span></span></code></pre>
 </div>
-<p>This will obviously differ depending on what failure you used, but
-the key things are that:</p>
-<ol style="list-style-type: decimal"><li>You get the “Assertion failed” message.</li>
-<li>You get the line of code where this happened, and your message if
-you added one.</li>
-<li>The return code (which you get from running <code>$?</code>
-immediately after executing the test) is non-zero.</li>
-</ol></div>
-</div>
-</div>
-</div>
-</section><section><h2 class="section-heading" id="limitations-of-using-assert">Limitations of using <code>assert</code>
-<a class="anchor" aria-label="anchor" href="#limitations-of-using-assert"></a></h2>
-<hr class="half-width"><div id="discussion" class="callout challenge">
+<p>So with <code>assert</code> we <em>don’t</em> get output by default
+unless we explicitly add it, though the program still ran and in this
+case successfully: our tests <em>passed</em>. It also provides a cleaner
+way to express <em>what</em> is being checked compared to our by-eye
+version.</p>
+<div id="making-a-failing-assertion" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="discussion" class="callout-inner">
-<h3 class="callout-title">Discussion</h3>
+<div id="making-a-failing-assertion" class="callout-inner">
+<h3 class="callout-title">Making a failing assertion</h3>
 <div class="callout-content">
-<p>Even with this simplicity, you can probably already see some of the
-limitations with using <code>assert</code> to implement unit tests.
-Think about these, and what other problems might be encountered with
-more complex test cases.</p>
-</div>
+<p>Add an <code>assert</code> in <code>test_physical_domain</code> that
+you know will fail, then compile and run again.</p>
+<ol style="list-style-type: decimal"><li>What output do you get now?</li>
+<li>What is the exit code of the application?</li>
+<li>Did all of the tests run?</li>
+</ol></div>
 </div>
 </div>
 <div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
@@ -510,64 +635,67 @@ more complex test cases.</p>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
-<ol style="list-style-type: decimal"><li>Whilst we know an <code>assert</code> failed, we don’t directly get
-information on why it failed: it doesn’t automatically print
-<em>what</em> the result of <code>divide</code> was.</li>
-<li>The first failing <code>assert</code> causes program termination and
-no further test cases run even if they could. We therefore don’t get
-additional checks that <em>might</em> help to triage the cause.</li>
-<li>The “pass/fail” check <em>must</em> be implemented as a C++
-statement that should evaluate to “not 0” for “pass”. Combined with
-point 1, this means we’ll need to implement a lot of functionality for
-more complex checks (see for example what we have to do just to check a
-required exception is thrown).</li>
+<p>The simplest way to do this is with a deliberately wrong answer:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a>   <span class="ot">assert</span><span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">100</span><span class="op">,</span><span class="dv">100</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.1</span> <span class="op">&amp;&amp;</span> <span class="st">"deliberate fail with unphysical answer"</span><span class="op">);</span></span></code></pre>
+</div>
+<ol style="list-style-type: decimal"><li>
+<p>When you compile this and run you would see something like</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="ex">Assertion</span> failed: <span class="er">(</span><span class="ex">invariant_mass</span><span class="er">(</span><span class="ex">100,100</span><span class="kw">)</span> <span class="ex">==</span> 0.1 <span class="kw">&amp;&amp;</span> <span class="st">"deliberate fail with unphysical answer"</span><span class="kw">)</span><span class="ex">,</span> function test_physical_domain, file test_invariant_mass.cpp, line 27.</span></code></pre>
+</div>
+<p>We see that the assertion failed and we get the assertion printed.
+This is why we put a message in here so that we have some information on
+<em>what</em> was being asserted. We also get the file and line of code
+in that file where the assertion happened, adding debugging.</p>
+<p>Note that we <em>don’t</em> get information on what
+<code>invariant_mass</code> actually returned here unless we added extra
+code.</p>
+</li>
+<li>
+<p>The return code, which we can get from <code>$?</code>
+immediately after executing the test will be something like:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="bu">echo</span> <span class="va">$?</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="ex">134</span></span></code></pre>
+</div>
+<p>Your number might differ depending on platform, but the important
+point is that it is not “success”. Programs on most systems return
+<code>0</code> for success, so this provides a way for the computer to
+check for failing test programs. We’ll use this later.</p>
+</li>
+<li>
+<p><strong>No!</strong> We didn’t actually run
+<code>test_unphysical_domain()</code> because <code>assert()</code>
+terminates execution immediately when an assertion fails.</p>
+<p>A failure is a failure, but we generally don’t want to stop running
+tests if we <em>could</em> continue (this is the case here). The
+pass/fail of other tests might offer insight into the cause of
+failure.</p>
+</li>
 </ol></div>
 </div>
 </div>
 </div>
-<p>There’s another compile-related issue with <code>assert</code>: it
-can be <em>completely disabled</em> though the preprocessor argument
-<code>-DNDEBUG</code>. Compiling your test case with this flag:</p>
-<div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
-  <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Linux </h3>
-</button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
-<div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb4">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">g++</span> <span class="at">-DNDEBUG</span> <span class="at">-std</span><span class="op">=</span>c++17 test_divide.cpp <span class="at">-o</span> test_divide</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="ex">./test_divide</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="accordionSpoiler2" class="accordion spoiler-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
-  <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> MacOS </h3>
-</button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
-<div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb5">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="fu">clang</span>++ <span class="at">-DNDEBUG</span> <span class="at">-std</span><span class="op">=</span>c++17 test_divide.cpp <span class="at">-o</span> test_divide</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="ex">./test_divide</span> </span></code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p>If you run <code>test_divide</code> compiled like this, it will
-execute successfully no matter what. The <code>NDEBUG</code> symbol is
-typically used in fully optimized builds of high performance codes as
-the check on <code>assert</code> does add small overhead. This reveals
-its purpose as more for defensive programming and <em>design by contract
-verification during development</em> than unit testing</p>
+</section><section><h2 class="section-heading" id="limitations-of-our-approach-so-far">Limitations of our approach so far<a class="anchor" aria-label="anchor" href="#limitations-of-our-approach-so-far"></a></h2>
+<hr class="half-width"><p>Using <code>assert</code> has solved the two primary issues we
+identified with “smoke/by-eye” testing: the computer is now verifying
+results, both expected and exceptional, for us, and we get an error
+message and failing program if a test case fails. We don’t get much
+information on why the assertion failed though, for example what got
+returned from a function.</p>
+<p>Whilst we have begun to automate the <em>verification</em> part,
+we’re still manually recompiling our test program on every change with a
+complex command, <em>and then</em> running the test manually, <em>and
+then</em> checking that it didn’t fail. Let’s automate these steps as
+well before going further with adding more tests and resolving the
+issues we’ve seen with assert.</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -575,13 +703,19 @@ verification during development</em> than unit testing</p>
 <span class="callout-header">Key Points</span>
 <div class="callout-inner">
 <div class="callout-content">
-<ul><li>We can use <code>assert</code> and <code>try/catch</code> to
-implement simple unit tests.</li>
-<li>This has limitations:
-<ul><li>Limited information on where/why an assertion failed.</li>
-<li>Execution stops on the first failure.</li>
-<li>Can be completely disabled.</li>
+<ul><li>Documentation and testing are symbiotic:
+<ul><li>Documentation records our expections of the code’s behaviour.</li>
+<li>Tests encode the <em>verification</em> of this behaviour in <em>test
+cases</em>.</li>
 </ul></li>
+<li>
+<code>assert(expression)</code> aborts the program if
+<code>expression</code> is false — silence means the test passed</li>
+<li>Failure of an assertion results in an error message and program
+termination, providing a clear <em>test failure</em> condition.</li>
+<li>A failing assert() tells you something went wrong, and where in the
+sode, but not directly <em>how</em>.</li>
+<li>Manual compilation of multiple test files does not scale.</li>
 </ul></div>
 </div>
 </div>
@@ -591,17 +725,17 @@ any links that you are not going to use.
  -->
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter Bottom"><div class="d-block d-sm-block d-md-none">
-        <a class="chapter-link" href="introduction.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="codeorganization.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link" href="codeorganization.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
+        <a class="chapter-link float-end" href="cmakectest.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link" href="introduction.html" rel="prev">
+        <a class="chapter-link" href="codeorganization.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: What is unit testing
+          Previous: Organizing code to
         </a>
-        <a class="chapter-link float-end" href="codeorganization.html" rel="next">
-          Next: Organizing code to...
+        <a class="chapter-link float-end" href="cmakectest.html" rel="next">
+          Next: Integrating tests...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -649,8 +783,8 @@ any links that you are not going to use.
   "url": "https://drbenmorgan.github.io/cpp-unit-testing/cppassertions.html",
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/cppassertions.html",
   "dateCreated": "2026-05-27",
-  "dateModified": "2026-06-22",
-  "datePublished": "2026-06-23"
+  "dateModified": "2026-06-27",
+  "datePublished": "2026-06-27"
 }
 
   </script><script>
