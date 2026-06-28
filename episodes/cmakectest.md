@@ -6,7 +6,7 @@ exercises: 2 # exercise time in minutes
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How do build and run my tests automatically?
+- How do I build and run my tests automatically?
 - How does a build system benefit testing as a project grows?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
@@ -17,7 +17,7 @@ exercises: 2 # exercise time in minutes
 - Write a `CMakeLists.txt` that builds a test executable and registers it with CTest.
 - Run tests using `ctest` with `-V` and `--output-on-failure` to analyse test failure outputs.
 - Understand the limitation of `assert()` in release builds.
-- Explain why automating the build and run of tests reduces the barrier to running them easiely and frequently.
+- Explain why automating the build and run of tests reduces the barrier to running them easily and frequently.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -270,7 +270,7 @@ will always output warning/error messages for compile/link problems.
 3. You should see that it recompiles _only_ `test_invariant_mass.cpp`:
 
    ```bash
-   Change Dir: '/Users/benmorgan/tmp/pix/ccptepp-test/build'
+   Change Dir: '/tmp/ccptepp-test/build'
 
    Run Build Command(s): /tmp/ccptepp-test/.pixi/envs/default/bin/ninja -v
    [1/2] /usr/bin/c++  -I/tmp/ccptepp-test/src -std=c++17 -arch arm64 -MD -MT CMakeFiles/test_invariant_mass.dir/test/test_invariant_mass.cpp.o -MF CMakeFiles/test_invariant_mass.dir/test/test_invariant_mass.cpp.o.d -o CMakeFiles/test_invariant_mass.dir/test/test_invariant_mass.cpp.o -c /tmp/ccptepp-test/test/test_invariant_mass.cpp

@@ -29,11 +29,11 @@ into _documentation_ here because the first part of "how do you know?" is "_what
 is this function supposed to offer?_" because this what we want to verify:
 
 ```cpp
-//! \file test_invariant_mass.cpp
+//! \file invariant_mass.cpp
 #include <cmath>
 #include <stdexcept>
 
-// 1. Return invariant mass $m = sqrt(E^2 - p^2) in natural units
+// 1. Return invariant mass m = sqrt(E^2 - p^2) in natural units
 // 2. throws std::domain_error if E < 0
 // 3. throws std::domain_error if E^2 - p^2 < 0
 double invariant_mass(double energy, double momentum)
@@ -149,7 +149,7 @@ standard error, and `std::abort()` called to terminate the program.
 
 ```cpp
 //! \file test_invariant_mass.cpp
-#include "invariant_mass.hh"
+#include "invariant_mass.hpp"
 
 #include <cassert>
 #include <iostream>
@@ -237,7 +237,7 @@ The simplest way to do this is with a deliberately wrong answer:
    not "success". Programs on most systems return `0` for success, so this provides a way for
    the computer to check for failing test programs. We'll use this later.
 
-3. **No!** We didn't actually run `test_unphysical_domain()` because `assert()` terminates
+3. **No!** We didn't actually run `test_unphysical_energy()` because `assert()` terminates
    execution immediately when an assertion fails.
 
    A failure is a failure, but we generally don't want to stop running tests if we _could_ continue
@@ -266,6 +266,6 @@ then_ checking that it didn't fail. Let's automate these steps as well before go
   - Tests encode the _verification_ of this behaviour in _test cases_.
 - `assert(expression)` aborts the program if `expression` is false — silence means the test passed
 - Failure of an assertion results in an error message and program termination, providing a clear _test failure_ condition.
-- A failing assert() tells you something went wrong, and where in the sode, but not directly _how_.
+- A failing `assert()` tells you something went wrong, and where in the sode, but not directly _how_.
 - Manual compilation of multiple test files does not scale.
 ::::::::::::::::::::::::::::::::::::::::::::::::
