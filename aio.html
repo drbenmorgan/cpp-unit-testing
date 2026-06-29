@@ -474,10 +474,10 @@ testing.</p></li>
 <hr class="half-width">
 <p>Computers only do exactly what we tell them to, and we are fallible,
 so we should assume that <strong>mistakes, i.e. bugs, will
-happen</strong>. Scientists often fall into the trap of <em>“I am a
-smart, so my code must be correct.”</em>, but software is no different
-to any other piece of experimental apparatus. We wouldn’t plug a new
-voltage sensor into a dark matter experiment and take data without
+happen</strong>. Scientists often fall into the trap of <em>“I am smart,
+so my code must be correct.”</em>, but software is no different to any
+other piece of experimental apparatus. We wouldn’t plug a new voltage
+sensor into a dark matter experiment and take data without
 <strong>testing</strong> it first (e.g. calibrating it), and we should
 follow the same procedure to <em>verify</em> and <em>validate</em> the
 behaviour of software used to produce scientific outputs:</p>
@@ -554,7 +554,7 @@ from the <code>ccptepp-test/</code> directory as follows:</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Linux </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -571,7 +571,7 @@ from the <code>ccptepp-test/</code> directory as follows:</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> MacOS </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -714,7 +714,7 @@ to catch it <em>before</em> you submit a paper.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Layers provide <strong>defense in depth</strong>:</p>
 <ul>
@@ -1361,7 +1361,7 @@ detector resolution on our calculated mass:</p>
 </h3>
 <pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1" aria-label="code-block-13-2"></a><span class="pp">#include </span><span class="im">&lt;random&gt;</span></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a><span class="pp">#include </span><span class="im">"invariant_mass.h"</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a><span class="pp">#include </span><span class="im">"invariant_mass.hpp"</span></span>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1" aria-label="code-block-13-4"></a></span>
 <span id="cb13-5"><a href="#cb13-5" tabindex="-1" aria-label="code-block-13-5"></a><span class="co">/* Estimate the invariant mass resolution by smearing true quantities</span></span>
 <span id="cb13-6"><a href="#cb13-6" tabindex="-1" aria-label="code-block-13-6"></a><span class="co">   with Gaussian detector resolution */</span></span>
@@ -1397,8 +1397,9 @@ detector resolution on our calculated mass:</p>
 there’s no I/O, and it returns a value. But it still has testability
 problems.</p>
 <ol style="list-style-type: decimal">
-<li>What would happen if you wrote assert(estimate_mass_resolution(91.2,
-0.0) == X) for some value X you computed by hand?</li>
+<li>What would happen if you wrote
+<code>assert(estimate_mass_resolution(91.2, 0.0) == X)</code> for some
+value X you computed by hand?</li>
 <li>How would you restructure the function so that a test could produce
 a reproducible result? What is the minimal change needed?</li>
 <li>Even with that fix, what would your test actually be checking? Is
@@ -1548,11 +1549,11 @@ to offer?</em>” because this what we want to verify:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="co">//! </span><span class="an">\file</span><span class="co"> </span><span class="cv">test_invariant_mass.cpp</span></span>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="co">//! </span><span class="an">\file</span><span class="co"> </span><span class="cv">invariant_mass.cpp</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="pp">#include </span><span class="im">&lt;stdexcept&gt;</span></span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a><span class="co">// 1. Return invariant mass $m = sqrt(E^2 - p^2) in natural units</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a><span class="co">// 1. Return invariant mass m = sqrt(E^2 - p^2) in natural units</span></span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a><span class="co">// 2. throws std::domain_error if E &lt; 0</span></span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a><span class="co">// 3. throws std::domain_error if E^2 - p^2 &lt; 0</span></span>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a><span class="dt">double</span> invariant_mass<span class="op">(</span><span class="dt">double</span> energy<span class="op">,</span> <span class="dt">double</span> momentum<span class="op">)</span></span>
@@ -1674,7 +1675,7 @@ cases.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <ol style="list-style-type: decimal">
 <li>We have to <em>look</em> at the outputs. The program always executes
@@ -1704,7 +1705,7 @@ and <code>std::abort()</code> called to terminate the program.</p>
 <h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="co">//! </span><span class="an">\file</span><span class="co"> </span><span class="cv">test_invariant_mass.cpp</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="pp">#include </span><span class="im">"invariant_mass.hh"</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="pp">#include </span><span class="im">"invariant_mass.hpp"</span></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a></span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="pp">#include </span><span class="im">&lt;cassert&gt;</span></span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
@@ -1772,7 +1773,7 @@ you know will fail, then compile and run again.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>The simplest way to do this is with a deliberately wrong answer:</p>
 <div class="codewrapper sourceCode" id="cb6">
@@ -1812,7 +1813,7 @@ check for failing test programs. We’ll use this later.</p>
 </li>
 <li>
 <p><strong>No!</strong> We didn’t actually run
-<code>test_unphysical_domain()</code> because <code>assert()</code>
+<code>test_unphysical_energy()</code> because <code>assert()</code>
 terminates execution immediately when an assertion fails.</p>
 <p>A failure is a failure, but we generally don’t want to stop running
 tests if we <em>could</em> continue (this is the case here). The
@@ -1859,8 +1860,8 @@ cases</em>.</li>
 <code>expression</code> is false — silence means the test passed</li>
 <li>Failure of an assertion results in an error message and program
 termination, providing a clear <em>test failure</em> condition.</li>
-<li>A failing assert() tells you something went wrong, and where in the
-sode, but not directly <em>how</em>.</li>
+<li>A failing <code>assert()</code> tells you something went wrong, and
+where in the sode, but not directly <em>how</em>.</li>
 <li>Manual compilation of multiple test files does not scale.</li>
 </ul>
 </div>
@@ -1886,7 +1887,7 @@ any links that you are not going to use.
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul>
-<li>How do build and run my tests automatically?</li>
+<li>How do I build and run my tests automatically?</li>
 <li>How does a build system benefit testing as a project grows?</li>
 </ul>
 </div>
@@ -1906,7 +1907,7 @@ and registers it with CTest.</li>
 <li>Understand the limitation of <code>assert()</code> in release
 builds.</li>
 <li>Explain why automating the build and run of tests reduces the
-barrier to running them easiely and frequently.</li>
+barrier to running them easily and frequently.</li>
 </ul>
 </div>
 </div>
@@ -2288,7 +2289,7 @@ time?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <ol style="list-style-type: decimal">
 <li><p>It should run fine - at least it should pass/fail as you left it
@@ -2302,7 +2303,7 @@ Buildsystems won’t needlessly recompile if none of the inputs
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="ex">Change</span> Dir: <span class="st">'/Users/benmorgan/tmp/pix/ccptepp-test/build'</span></span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="ex">Change</span> Dir: <span class="st">'/tmp/ccptepp-test/build'</span></span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a></span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a><span class="ex">Run</span> Build Command<span class="er">(</span><span class="ex">s</span><span class="kw">)</span><span class="bu">:</span> /tmp/ccptepp-test/.pixi/envs/default/bin/ninja <span class="at">-v</span></span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a><span class="ex">[1/2]</span> /usr/bin/c++  <span class="at">-I</span>/tmp/ccptepp-test/src <span class="at">-std</span><span class="op">=</span>c++17 <span class="at">-arch</span> arm64 <span class="at">-MD</span> <span class="at">-MT</span> CMakeFiles/test_invariant_mass.dir/test/test_invariant_mass.cpp.o <span class="at">-MF</span> CMakeFiles/test_invariant_mass.dir/test/test_invariant_mass.cpp.o.d <span class="at">-o</span> CMakeFiles/test_invariant_mass.dir/test/test_invariant_mass.cpp.o <span class="at">-c</span> /tmp/ccptepp-test/test/test_invariant_mass.cpp</span>
@@ -2504,7 +2505,7 @@ development work?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Usually <code>--output-on-failure</code> is the best compromise as
 you obviously <em>hope</em> that tests pass, so you won’t get any output
@@ -2597,7 +2598,7 @@ happening?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <ol style="list-style-type: decimal">
 <li>
@@ -2780,7 +2781,7 @@ more information printed when a failure occurs?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <ol style="list-style-type: decimal">
 <li>
@@ -3007,7 +3008,7 @@ notice?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <ol style="list-style-type: decimal">
 <li>
@@ -3144,7 +3145,7 @@ failure?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>You should get output similar to:</p>
 <div class="codewrapper sourceCode" id="cb10">
@@ -3253,7 +3254,7 @@ tests and assertions run?</h3>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <ol style="list-style-type: decimal">
 <li>
@@ -3345,7 +3346,7 @@ case</em>. It <em>doesn’t</em> prevent other tests cases like
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
   <h4 class="accordion-header" id="headingSolution5"> Show me the solution </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
 <div class="accordion-body">
 <ol style="list-style-type: decimal">
 <li>
@@ -3460,12 +3461,12 @@ correct?</li>
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul>
-<li>Explain why exact equality is unreliable for floating point
-values</li>
 <li>Demonstrate a case where <code>EXPECT_EQ</code> fails on values that
 are mathematically equal</li>
-<li>Use <code>EXPECT_NEAR</code> with an appropriate absolute
-tolerance</li>
+<li>Explain why exact equality is unreliable for floating point
+values</li>
+<li>Use <code>EXPECT_DOUBLE_EQ</code> and <code>EXPECT_NEAR</code> with
+an appropriate absolute tolerance</li>
 <li>Write tests for invariant_mass() that correctly handle floating
 point results</li>
 </ul>
@@ -3474,6 +3475,307 @@ point results</li>
 </div>
 </div>
 </div>
+<div class="section level1">
+<h1 id="testing-with-floating-point-numbers">Testing with floating point numbers<a class="anchor" aria-label="anchor" href="#testing-with-floating-point-numbers"></a>
+</h1>
+<p>Now we understand how GoogleTest deals with failures, we can start
+expanding the range of assertions used in the
+<code>PhysicalDomain</code>. Let’s start with the two basic massless
+ones we set up and write what we <em>actually</em> expect
+<code>invariant_mass()</code> to return:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="co">// Case 1. Test physical domain</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a>TEST<span class="op">(</span>InvariantMass<span class="op">,</span> PhysicalDomain<span class="op">)</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="op">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">),</span> <span class="dv">10</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"at rest particle does not have correct mass"</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">),</span> <span class="fl">0.0</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"massless particle not massless"</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>Building and running again, we should now see that
+<code>PhysicalDomain</code> test case passes:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">...</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a><span class="bu">[</span> RUN      <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a><span class="bu">[</span>       OK <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span> <span class="er">(</span><span class="ex">0</span> ms<span class="kw">)</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a><span class="ex">...</span></span></code></pre>
+</div>
+<div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>GoogleTest <em>doesn’t</em> print anything for passing tests. That
+might seem surprising, but it makes sense: you’ve encoded the
+expectation in the test code, and repeated it here would be superfluous.
+In addition, it would clutter the output with passing test info when we
+want to see <em>failures</em>.</p>
+<p>The one exception here is if you’re debugging a test that’s passing
+when you expect it to fail. One technique here is to reverse the logic
+of the test, but don’t forget to re-reverse it for production! You could
+also just use good old “debug by <code>std::cout</code>”.</p>
+<p>Unfortunately, there’s no easy way to get GoogleTest to be fully
+verbose here.</p>
+</div>
+</div>
+</div>
+<p>These are trivial cases, so let’s think about assertions for a
+particle with mass in motion. Since <span class="math inline">\(E^2 =
+p^2 + m^2\)</span> is Pythagoras’s rule, we could also use this:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="co">// Case 1. Test physical domain</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a>TEST<span class="op">(</span>InvariantMass<span class="op">,</span> PhysicalDomain<span class="op">)</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a><span class="op">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">),</span> <span class="dv">10</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"at rest particle does not have correct mass"</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">),</span> <span class="fl">0.0</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"massless particle not massless"</span><span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">3</span><span class="op">),</span> <span class="dv">4</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">4</span><span class="op">),</span> <span class="dv">3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>Building and running again, these new assertions pass:</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">...</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="bu">[</span> RUN      <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a><span class="bu">[</span>       OK <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span> <span class="er">(</span><span class="ex">0</span> ms<span class="kw">)</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="ex">...</span></span></code></pre>
+</div>
+<p>Since we’re dealing with floating point numbers, let’s add the same
+assertion rule but with the inputs a factor of ten smaller:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="co">// Case 1. Test physical domain</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a>TEST<span class="op">(</span>InvariantMass<span class="op">,</span> PhysicalDomain<span class="op">)</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a><span class="op">{</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">),</span> <span class="dv">10</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"at rest particle does not have correct mass"</span><span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">),</span> <span class="fl">0.0</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"massless particle not massless"</span><span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1" aria-label="code-block-5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1" aria-label="code-block-5-7"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">3</span><span class="op">),</span> <span class="dv">4</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1" aria-label="code-block-5-8"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">4</span><span class="op">),</span> <span class="dv">3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1" aria-label="code-block-5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1" aria-label="code-block-5-10"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="fl">0.5</span><span class="op">,</span> <span class="fl">0.3</span><span class="op">),</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1" aria-label="code-block-5-11"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="fl">0.5</span><span class="op">,</span> <span class="fl">0.4</span><span class="op">),</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1" aria-label="code-block-5-12"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>If we build and run this now however, we get what may be a slightly
+surprising failure:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">...</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="bu">[</span> RUN      <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="ex">/Users/benmorgan/tmp/pix/ccptepp-test/test/test_invariant_mass.cpp:17:</span> Failure</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a><span class="ex">Expected</span> equality of these values:</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a>  <span class="ex">invariant_mass</span><span class="er">(</span><span class="ex">0.5,</span> 0.4<span class="kw">)</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1" aria-label="code-block-6-6"></a>    <span class="ex">Which</span> is: 0.29999999999999993</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1" aria-label="code-block-6-7"></a>  <span class="ex">0.3</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1" aria-label="code-block-6-8"></a><span class="ex">off</span> mass shell</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1" aria-label="code-block-6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1" aria-label="code-block-6-10"></a><span class="bu">[</span>  FAILED  <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span> <span class="er">(</span><span class="ex">0</span> ms<span class="kw">)</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1" aria-label="code-block-6-11"></a><span class="ex">...</span></span></code></pre>
+</div>
+<p>We have run into one of the main issues with floating point
+operations and arithmetic - <strong>they are not exact</strong>.
+Mathematically <span class="math inline">\(0.3 = \sqrt (0.5^2 -
+0.4^2)\)</span>, but the implementation of <code>sqrt</code> doesn’t
+algebraically/symbolically calculate the result. Even basic operations
+can produce results we can’t compare <em>exactly</em>. To illustrate
+this, trying adding the following to <code>PhysicalDomain</code>:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a>  EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="fl">0.5</span><span class="op">,</span> <span class="fl">0.4</span><span class="op">),</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a>  EXPECT_EQ<span class="op">(</span><span class="fl">0.1</span><span class="op">+</span><span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"summation not exact"</span><span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>  EXPECT_EQ<span class="op">(</span><span class="fl">0.1</span><span class="op">+</span><span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.2</span><span class="op">+</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"not commutative"</span><span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a>  EXPECT_EQ<span class="op">((</span><span class="fl">0.1</span><span class="op">+</span><span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">0.3</span><span class="op">+</span><span class="fl">0.2</span><span class="op">))</span> <span class="op">&lt;&lt;</span> <span class="st">"not associative"</span><span class="op">;</span></span></code></pre>
+</div>
+<p>Compiling and running, we’ll see:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="op">[</span> RUN      <span class="op">]</span> InvariantMass<span class="op">.</span>PhysicalDomain</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="op">/</span>Users<span class="op">/</span>benmorgan<span class="op">/</span>tmp<span class="op">/</span>pix<span class="op">/</span>ccptepp<span class="op">-</span>test<span class="op">/</span>test<span class="op">/</span>test_invariant_mass<span class="op">.</span>cpp<span class="op">:</span><span class="dv">17</span><span class="op">:</span> Failure</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a>Expected equality of these values<span class="op">:</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a>  invariant_mass<span class="op">(</span><span class="fl">0.5</span><span class="op">,</span> <span class="fl">0.4</span><span class="op">)</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a>    Which is<span class="op">:</span> <span class="fl">0.29999999999999993</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a>  <span class="fl">0.3</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a>off mass shell</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a><span class="op">/</span>Users<span class="op">/</span>benmorgan<span class="op">/</span>tmp<span class="op">/</span>pix<span class="op">/</span>ccptepp<span class="op">-</span>test<span class="op">/</span>test<span class="op">/</span>test_invariant_mass<span class="op">.</span>cpp<span class="op">:</span><span class="dv">19</span><span class="op">:</span> Failure</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1" aria-label="code-block-8-10"></a>Expected equality of these values<span class="op">:</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1" aria-label="code-block-8-11"></a>  <span class="fl">0.1</span><span class="op">+</span><span class="fl">0.2</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1" aria-label="code-block-8-12"></a>    Which is<span class="op">:</span> <span class="fl">0.30000000000000004</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1" aria-label="code-block-8-13"></a>  <span class="fl">0.3</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1" aria-label="code-block-8-14"></a><span class="kw">not</span> exact</span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1" aria-label="code-block-8-15"></a></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1" aria-label="code-block-8-16"></a><span class="op">/</span>Users<span class="op">/</span>benmorgan<span class="op">/</span>tmp<span class="op">/</span>pix<span class="op">/</span>ccptepp<span class="op">-</span>test<span class="op">/</span>test<span class="op">/</span>test_invariant_mass<span class="op">.</span>cpp<span class="op">:</span><span class="dv">21</span><span class="op">:</span> Failure</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1" aria-label="code-block-8-17"></a>Expected equality of these values<span class="op">:</span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1" aria-label="code-block-8-18"></a>  <span class="op">(</span><span class="fl">0.1</span><span class="op">+</span><span class="fl">0.3</span><span class="op">)+</span><span class="fl">0.2</span></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1" aria-label="code-block-8-19"></a>    Which is<span class="op">:</span> <span class="fl">0.60000000000000009</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1" aria-label="code-block-8-20"></a>  <span class="fl">0.1</span><span class="op">+(</span><span class="fl">0.3</span><span class="op">+</span><span class="fl">0.2</span><span class="op">)</span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1" aria-label="code-block-8-21"></a>    Which is<span class="op">:</span> <span class="fl">0.6</span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1" aria-label="code-block-8-22"></a><span class="kw">not</span> associative</span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1" aria-label="code-block-8-23"></a></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1" aria-label="code-block-8-24"></a><span class="op">[</span>  FAILED  <span class="op">]</span> InvariantMass<span class="op">.</span>PhysicalDomain <span class="op">(</span><span class="dv">0</span> ms<span class="op">)</span></span></code></pre>
+</div>
+<p>In general, floating point arithmatic is <em>commutative</em> but
+<em>not associative</em>, and we can’t guarantee <em>mathematically
+exact</em> equality between two expressions. We got away with this in
+our earlier tests because we were lucky that the numbers chosen are
+exactly representable and that an algorithm like <code>sqrt</code> can
+get to this exact representation.</p>
+<p>Thankfully, GoogleTest provides some specialized assertions to handle
+floating point comparisons.</p>
+<div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Floating point representation is a <em>huge</em> topic. The gory
+details are provided in the <a href="https://en.wikipedia.org/wiki/IEEE_754" class="external-link">IEEE754</a> specification,
+which modern hardware implements.</p>
+</div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="comparing-floating-point-numbers-in-googletest">Comparing floating point numbers in GoogleTest<a class="anchor" aria-label="anchor" href="#comparing-floating-point-numbers-in-googletest"></a>
+</h2>
+<p>If we look at the actual number returned by
+<code>invariant_mass(0.5,0.4)</code> and <code>0.1+0.2</code> reported
+by our assertions, we see that the former is slightly less than
+<code>0.3</code> and the later slightly larger. As you might guess from
+earlier discussion, floating point numbers are not <em>continuous</em>
+like real numbers. Rather, adjacent floating point numbers are separated
+by a <em>distance</em> called the <a href="https://en.wikipedia.org/wiki/Unit_in_the_last_place" class="external-link"><em>Unit in
+the Last Place</em> (sometimes <em>Unit of Least Precision</em>) or
+“ULP”</a>. What we’re seeing in the two calculations of “0.3” is
+<em>correctness to within a given number of ULPs</em>.</p>
+<div id="callout3" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>IEEE754 specifies rounding rules for arithmetic operations and
+<code>sqrt</code> that they be within 0.5ULP of the mathematically exact
+result. Good numeric libraries will calculate the transcendental
+functions to 0.5-1ULP of the mathematically exact result.</p>
+</div>
+</div>
+</div>
+<p>In GoogleTest, the basic assertion for comparing two
+<code>double</code> floating point numbers is
+<code>EXPECT_DOUBLE_EQ(a, b)</code> (which naturally has an
+<code>ASSERT_*</code> version). For <code>float</code>, the
+corresponding <code>EXPECT_FLOAT_EQ</code> <strong>must</strong> be used
+because the comparisons are fundamentally different. Both of these check
+that <code>a</code> and <code>b</code> are within 4ULPs of each other,
+failing of this condition is not met. Rewriting
+<code>PhysicalDomain</code> to use this is very simple:</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="co">// Case 1. Test physical domain</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a>TEST<span class="op">(</span>InvariantMass<span class="op">,</span> PhysicalDomain<span class="op">)</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a><span class="op">{</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">),</span> <span class="dv">10</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"at rest particle does not have correct mass"</span><span class="op">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">),</span> <span class="fl">0.0</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"massless particle not massless"</span><span class="op">;</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">3</span><span class="op">),</span> <span class="dv">4</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">4</span><span class="op">),</span> <span class="dv">3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1" aria-label="code-block-9-9"></a></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1" aria-label="code-block-9-10"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="fl">0.5</span><span class="op">,</span> <span class="fl">0.3</span><span class="op">),</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1" aria-label="code-block-9-11"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="fl">0.5</span><span class="op">,</span> <span class="fl">0.4</span><span class="op">),</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1" aria-label="code-block-9-12"></a></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1" aria-label="code-block-9-13"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span><span class="fl">0.1</span><span class="op">+</span><span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"not exact"</span><span class="op">;</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1" aria-label="code-block-9-14"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span><span class="fl">0.7</span><span class="op">-</span><span class="fl">0.4</span><span class="op">,</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"not exact"</span><span class="op">;</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1" aria-label="code-block-9-15"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span><span class="fl">0.1</span><span class="op">+</span><span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.2</span><span class="op">+</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"not commutative"</span><span class="op">;</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1" aria-label="code-block-9-16"></a>  EXPECT_DOUBLE_EQ<span class="op">((</span><span class="fl">0.1</span><span class="op">+</span><span class="fl">0.3</span><span class="op">)+</span><span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.1</span><span class="op">+(</span><span class="fl">0.3</span><span class="op">+</span><span class="fl">0.2</span><span class="op">))</span> <span class="op">&lt;&lt;</span> <span class="st">"not associative"</span><span class="op">;</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1" aria-label="code-block-9-17"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>which we should now see results in a clean pass when rebuilding and
+running:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="op">[</span> RUN      <span class="op">]</span> InvariantMass<span class="op">.</span>PhysicalDomain</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a><span class="op">[</span>       OK <span class="op">]</span> InvariantMass<span class="op">.</span>PhysicalDomain <span class="op">(</span><span class="dv">0</span> ms<span class="op">)</span></span></code></pre>
+</div>
+<div id="callout4" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>You might think 4ULPs is a bit wide when we stated IEE754 requires
+0.5-1ULP. However, the IEEE754 requirement is on single operations only.
+4ULPs can actually be quite tight when we have multiple operations, as
+we do in <code>invariant_mass</code>.</p>
+</div>
+</div>
+</div>
+<p>For this type of simple, mostly mathematical check,
+<code>EXPECT_DOUBLE_EQ</code> suffices. However, the numerical methods
+used in scientific codes are generally more complex, involving multiple
+arithmetic operations and transcendental function calls. The use of
+multithreading/multiprocess introduces the additional complication of
+<em>ordering</em> of calculations, so repeated runs might not produce a
+binary or numerically identical number. 4ULPs is quite a tight bound, so
+if the number we write to compare the result against is an experimental
+result or a numerical calculation only know to <code>N</code>
+significant digits, we could quite easily get a failing test for a
+perfectly valid calculation.</p>
+<p>Here, it is better to specify the exact <em>tolerance</em> we want
+between the calculation and expected result, and we can use the
+<code>EXPECT_NEAR(a, b, tol)</code> (or <code>ASSERT_NEAR</code>)
+assertion for this. This is general purpose (one can use it for integers
+as well) and checks that <code>|a - b| &lt; tol</code>, failing if this
+condition is not met. For example, say we want to use some arbitrary
+numbers to test <code>invariant_mass</code>:</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="co">// Case 1. Test physical domain</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a>TEST<span class="op">(</span>InvariantMass<span class="op">,</span> PhysicalDomain<span class="op">)</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a><span class="op">{</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a>  <span class="op">...</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a>  EXPECT_NEAR<span class="op">(</span>invariant_mass<span class="op">(</span><span class="fl">54.9</span><span class="op">,</span> <span class="fl">3.14</span><span class="op">),</span> <span class="fl">54.8</span><span class="op">,</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"incorrect mass calculation"</span><span class="op">;</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1" aria-label="code-block-11-6"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>Now <span class="math inline">\(\sqrt(54.9^2 - 3.14^2) =
+54.81013045049245\)</span> so why not use that and
+<code>EXPECT_DOUBLE_EQ</code>? Ultimately, the result can be no more
+precise than its least precise input. Our inputs are 3 significant
+figures, so we should not expect more than 3 significant figures in the
+result — which for a value of order 54 corresponds to a absolute
+tolerance of about 0.1.</p>
+<p>Choosing a reasonable tolerance in realistic cases is dependent on
+both the precision of the inputs <em>and</em> the form of the
+calculation. Ultimately, what we are doing is applying the error
+propagation we do in data analysis to our algorithms, accounting for the
+nature of floating point operations. This is a large topic itself, which
+we defer to other material.</p>
+<p>One final question we might have is have we covered the entire range
+of numbers possible? This is a hard question as well and more towards
+the very difficult task of formal verification. Covering a
+representative range of typical inputs, plus the boundaries and error
+conditions we will address next, will give a practically useful test
+suite — even if formal exhaustive verification is out of reach.</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -3483,10 +3785,13 @@ point results</li>
 <div class="callout-content">
 <ul>
 <li>Floating point arithmetic is not exact — two calculations that are
-mathematically equal may not be numerically equal</li>
+mathematically equal may not be numerically equal.</li>
 <li>
 <code>EXPECT_EQ</code> is appropriate for floating point only when
-the value is</li>
+the value is exactly representable.</li>
+<li>
+<code>EXPECT_DOUBLE_EQ</code> and <code>EXPECT_FLOAT_EQ</code> check
+that two floating point numbers are within 4 ULPs of each other.</li>
 <li>
 <code>EXPECT_NEAR(a, b, tol)</code> checks that
 <code>|a - b| &lt; tol</code> — the tolerance should reflect the
@@ -3494,6 +3799,12 @@ expected numerical error from the specific type of calculation, not be
 chosen arbitrarily.</li>
 </ul>
 </div>
+</div>
+</div>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
 </div>
 </div></section><section id="aio-testingexceptions"><p>Content from <a href="testingexceptions.html">Testing exceptional behaviour</a></p>
 <hr>
@@ -3522,18 +3833,237 @@ chosen arbitrarily.</li>
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul>
-<li>Use EXPECT_THROW to assert that a specific exception type is
-raised</li>
-<li>Use EXPECT_NO_THROW to assert that valid input does not raise</li>
-<li>Write tests for the boundary conditions of invariant_mass():
-negative energy, unphysical mass squared.</li>
 <li>Explain the difference between testing error handling and testing
 normal behaviour</li>
+<li>Use <code>EXPECT_THROW</code> to assert that a specific exception
+type is raised</li>
+<li>Write tests for the boundary conditions of
+<code>invariant_mass()</code>: negative energy, unphysical mass
+squared.</li>
 <li>Explain why the choice of exception type matters and how to test for
-it specifically</li>
+it specifically.</li>
 </ul>
 </div>
 </div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="testing-error-handling">Testing error handling<a class="anchor" aria-label="anchor" href="#testing-error-handling"></a>
+</h2>
+<hr class="half-width">
+<p>Testing that our software <em>fails</em> under the conditions we
+expect is just as important as testing that it succeeds. These failure
+conditions are as much a part of a function’s specification as those for
+its success. In <code>invariant_mass()</code> for example, we’ve
+specified:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="co">// 1. Return invariant mass m = sqrt(E^2 - p^2) in natural units</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="co">// 2. throws std::domain_error if E &lt; 0</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="co">// 3. throws std::domain_error if E^2 - p^2 &lt; 0</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a><span class="dt">double</span> invariant_mass<span class="op">(</span><span class="dt">double</span> energy<span class="op">,</span> <span class="dt">double</span> momentum<span class="op">)</span></span></code></pre>
+</div>
+<p>Thus we <em>should</em> test that (2) and (3) really do result in a
+thrown exceptions when given inputs as specified. The key point here is
+that we are <strong>not</strong> testing “what goes wrong”, rather “that
+the function does what it is supposed to do when given invalid input”,
+in essence:</p>
+<ul>
+<li>
+<em>Normal behaviour</em>: provide valid input, check the return
+value.
+<ul>
+<li>Here, the assertion is about <em>what comes out</em>.</li>
+</ul>
+</li>
+<li>
+<em>Exceptional behaviour</em>: provide invalid input, check that
+the error is triggered <em>and is the right type of error</em>.
+<ul>
+<li>The assertion here is about what the function <em>refuses to
+do</em>.</li>
+</ul>
+</li>
+</ul>
+<p>This is another reason specifications for (i.e. documentation of)
+function behaviour is so important. We’ve made a <em>design choice</em>
+to handle invalid input to <code>invariant_mass</code> by throwing
+exceptions - but other programmers might make different decisions on
+error handling:</p>
+<ol style="list-style-type: decimal">
+<li>If <code>E &lt; 0</code> or <code>E^2 - p^2 &lt; 0</code>, return
+<code>-1.0</code> to indicate failure.</li>
+<li>If <code>E &lt; 0</code> return <code>-1.0</code>, if
+<code>E^2 - p^2 &lt; 0</code> return <code>-2.0</code>
+</li>
+<li>Have
+<code>bool invariant_mass(double E, double p, double&amp; mass)</code>,
+return <code>false</code> and set <code>mass</code> to <code>-1.0</code>
+if <code>E &lt; 0</code> or <code>E^2 - p^2 &lt; 0</code>.</li>
+<li>If <code>E &lt; 0</code>, terminate execution completely.</li>
+</ol>
+<p>All of these are defining what happens on and just outside the
+boundaries of applicability of the function, which are often the most
+trouble prone parts of our codes. Thus no matter how we handle errors
+here, we should always test that they <em>are</em> handled, and as we
+<em>expect</em>.</p>
+</section><section><h2 class="section-heading" id="testing-for-exceptions-with-googletest">Testing for exceptions with GoogleTest<a class="anchor" aria-label="anchor" href="#testing-for-exceptions-with-googletest"></a>
+</h2>
+<hr class="half-width">
+<p>To check that a function throws an exception <em>and</em> that the
+thrown exception is the correct one, GoogleTest provides the
+<code>EXPECT_THROW</code> (and corresponding <code>ASSERT_*</code> form)
+assertion. This is very simple, so let’s use it to implement the
+<code>E&lt;0</code> error case in the <code>UnphysicalEnergies</code>
+test case:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="co">// Case 2. Test unphysical energies</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a>TEST<span class="op">(</span>InvariantMass<span class="op">,</span> UnphysicalEnergies<span class="op">)</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a><span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a>  EXPECT_THROW<span class="op">(</span>invariant_mass<span class="op">(-</span><span class="fl">1.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">),</span> <span class="bu">std::</span>domain_error<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"negative input energy does not throw"</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>The first argument is just the expression we want to assert on, the
+second is the <em>C++ type</em> of what we are asserting the expression
+will throw. Building and running again, we’ll now see the
+<code>UnphysicalEnergies</code> passes:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">$</span> ctest <span class="at">--test-dir</span> build <span class="at">--output-on-failure</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a><span class="ex">Test</span> project /tmp/ccptepp-test/build</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a>    <span class="ex">Start</span> 1: TestInvariantMass</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a><span class="ex">1/1</span> Test <span class="co">#1: TestInvariantMass ................   Passed    0.23 sec</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a><span class="ex">100%</span> tests passed, 0 tests failed out of 1</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a><span class="ex">Total</span> Test time <span class="er">(</span><span class="ex">real</span><span class="kw">)</span> <span class="ex">=</span>   0.24 sec</span></code></pre>
+</div>
+<p>Let’s go on to add the case for negative mass squared but
+deliberately make the expected assertion type wrong:</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="co">// Case 2. Test unphysical energies</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a>TEST<span class="op">(</span>InvariantMass<span class="op">,</span> UnphysicalEnergies<span class="op">)</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a><span class="op">{</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a>   EXPECT_THROW<span class="op">(</span>invariant_mass<span class="op">(-</span><span class="fl">1.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">),</span> <span class="bu">std::</span>domain_error<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"negative input energy does not throw correctly"</span><span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a>   EXPECT_THROW<span class="op">(</span>invariant_mass<span class="op">(</span><span class="fl">1.0</span><span class="op">,</span> <span class="fl">1.1</span><span class="op">),</span> <span class="bu">std::</span>runtime_error<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"negative mass-squared does not throw correctly"</span><span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1" aria-label="code-block-4-6"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>Building and running now trigger an error:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ex">...</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="bu">[</span> RUN      <span class="bu">]</span> <span class="ex">InvariantMass.UnphysicalEnergies</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a><span class="ex">/tmp/ccptepp-test/test/test_invariant_mass.cpp:29:</span> Failure</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a><span class="ex">Expected:</span> invariant_mass<span class="er">(</span><span class="ex">1.0,</span> 1.1<span class="kw">)</span> <span class="ex">throws</span> an exception of type std::runtime_error.</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a>  <span class="ex">Actual:</span> it throws std::domain_error with description <span class="st">"unphysical mass^2"</span>.</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1" aria-label="code-block-5-6"></a><span class="ex">negative</span> mass-squared does not throw correctly</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1" aria-label="code-block-5-7"></a></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1" aria-label="code-block-5-8"></a><span class="bu">[</span>  FAILED  <span class="bu">]</span> <span class="ex">InvariantMass.UnphysicalEnergies</span> <span class="er">(</span><span class="ex">1</span> ms<span class="kw">)</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1" aria-label="code-block-5-9"></a><span class="ex">...</span></span></code></pre>
+</div>
+<p>Thus we get a helpful message when an exception <em>is</em> thrown
+but it is not the <em>right type of exception</em>. We can also confirm
+that the assertion will fail if the call <em>does not throw at all</em>
+by changing the assertion to:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="co">// right exception type, but it won't throw!</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a>EXPECT_THROW<span class="op">(</span>invariant_mass<span class="op">(</span><span class="fl">1.1</span><span class="op">,</span> <span class="fl">1.0</span><span class="op">),</span> <span class="bu">std::</span>domain_error<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"negative mass-squared does not throw correctly"</span><span class="op">;</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="bu">[</span> RUN      <span class="bu">]</span> <span class="ex">InvariantMass.UnphysicalEnergies</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a><span class="ex">/tmp/ccptepp-test/test/test_invariant_mass.cpp:29:</span> Failure</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a><span class="ex">Expected:</span> invariant_mass<span class="er">(</span><span class="ex">1.1,</span> 1.0<span class="kw">)</span> <span class="ex">throws</span> an exception of type std::domain_error.</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>  <span class="ex">Actual:</span> it throws nothing.</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a><span class="ex">negative</span> mass-squared does not throw correctly</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a><span class="bu">[</span>  FAILED  <span class="bu">]</span> <span class="ex">InvariantMass.UnphysicalEnergies</span> <span class="er">(</span><span class="ex">0</span> ms<span class="kw">)</span></span></code></pre>
+</div>
+<div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>As you might anticipate, GoogleTest also provides
+<code>EXPECT_NO_THROW</code>, which asserts that an expression does
+<em>not</em> throw <em>any</em> exception. This is most useful when a
+function can throw for some inputs and you want to explicitly document
+that a particular valid input is safe. It’s less useful for general. It
+is less useful when a test already makes assertions about the return
+value, since a thrown exception would cause those assertions to fail
+anyway.</p>
+</div>
+</div>
+</div>
+<p>Together, these cover all of the possible cases we’ll need, but there
+are two small things to watch out for.</p>
+<p>First, we’ve chosen to throw the <em>same</em> exception type for
+both error cases. This isn’t unreasonable since they are both domain
+errors, but strictly speaking this means our two test cases
+<em>aren’t</em> completely distinguishing the <code>E&lt;0</code> and
+<code>E^2 - p^2 &lt; 0</code> cases. We <em>are</em> testing the
+specification is met though, which the main thing here. If we did want
+to be specific here, we might introduce our own exception types to
+distinguish both.</p>
+<p>Second, and somewhat related, GoogleTest’s check on the <em>type</em>
+of the exception thrown uses C++ “is-a” inheritance rules if class types
+(as <code>std::domain_error</code> is) are involved. What this means is
+that <em>if</em> <code>invariant_mass</code> threw an exception, say
+<code>foo_exception</code>, that <em>inherits</em> from
+<code>std::domain_error</code> in these assertions, the <em>test would
+actually pass</em>. We can mock this by writing:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a>EXPECT_THROW<span class="op">(</span>invariant_mass<span class="op">(</span><span class="fl">1.0</span><span class="op">,</span> <span class="fl">1.1</span><span class="op">),</span> <span class="bu">std::</span>exception<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"negative mass-squared does not throw correctly"</span><span class="op">;</span></span></code></pre>
+</div>
+<p>as <code>std::domain_error</code> inherits from
+<code>std::exception</code>. Building and running this will show a
+passing test case:</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> ctest <span class="at">--test-dir</span> build <span class="at">--output-on-failure</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a><span class="ex">Test</span> project /tmp/ccptepp-test/build</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a>    <span class="ex">Start</span> 1: TestInvariantMass</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a><span class="ex">1/1</span> Test <span class="co">#1: TestInvariantMass ................   Passed    0.23 sec</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a><span class="ex">100%</span> tests passed, 0 tests failed out of 1</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a><span class="ex">Total</span> Test time <span class="er">(</span><span class="ex">real</span><span class="kw">)</span> <span class="ex">=</span>   0.24 sec</span></code></pre>
+</div>
+<p>This is intended and semantically correct behaviour from GoogleTest -
+we have asked it to check that a <code>std::exception</code> is thrown,
+and <code>std::domain_error</code> “is-a” <code>std::exception</code>,
+so the assertion condition is met. There’s no real way around this other
+than to be as specific as possible when declaring the type you expect to
+be thrown, and don’t have deeply nested inheritance hierarchies for
+exceptions!</p>
+<div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>How would we test the other possible error handling mechanisms we
+outlined at the start of the episode? The first three are logically
+handled by <code>EXPECT_EQ</code> or <code>ASSERT_EQ</code> and their
+variants we’ve seen already. We <em>can</em> actually test for
+termination with so-called “death tests”. These are rather specialised,
+but do have their place.</p>
 </div>
 </div>
 </div>
@@ -3547,19 +4077,26 @@ it specifically</li>
 <ul>
 <li>Testing what your code refuses to do is as important as testing what
 it does</li>
-<li>EXPECT_THROW checks both that an exception was raised and that it
-was the right type — the type is part of the contract</li>
-<li>Boundary conditions are where bugs most commonly live — zero, empty,
-equal, and just-outside-range inputs deserve explicit tests</li>
 <li>A function’s error handling is part of its specification and should
-be documented and tested like any other behaviour</li>
-<li>With invariant_mass() now fully tested, we have seen the complete
-range of GoogleTest assertion types — the remaining episodes apply these
-tools to more complex code</li>
+be documented and tested like any other behaviour.</li>
+<li>These often determine boundary conditions where bugs most commonly
+live, making them vital to test.</li>
+<li>
+<code>EXPECT_THROW</code> checks both that an exception was raised
+and that it was the right type — the type is part of the function’s
+specification.</li>
+<li>With <code>invariant_mass()</code> now fully tested, we have seen a
+near complete range of GoogleTest assertion types — the remaining
+episodes apply these tools to more complex code.</li>
 </ul>
 </div>
 </div>
-</div></section><section id="aio-testingclasses"><p>Content from <a href="testingclasses.html">Testing stateful classes</a></p>
+</div>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</section></section><section id="aio-testingclasses"><p>Content from <a href="testingclasses.html">Testing stateful classes</a></p>
 <hr>
 <p>Last updated on 2026-06-29 |
 
@@ -3759,13 +4296,15 @@ we need to do here is add one line:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="co"># 2. C++ Standard setup</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_STANDARD</span> 17)</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_STANDARD_REQUIRED</span> <span class="ot">ON</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_EXTENSIONS</span> <span class="ot">OFF</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a><span class="co"># 2a. Coverage Build Type flags for C++ </span></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_FLAGS_COVERAGE</span> <span class="st">"-O0 --coverage"</span>)</span></code></pre>
+<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a>...</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="co"># - C++ Standard setup</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_STANDARD</span> 17)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_STANDARD_REQUIRED</span> <span class="ot">ON</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_EXTENSIONS</span> <span class="ot">OFF</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a><span class="co"># - Coverage Build Type flags for C++ </span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_FLAGS_COVERAGE</span> <span class="st">"-O0 --coverage"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a>...</span></code></pre>
 </div>
 <div id="callout1" class="callout">
 <div class="callout-square">
@@ -3893,7 +4432,6 @@ terminal, so we’ll see something like</p>
 </div>
 <p>You can now open <code>build-coverage/coverage.html</code> in your
 browser of choice, and you should see:</p>
-<p>Let’s focus on the</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -3954,33 +4492,6 @@ any links that you are not going to use.
 <li>Describe the relationship between unit testing, coverage, and
 sanitizers as complementary tools</li>
 </ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="when-to-use-other-sanitizers" class="callout discussion">
-<div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
-</div>
-<span class="callout-header">Discussion</span>
-<div id="when-to-use-other-sanitizers" class="callout-inner">
-<h3 class="callout-title">When to use other sanitizers?</h3>
-<div class="callout-content">
-<p>Only look at ASan, when and where could we use the others.</p>
-<div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
-  <h3 class="accordion-header" id="headingSpoiler1">
-  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
-  Spoiler!
-  </h3>
-</button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
-<div class="accordion-body">
-<p>Some examples of use</p>
-</div>
-</div>
 </div>
 </div>
 </div>

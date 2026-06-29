@@ -917,7 +917,7 @@ detector resolution on our calculated mass:</p>
 </h3>
 <pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1" aria-label="code-block-13-2"></a><span class="pp">#include </span><span class="im">&lt;random&gt;</span></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a><span class="pp">#include </span><span class="im">"invariant_mass.h"</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a><span class="pp">#include </span><span class="im">"invariant_mass.hpp"</span></span>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1" aria-label="code-block-13-4"></a></span>
 <span id="cb13-5"><a href="#cb13-5" tabindex="-1" aria-label="code-block-13-5"></a><span class="co">/* Estimate the invariant mass resolution by smearing true quantities</span></span>
 <span id="cb13-6"><a href="#cb13-6" tabindex="-1" aria-label="code-block-13-6"></a><span class="co">   with Gaussian detector resolution */</span></span>
@@ -952,8 +952,9 @@ detector resolution on our calculated mass:</p>
 <code>process_candidates()</code> — it takes all inputs as parameters,
 there’s no I/O, and it returns a value. But it still has testability
 problems.</p>
-<ol style="list-style-type: decimal"><li>What would happen if you wrote assert(estimate_mass_resolution(91.2,
-0.0) == X) for some value X you computed by hand?</li>
+<ol style="list-style-type: decimal"><li>What would happen if you wrote
+<code>assert(estimate_mass_resolution(91.2, 0.0) == X)</code> for some
+value X you computed by hand?</li>
 <li>How would you restructure the function so that a test could produce
 a reproducible result? What is the minimal change needed?</li>
 <li>Even with that fix, what would your test actually be checking? Is

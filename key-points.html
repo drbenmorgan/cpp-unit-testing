@@ -461,8 +461,8 @@ cases</em>.</li>
 <code>expression</code> is false — silence means the test passed</li>
 <li>Failure of an assertion results in an error message and program
 termination, providing a clear <em>test failure</em> condition.</li>
-<li>A failing assert() tells you something went wrong, and where in the
-sode, but not directly <em>how</em>.</li>
+<li>A failing <code>assert()</code> tells you something went wrong, and
+where in the sode, but not directly <em>how</em>.</li>
 <li>Manual compilation of multiple test files does not scale.</li>
 </ul></section><section id="cmakectest"><h2 class="section-heading"><a href="cmakectest.html">Integrating tests into a build system</a></h2>
 <hr class="half-width">
@@ -490,14 +490,17 @@ workflow does not change</li>
 <code>EXPECT_*</code> continues after a failure;
 <code>ASSERT_*</code> stops the current <code>TEST</code> — use
 <code>ASSERT_*</code> when continuing would be meaningless.</li>
-</ul></section><section id="testingfloatingpoint"><h2 class="section-heading"><a href="testingfloatingpoint.html">Floating point comparisons</a></h2>
+</ul></section><section id="testingfloatingpoint"><h2 class="section-heading"><a href="testingfloatingpoint.html">Floating point comparisonsTesting with floating point numbers<a class="anchor" aria-label="anchor" href="#testing-with-floating-point-numbers"></a></a></h2>
 <hr class="half-width">
 <ul>
 <li>Floating point arithmetic is not exact — two calculations that are
-mathematically equal may not be numerically equal</li>
+mathematically equal may not be numerically equal.</li>
 <li>
 <code>EXPECT_EQ</code> is appropriate for floating point only when
-the value is</li>
+the value is exactly representable.</li>
+<li>
+<code>EXPECT_DOUBLE_EQ</code> and <code>EXPECT_FLOAT_EQ</code> check
+that two floating point numbers are within 4 ULPs of each other.</li>
 <li>
 <code>EXPECT_NEAR(a, b, tol)</code> checks that
 <code>|a - b| &lt; tol</code> — the tolerance should reflect the
@@ -508,15 +511,17 @@ chosen arbitrarily.</li>
 <ul>
 <li>Testing what your code refuses to do is as important as testing what
 it does</li>
-<li>EXPECT_THROW checks both that an exception was raised and that it
-was the right type — the type is part of the contract</li>
-<li>Boundary conditions are where bugs most commonly live — zero, empty,
-equal, and just-outside-range inputs deserve explicit tests</li>
 <li>A function’s error handling is part of its specification and should
-be documented and tested like any other behaviour</li>
-<li>With invariant_mass() now fully tested, we have seen the complete
-range of GoogleTest assertion types — the remaining episodes apply these
-tools to more complex code</li>
+be documented and tested like any other behaviour.</li>
+<li>These often determine boundary conditions where bugs most commonly
+live, making them vital to test.</li>
+<li>
+<code>EXPECT_THROW</code> checks both that an exception was raised
+and that it was the right type — the type is part of the function’s
+specification.</li>
+<li>With <code>invariant_mass()</code> now fully tested, we have seen a
+near complete range of GoogleTest assertion types — the remaining
+episodes apply these tools to more complex code.</li>
 </ul></section><section id="testingclasses"><h2 class="section-heading"><a href="testingclasses.html">Testing stateful classes</a></h2>
 <hr class="half-width">
 <ul>

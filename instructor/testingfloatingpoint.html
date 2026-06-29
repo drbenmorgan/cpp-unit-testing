@@ -388,12 +388,12 @@ correct?</li>
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Explain why exact equality is unreliable for floating point
-values</li>
-<li>Demonstrate a case where <code>EXPECT_EQ</code> fails on values that
+<ul><li>Demonstrate a case where <code>EXPECT_EQ</code> fails on values that
 are mathematically equal</li>
-<li>Use <code>EXPECT_NEAR</code> with an appropriate absolute
-tolerance</li>
+<li>Explain why exact equality is unreliable for floating point
+values</li>
+<li>Use <code>EXPECT_DOUBLE_EQ</code> and <code>EXPECT_NEAR</code> with
+an appropriate absolute tolerance</li>
 <li>Write tests for invariant_mass() that correctly handle floating
 point results</li>
 </ul></div>
@@ -401,6 +401,305 @@ point results</li>
 </div>
 </div>
 </div>
+<div class="section level1">
+<h1 id="testing-with-floating-point-numbers">Testing with floating point numbers<a class="anchor" aria-label="anchor" href="#testing-with-floating-point-numbers"></a></h1>
+<p>Now we understand how GoogleTest deals with failures, we can start
+expanding the range of assertions used in the
+<code>PhysicalDomain</code>. Let’s start with the two basic massless
+ones we set up and write what we <em>actually</em> expect
+<code>invariant_mass()</code> to return:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="co">// Case 1. Test physical domain</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a>TEST<span class="op">(</span>InvariantMass<span class="op">,</span> PhysicalDomain<span class="op">)</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="op">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">),</span> <span class="dv">10</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"at rest particle does not have correct mass"</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">),</span> <span class="fl">0.0</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"massless particle not massless"</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>Building and running again, we should now see that
+<code>PhysicalDomain</code> test case passes:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">...</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a><span class="bu">[</span> RUN      <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a><span class="bu">[</span>       OK <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span> <span class="er">(</span><span class="ex">0</span> ms<span class="kw">)</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a><span class="ex">...</span></span></code></pre>
+</div>
+<div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>GoogleTest <em>doesn’t</em> print anything for passing tests. That
+might seem surprising, but it makes sense: you’ve encoded the
+expectation in the test code, and repeated it here would be superfluous.
+In addition, it would clutter the output with passing test info when we
+want to see <em>failures</em>.</p>
+<p>The one exception here is if you’re debugging a test that’s passing
+when you expect it to fail. One technique here is to reverse the logic
+of the test, but don’t forget to re-reverse it for production! You could
+also just use good old “debug by <code>std::cout</code>”.</p>
+<p>Unfortunately, there’s no easy way to get GoogleTest to be fully
+verbose here.</p>
+</div>
+</div>
+</div>
+<p>These are trivial cases, so let’s think about assertions for a
+particle with mass in motion. Since <span class="math inline">\(E^2 =
+p^2 + m^2\)</span> is Pythagoras’s rule, we could also use this:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="co">// Case 1. Test physical domain</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a>TEST<span class="op">(</span>InvariantMass<span class="op">,</span> PhysicalDomain<span class="op">)</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a><span class="op">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">),</span> <span class="dv">10</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"at rest particle does not have correct mass"</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">),</span> <span class="fl">0.0</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"massless particle not massless"</span><span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">3</span><span class="op">),</span> <span class="dv">4</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">4</span><span class="op">),</span> <span class="dv">3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>Building and running again, these new assertions pass:</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">...</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="bu">[</span> RUN      <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a><span class="bu">[</span>       OK <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span> <span class="er">(</span><span class="ex">0</span> ms<span class="kw">)</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="ex">...</span></span></code></pre>
+</div>
+<p>Since we’re dealing with floating point numbers, let’s add the same
+assertion rule but with the inputs a factor of ten smaller:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="co">// Case 1. Test physical domain</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a>TEST<span class="op">(</span>InvariantMass<span class="op">,</span> PhysicalDomain<span class="op">)</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a><span class="op">{</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">),</span> <span class="dv">10</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"at rest particle does not have correct mass"</span><span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">),</span> <span class="fl">0.0</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"massless particle not massless"</span><span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1" aria-label="code-block-5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1" aria-label="code-block-5-7"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">3</span><span class="op">),</span> <span class="dv">4</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1" aria-label="code-block-5-8"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">4</span><span class="op">),</span> <span class="dv">3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1" aria-label="code-block-5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1" aria-label="code-block-5-10"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="fl">0.5</span><span class="op">,</span> <span class="fl">0.3</span><span class="op">),</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1" aria-label="code-block-5-11"></a>   EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="fl">0.5</span><span class="op">,</span> <span class="fl">0.4</span><span class="op">),</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1" aria-label="code-block-5-12"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>If we build and run this now however, we get what may be a slightly
+surprising failure:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">...</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="bu">[</span> RUN      <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="ex">/Users/benmorgan/tmp/pix/ccptepp-test/test/test_invariant_mass.cpp:17:</span> Failure</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a><span class="ex">Expected</span> equality of these values:</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a>  <span class="ex">invariant_mass</span><span class="er">(</span><span class="ex">0.5,</span> 0.4<span class="kw">)</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1" aria-label="code-block-6-6"></a>    <span class="ex">Which</span> is: 0.29999999999999993</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1" aria-label="code-block-6-7"></a>  <span class="ex">0.3</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1" aria-label="code-block-6-8"></a><span class="ex">off</span> mass shell</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1" aria-label="code-block-6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1" aria-label="code-block-6-10"></a><span class="bu">[</span>  FAILED  <span class="bu">]</span> <span class="ex">InvariantMass.PhysicalDomain</span> <span class="er">(</span><span class="ex">0</span> ms<span class="kw">)</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1" aria-label="code-block-6-11"></a><span class="ex">...</span></span></code></pre>
+</div>
+<p>We have run into one of the main issues with floating point
+operations and arithmetic - <strong>they are not exact</strong>.
+Mathematically <span class="math inline">\(0.3 = \sqrt (0.5^2 -
+0.4^2)\)</span>, but the implementation of <code>sqrt</code> doesn’t
+algebraically/symbolically calculate the result. Even basic operations
+can produce results we can’t compare <em>exactly</em>. To illustrate
+this, trying adding the following to <code>PhysicalDomain</code>:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a>  EXPECT_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="fl">0.5</span><span class="op">,</span> <span class="fl">0.4</span><span class="op">),</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a>  EXPECT_EQ<span class="op">(</span><span class="fl">0.1</span><span class="op">+</span><span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"summation not exact"</span><span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>  EXPECT_EQ<span class="op">(</span><span class="fl">0.1</span><span class="op">+</span><span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.2</span><span class="op">+</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"not commutative"</span><span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a>  EXPECT_EQ<span class="op">((</span><span class="fl">0.1</span><span class="op">+</span><span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">0.3</span><span class="op">+</span><span class="fl">0.2</span><span class="op">))</span> <span class="op">&lt;&lt;</span> <span class="st">"not associative"</span><span class="op">;</span></span></code></pre>
+</div>
+<p>Compiling and running, we’ll see:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="op">[</span> RUN      <span class="op">]</span> InvariantMass<span class="op">.</span>PhysicalDomain</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="op">/</span>Users<span class="op">/</span>benmorgan<span class="op">/</span>tmp<span class="op">/</span>pix<span class="op">/</span>ccptepp<span class="op">-</span>test<span class="op">/</span>test<span class="op">/</span>test_invariant_mass<span class="op">.</span>cpp<span class="op">:</span><span class="dv">17</span><span class="op">:</span> Failure</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a>Expected equality of these values<span class="op">:</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a>  invariant_mass<span class="op">(</span><span class="fl">0.5</span><span class="op">,</span> <span class="fl">0.4</span><span class="op">)</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a>    Which is<span class="op">:</span> <span class="fl">0.29999999999999993</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a>  <span class="fl">0.3</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a>off mass shell</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a><span class="op">/</span>Users<span class="op">/</span>benmorgan<span class="op">/</span>tmp<span class="op">/</span>pix<span class="op">/</span>ccptepp<span class="op">-</span>test<span class="op">/</span>test<span class="op">/</span>test_invariant_mass<span class="op">.</span>cpp<span class="op">:</span><span class="dv">19</span><span class="op">:</span> Failure</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1" aria-label="code-block-8-10"></a>Expected equality of these values<span class="op">:</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1" aria-label="code-block-8-11"></a>  <span class="fl">0.1</span><span class="op">+</span><span class="fl">0.2</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1" aria-label="code-block-8-12"></a>    Which is<span class="op">:</span> <span class="fl">0.30000000000000004</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1" aria-label="code-block-8-13"></a>  <span class="fl">0.3</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1" aria-label="code-block-8-14"></a><span class="kw">not</span> exact</span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1" aria-label="code-block-8-15"></a></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1" aria-label="code-block-8-16"></a><span class="op">/</span>Users<span class="op">/</span>benmorgan<span class="op">/</span>tmp<span class="op">/</span>pix<span class="op">/</span>ccptepp<span class="op">-</span>test<span class="op">/</span>test<span class="op">/</span>test_invariant_mass<span class="op">.</span>cpp<span class="op">:</span><span class="dv">21</span><span class="op">:</span> Failure</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1" aria-label="code-block-8-17"></a>Expected equality of these values<span class="op">:</span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1" aria-label="code-block-8-18"></a>  <span class="op">(</span><span class="fl">0.1</span><span class="op">+</span><span class="fl">0.3</span><span class="op">)+</span><span class="fl">0.2</span></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1" aria-label="code-block-8-19"></a>    Which is<span class="op">:</span> <span class="fl">0.60000000000000009</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1" aria-label="code-block-8-20"></a>  <span class="fl">0.1</span><span class="op">+(</span><span class="fl">0.3</span><span class="op">+</span><span class="fl">0.2</span><span class="op">)</span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1" aria-label="code-block-8-21"></a>    Which is<span class="op">:</span> <span class="fl">0.6</span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1" aria-label="code-block-8-22"></a><span class="kw">not</span> associative</span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1" aria-label="code-block-8-23"></a></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1" aria-label="code-block-8-24"></a><span class="op">[</span>  FAILED  <span class="op">]</span> InvariantMass<span class="op">.</span>PhysicalDomain <span class="op">(</span><span class="dv">0</span> ms<span class="op">)</span></span></code></pre>
+</div>
+<p>In general, floating point arithmatic is <em>commutative</em> but
+<em>not associative</em>, and we can’t guarantee <em>mathematically
+exact</em> equality between two expressions. We got away with this in
+our earlier tests because we were lucky that the numbers chosen are
+exactly representable and that an algorithm like <code>sqrt</code> can
+get to this exact representation.</p>
+<p>Thankfully, GoogleTest provides some specialized assertions to handle
+floating point comparisons.</p>
+<div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Floating point representation is a <em>huge</em> topic. The gory
+details are provided in the <a href="https://en.wikipedia.org/wiki/IEEE_754" class="external-link">IEEE754</a> specification,
+which modern hardware implements.</p>
+</div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="comparing-floating-point-numbers-in-googletest">Comparing floating point numbers in GoogleTest<a class="anchor" aria-label="anchor" href="#comparing-floating-point-numbers-in-googletest"></a></h2>
+<p>If we look at the actual number returned by
+<code>invariant_mass(0.5,0.4)</code> and <code>0.1+0.2</code> reported
+by our assertions, we see that the former is slightly less than
+<code>0.3</code> and the later slightly larger. As you might guess from
+earlier discussion, floating point numbers are not <em>continuous</em>
+like real numbers. Rather, adjacent floating point numbers are separated
+by a <em>distance</em> called the <a href="https://en.wikipedia.org/wiki/Unit_in_the_last_place" class="external-link"><em>Unit in
+the Last Place</em> (sometimes <em>Unit of Least Precision</em>) or
+“ULP”</a>. What we’re seeing in the two calculations of “0.3” is
+<em>correctness to within a given number of ULPs</em>.</p>
+<div id="callout3" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>IEEE754 specifies rounding rules for arithmetic operations and
+<code>sqrt</code> that they be within 0.5ULP of the mathematically exact
+result. Good numeric libraries will calculate the transcendental
+functions to 0.5-1ULP of the mathematically exact result.</p>
+</div>
+</div>
+</div>
+<p>In GoogleTest, the basic assertion for comparing two
+<code>double</code> floating point numbers is
+<code>EXPECT_DOUBLE_EQ(a, b)</code> (which naturally has an
+<code>ASSERT_*</code> version). For <code>float</code>, the
+corresponding <code>EXPECT_FLOAT_EQ</code> <strong>must</strong> be used
+because the comparisons are fundamentally different. Both of these check
+that <code>a</code> and <code>b</code> are within 4ULPs of each other,
+failing of this condition is not met. Rewriting
+<code>PhysicalDomain</code> to use this is very simple:</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="co">// Case 1. Test physical domain</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a>TEST<span class="op">(</span>InvariantMass<span class="op">,</span> PhysicalDomain<span class="op">)</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a><span class="op">{</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">),</span> <span class="dv">10</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"at rest particle does not have correct mass"</span><span class="op">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">100</span><span class="op">,</span> <span class="dv">100</span><span class="op">),</span> <span class="fl">0.0</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"massless particle not massless"</span><span class="op">;</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">3</span><span class="op">),</span> <span class="dv">4</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">4</span><span class="op">),</span> <span class="dv">3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1" aria-label="code-block-9-9"></a></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1" aria-label="code-block-9-10"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="fl">0.5</span><span class="op">,</span> <span class="fl">0.3</span><span class="op">),</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1" aria-label="code-block-9-11"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span>invariant_mass<span class="op">(</span><span class="fl">0.5</span><span class="op">,</span> <span class="fl">0.4</span><span class="op">),</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"off mass shell"</span><span class="op">;</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1" aria-label="code-block-9-12"></a></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1" aria-label="code-block-9-13"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span><span class="fl">0.1</span><span class="op">+</span><span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"not exact"</span><span class="op">;</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1" aria-label="code-block-9-14"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span><span class="fl">0.7</span><span class="op">-</span><span class="fl">0.4</span><span class="op">,</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"not exact"</span><span class="op">;</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1" aria-label="code-block-9-15"></a>  EXPECT_DOUBLE_EQ<span class="op">(</span><span class="fl">0.1</span><span class="op">+</span><span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.2</span><span class="op">+</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"not commutative"</span><span class="op">;</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1" aria-label="code-block-9-16"></a>  EXPECT_DOUBLE_EQ<span class="op">((</span><span class="fl">0.1</span><span class="op">+</span><span class="fl">0.3</span><span class="op">)+</span><span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.1</span><span class="op">+(</span><span class="fl">0.3</span><span class="op">+</span><span class="fl">0.2</span><span class="op">))</span> <span class="op">&lt;&lt;</span> <span class="st">"not associative"</span><span class="op">;</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1" aria-label="code-block-9-17"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>which we should now see results in a clean pass when rebuilding and
+running:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="op">[</span> RUN      <span class="op">]</span> InvariantMass<span class="op">.</span>PhysicalDomain</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a><span class="op">[</span>       OK <span class="op">]</span> InvariantMass<span class="op">.</span>PhysicalDomain <span class="op">(</span><span class="dv">0</span> ms<span class="op">)</span></span></code></pre>
+</div>
+<div id="callout4" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>You might think 4ULPs is a bit wide when we stated IEE754 requires
+0.5-1ULP. However, the IEEE754 requirement is on single operations only.
+4ULPs can actually be quite tight when we have multiple operations, as
+we do in <code>invariant_mass</code>.</p>
+</div>
+</div>
+</div>
+<p>For this type of simple, mostly mathematical check,
+<code>EXPECT_DOUBLE_EQ</code> suffices. However, the numerical methods
+used in scientific codes are generally more complex, involving multiple
+arithmetic operations and transcendental function calls. The use of
+multithreading/multiprocess introduces the additional complication of
+<em>ordering</em> of calculations, so repeated runs might not produce a
+binary or numerically identical number. 4ULPs is quite a tight bound, so
+if the number we write to compare the result against is an experimental
+result or a numerical calculation only know to <code>N</code>
+significant digits, we could quite easily get a failing test for a
+perfectly valid calculation.</p>
+<p>Here, it is better to specify the exact <em>tolerance</em> we want
+between the calculation and expected result, and we can use the
+<code>EXPECT_NEAR(a, b, tol)</code> (or <code>ASSERT_NEAR</code>)
+assertion for this. This is general purpose (one can use it for integers
+as well) and checks that <code>|a - b| &lt; tol</code>, failing if this
+condition is not met. For example, say we want to use some arbitrary
+numbers to test <code>invariant_mass</code>:</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="co">// Case 1. Test physical domain</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a>TEST<span class="op">(</span>InvariantMass<span class="op">,</span> PhysicalDomain<span class="op">)</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a><span class="op">{</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a>  <span class="op">...</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a>  EXPECT_NEAR<span class="op">(</span>invariant_mass<span class="op">(</span><span class="fl">54.9</span><span class="op">,</span> <span class="fl">3.14</span><span class="op">),</span> <span class="fl">54.8</span><span class="op">,</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="st">"incorrect mass calculation"</span><span class="op">;</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1" aria-label="code-block-11-6"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>Now <span class="math inline">\(\sqrt(54.9^2 - 3.14^2) =
+54.81013045049245\)</span> so why not use that and
+<code>EXPECT_DOUBLE_EQ</code>? Ultimately, the result can be no more
+precise than its least precise input. Our inputs are 3 significant
+figures, so we should not expect more than 3 significant figures in the
+result — which for a value of order 54 corresponds to a absolute
+tolerance of about 0.1.</p>
+<p>Choosing a reasonable tolerance in realistic cases is dependent on
+both the precision of the inputs <em>and</em> the form of the
+calculation. Ultimately, what we are doing is applying the error
+propagation we do in data analysis to our algorithms, accounting for the
+nature of floating point operations. This is a large topic itself, which
+we defer to other material.</p>
+<p>One final question we might have is have we covered the entire range
+of numbers possible? This is a hard question as well and more towards
+the very difficult task of formal verification. Covering a
+representative range of typical inputs, plus the boundaries and error
+conditions we will address next, will give a practically useful test
+suite — even if formal exhaustive verification is out of reach.</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -409,10 +708,13 @@ point results</li>
 <div class="callout-inner">
 <div class="callout-content">
 <ul><li>Floating point arithmetic is not exact — two calculations that are
-mathematically equal may not be numerically equal</li>
+mathematically equal may not be numerically equal.</li>
 <li>
 <code>EXPECT_EQ</code> is appropriate for floating point only when
-the value is</li>
+the value is exactly representable.</li>
+<li>
+<code>EXPECT_DOUBLE_EQ</code> and <code>EXPECT_FLOAT_EQ</code> check
+that two floating point numbers are within 4 ULPs of each other.</li>
 <li>
 <code>EXPECT_NEAR(a, b, tol)</code> checks that
 <code>|a - b| &lt; tol</code> — the tolerance should reflect the
@@ -425,6 +727,8 @@ chosen arbitrarily.</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
+</div>
+</div>
 
 
 

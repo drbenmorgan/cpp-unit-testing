@@ -10,6 +10,9 @@
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/aio.html</loc>
+  </url>
+  <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/citation.html</loc>
   </url>
   <url>
@@ -28,6 +31,9 @@
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/googletest.html</loc>
   </url>
   <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/images.html</loc>
+  </url>
+  <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/index.html</loc>
   </url>
   <url>
@@ -38,6 +44,9 @@
   </url>
   <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/aio.html</loc>
   </url>
   <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/citation.html</loc>
@@ -58,10 +67,19 @@
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/googletest.html</loc>
   </url>
   <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/images.html</loc>
+  </url>
+  <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/index.html</loc>
   </url>
   <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/instructor-notes.html</loc>
+  </url>
+  <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/introduction.html</loc>
+  </url>
+  <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/key-points.html</loc>
   </url>
   <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/profiles.html</loc>
@@ -85,7 +103,13 @@
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor/testingfloatingpoint.html</loc>
   </url>
   <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/instructor-notes.html</loc>
+  </url>
+  <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/introduction.html</loc>
+  </url>
+  <url>
+    <loc>https://drbenmorgan.github.io/cpp-unit-testing/key-points.html</loc>
   </url>
   <url>
     <loc>https://drbenmorgan.github.io/cpp-unit-testing/profiles.html</loc>
