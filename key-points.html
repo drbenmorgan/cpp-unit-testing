@@ -356,7 +356,7 @@
 <div class="accordion accordion-flush" id="accordionFlush12">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading12">
-        <a href="sanitizers.html">11. Testing with static analysers</a>
+        <a href="sanitizers.html">11. Sanitizers as another line of defence</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -524,12 +524,31 @@ near complete range of GoogleTest assertion types — the remaining
 episodes apply these tools to more complex code.</li>
 </ul></section><section id="testingclasses"><h2 class="section-heading"><a href="testingclasses.html">Testing stateful classes</a></h2>
 <hr class="half-width">
+<ol style="list-style-type: decimal">
+<li>A half-open interval <code>[x_min, x_max)</code> has been chosen for
+the bins — this is a decision with testable consequences.</li>
+<li>There’s a distinction between <code>n_entries()</code> and in-range
+fills — overflow and underflow are counted but excluded from
+<code>bin_counts()</code> and <code>mean()</code>
+</li>
+<li>Note the author has defined an unweighted mean!</li>
+</ol>
+<ul>
+<li>The name <code>HistogramConstruction</code> groups all
+construction-related tests in a clear <em>suite</em>.</li>
+<li>We see a use case for <code>EXPECT_NO_THROW</code>: valid inputs
+should not throw!</li>
+<li>
+<a href="https://google.github.io/googletest/reference/matchers.html" class="external-link">GoogleTest’s
+Matchers from its GMock Component</a> help to write tests more easily
+and expressively when dealing with more complex assertions.</li>
+</ul>
 <ul>
 <li>A stateful class is testable if its state is explicit and controlled
-through a well-defined interface — the difficulty arises from hidden or
-global state, not from state itself.</li>
+through a well-defined interface — the difficulty arises from
+<em>global</em> state, not from state itself.</li>
 <li>Reading the specification before writing tests is not optional — it
-determines what the tests should assert makes any ambiguities
+determines what the tests should assert and makes any ambiguities
 obvious.</li>
 <li>Each test case should verify one behaviour — if a test needs “and”
 in its name it is probably two tests</li>
@@ -559,7 +578,7 @@ coverage is necessary but not sufficient</li>
 <li>The coverage report is most useful as a guide to where tests are
 missing, not as a measure of test quality</li>
 <li>Beware of diminishing returns</li>
-</ul></section><section id="sanitizers"><h2 class="section-heading"><a href="sanitizers.html">Testing with static analysers</a></h2>
+</ul></section><section id="sanitizers"><h2 class="section-heading"><a href="sanitizers.html">Sanitizers as another line of defence</a></h2>
 <hr class="half-width">
 <ul>
 <li>Unit tests check that your code does what you intended; sanitizers
@@ -625,8 +644,8 @@ correct</li>
   "url": "https://drbenmorgan.github.io/cpp-unit-testing/key-points.html",
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/key-points.html",
   "dateCreated": "2026-05-27",
-  "dateModified": "2026-06-29",
-  "datePublished": "2026-06-29"
+  "dateModified": "2026-06-30",
+  "datePublished": "2026-06-30"
 }
 
   </script><script>

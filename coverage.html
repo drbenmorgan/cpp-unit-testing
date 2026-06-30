@@ -280,20 +280,12 @@
 <div class="accordion accordion-flush" id="accordionFlushcurrent">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-headingcurrent">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsecurrent" aria-expanded="true" aria-controls="flush-collapsecurrent">
         <span class="visually-hidden">Current Chapter</span>
         <span class="current-chapter">
         10. Code coverage
         </span>
-      </button>
+      
     </div><!--/div.accordion-header-->
-
-    <div id="flush-collapsecurrent" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushcurrent">
-      <div class="accordion-body">
-        <ul><li><a href="#test-coverage">Test coverage</a></li>
-<li><a href="#using-gcovr-to-generate-coverage-reports">Using <code>gcovr</code> to generate coverage reports</a></li>
-        </ul></div><!--/div.accordion-body-->
-    </div><!--/div.accordion-collapse-->
 
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
@@ -301,7 +293,7 @@
 <div class="accordion accordion-flush" id="accordionFlush12">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading12">
-        <a href="sanitizers.html">11. Testing with static analysers</a>
+        <a href="sanitizers.html">11. Sanitizers as another line of defence</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -359,13 +351,13 @@
           Previous: Test fixtures
         </a>
         <a class="chapter-link float-end" href="sanitizers.html" rel="next">
-          Next: Testing with static...
+          Next: Sanitizers as...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Code coverage</h1>
-        <p>Last updated on 2026-06-29 |
+        <p>Last updated on 2026-06-30 |
 
         <a href="https://github.com/drbenmorgan/cpp-unit-testing/edit/main/episodes/coverage.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -410,154 +402,6 @@ not catch</p></li>
 </div>
 </div>
 </div>
-<section><h2 class="section-heading" id="test-coverage">Test coverage<a class="anchor" aria-label="anchor" href="#test-coverage"></a></h2>
-<hr class="half-width"><p>We’ve been adding tests for <code>histogram</code> and as this has
-progressed you might have been asking “how do I know I’ve tested
-everything?”.</p>
-<p>The good news is that there are tools that can measure the
-<strong>coverage</strong> of our tests: which lines of the code we are
-testing were <em>actually</em> executed by tests.</p>
-<p>As you might guess, this requires instrumenting the compiled code and
-we therefore need to compile with flags that enable this. We should also
-turn optimization off, because this process can throw off line matching.
-Both of these motivate the simplest way to enable coverage in our tests:
-a separate CMake <em>build type</em> like the <code>Release</code> and
-<code>Debug</code> we saw earlier in which we can exactly specify the
-flags we want to use. Open up your <code>CMakeLists.txt</code> and all
-we need to do here is add one line:</p>
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a>...</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="co"># - C++ Standard setup</span></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_STANDARD</span> 17)</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_STANDARD_REQUIRED</span> <span class="ot">ON</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_EXTENSIONS</span> <span class="ot">OFF</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a><span class="co"># - Coverage Build Type flags for C++ </span></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_FLAGS_COVERAGE</span> <span class="st">"-O0 --coverage"</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a>...</span></code></pre>
-</div>
-<div id="callout1" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<span class="callout-header">Callout</span>
-<div class="callout-inner">
-<div class="callout-content">
-<p>CMake organises compiler flags for C++ and each build type in the
-following <em>variables</em>:</p>
-<ul><li>
-<code>CMAKE_CXX_FLAGS</code>: always applied compiler flags.</li>
-<li>
-<code>CMAKE_CXX_FLAGS_&lt;TYPE&gt;</code>: additional flags to
-<code>CMAKE_CXX_FLAGS</code> used in build type
-<code>&lt;TYPE&gt;</code>.</li>
-</ul><p>There are many other ways to set this up, but these are beyond the
-scope of this lesson.</p>
-</div>
-</div>
-</div>
-<p>We’ve explicitly turned off optimization (<code>-O0</code>) and
-enabled instrumentation for coverage with <code>--coverage</code>. We
-can now configure, build and test using our new <code>Coverage</code>
-build type like as we did for <code>Release</code>:</p>
-<div class="codewrapper sourceCode" id="cb2">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> cmake <span class="at">-GNinja</span> <span class="at">-DCMAKE_BUILD_TYPE</span><span class="op">=</span>Coverage <span class="at">-S</span> . <span class="at">-B</span> build-coverage</span></code></pre>
-</div>
-<div id="callout2" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<span class="callout-header">Callout</span>
-<div class="callout-inner">
-<div class="callout-content">
-<p>Note that the argument to <code>CMAKE_BUILD_TYPE</code> is
-case-insensitive! We could equally have used <code>coverage</code> or
-<code>CoVeRaGe</code>.</p>
-</div>
-</div>
-</div>
-<div class="codewrapper sourceCode" id="cb3">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> cmake <span class="at">--build</span> build-coverage</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a><span class="ex">...</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a><span class="ex">[1/4]</span> /usr/bin/c++  <span class="at">-I</span>/tmp/ccptepp-test/src <span class="at">-O0</span> <span class="at">--coverage</span> <span class="at">-std</span><span class="op">=</span>c++17 <span class="at">-arch</span> arm64 <span class="at">-MD</span> <span class="at">-MT</span> CMakeFiles/ccptepp.dir/src/invariant_mass.cpp.o <span class="at">-MF</span> CMakeFiles/ccptepp.dir/src/invariant_mass.cpp.o.d <span class="at">-o</span> CMakeFiles/ccptepp.dir/src/invariant_mass.cpp.o <span class="at">-c</span> /tmp/ccptepp-test/src/invariant_mass.cpp</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a><span class="ex">...</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> ctest <span class="at">--test-dir</span> build-coverage</span></code></pre>
-</div>
-<p>So far, so much the same, so what has changed? Compiling with
-coverage and then running the tests has actually generated two extra
-files per <code>.cpp</code> file. We can find these in
-<code>build-coverage</code> with:</p>
-<div class="codewrapper sourceCode" id="cb4">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> find build-coverage <span class="at">-name</span> <span class="st">"*.gc*"</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="ex">build-coverage/CMakeFiles/test_invariant_mass.dir/test/test_invariant_mass.cpp.gcno</span></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a><span class="ex">build-coverage/CMakeFiles/test_invariant_mass.dir/test/test_invariant_mass.cpp.gcda</span></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="ex">build-coverage/CMakeFiles/ccptepp.dir/src/invariant_mass.cpp.gcno</span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a><span class="ex">build-coverage/CMakeFiles/ccptepp.dir/src/invariant_mass.cpp.gcda</span></span></code></pre>
-</div>
-<p>The <code>.gcno</code> files are output by the compiler when
-building, and the <code>.gcda</code> files when the programs actually
-run. These contain all the information we need, but are in binary format
-so we need a tool to help us make sense of them.</p>
-</section><section><h2 class="section-heading" id="using-gcovr-to-generate-coverage-reports">Using <code>gcovr</code> to generate coverage reports<a class="anchor" aria-label="anchor" href="#using-gcovr-to-generate-coverage-reports"></a></h2>
-<hr class="half-width"><p>We’re going to use the <a href="https://gcovr.com/en/stable/index.html" class="external-link"><code>gcovr</code></a>
-tool to help us make sense of the coverage outputs as it’s the simplest
-and easiest to use. It’s preinstalled in our Pixi development
-environment so we don’t need any further setup to use it.</p>
-<p>To produce a report, [<code>gcovr</code>] needs to know where to find
-both the <code>.cpp</code> files and the <code>.gcda</code> outputs
-generated for these. If we are running from <code>ccptepp-test/</code>
-as we’ve been doing so far, we can thus run <code>gcovr</code> as:</p>
-<div class="codewrapper sourceCode" id="cb5">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> gcovr <span class="at">--root</span> src/ build-coverage/</span></code></pre>
-</div>
-<div id="callout3" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<span class="callout-header">Callout</span>
-<div class="callout-inner">
-<div class="callout-content">
-<ul><li>
-<code>--root</code> tells <code>gcovr</code> where to look for
-source files.</li>
-<li>the locations for <code>.gcda</code> files are passed as additional
-paths at the end.</li>
-</ul><p>It will recurse into these directories, so we don’t need to provide
-multiple nested paths.</p>
-</div>
-</div>
-</div>
-<p>By default, <code>gcovr</code> just produces text output to the
-terminal, so we’ll see something like</p>
-<div class="codewrapper sourceCode" id="cb6">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> gcovr <span class="at">--root</span> src/ build-coverage/</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a></span></code></pre>
-</div>
-<p>So we get some details, even which lines are missed.</p>
-<p>Whilst complete, we can visualize this a bit more easily by getting
-<code>gcovr</code> to output an HTML report:</p>
-<div class="codewrapper sourceCode" id="cb7">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> gcovr <span class="at">--root</span> src/ build-coverage/ <span class="at">--html-details</span> build-coverage/coverage.html</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a><span class="kw">(</span><span class="ex">INFO</span><span class="kw">)</span> <span class="ex">Reading</span> coverage data...</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a><span class="kw">(</span><span class="ex">INFO</span><span class="kw">)</span> <span class="ex">Writing</span> coverage report...</span></code></pre>
-</div>
-<p>You can now open <code>build-coverage/coverage.html</code> in your
-browser of choice, and you should see:</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -583,7 +427,10 @@ missing, not as a measure of test quality</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-</section></div> <!-- / div.lesson-content -->
+
+
+
+      </div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter Bottom"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="testingfixtures.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
         <a class="chapter-link float-end" href="sanitizers.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
@@ -595,7 +442,7 @@ any links that you are not going to use.
           Previous: Test fixtures
         </a>
         <a class="chapter-link float-end" href="sanitizers.html" rel="next">
-          Next: Testing with static...
+          Next: Sanitizers as...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -643,8 +490,8 @@ any links that you are not going to use.
   "url": "https://drbenmorgan.github.io/cpp-unit-testing/coverage.html",
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/coverage.html",
   "dateCreated": "2026-05-27",
-  "dateModified": "2026-06-29",
-  "datePublished": "2026-06-29"
+  "dateModified": "2026-06-30",
+  "datePublished": "2026-06-30"
 }
 
   </script><script>
