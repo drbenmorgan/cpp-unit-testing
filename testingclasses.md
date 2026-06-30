@@ -20,6 +20,11 @@ exercises: 2 # exercise time in minutes
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 
+
+
+
+
+
 :::::::::::::::::::::::::::::::::::::: keypoints
 - A stateful class is testable if its state is explicit and controlled through a well-defined interface — the difficulty arises from hidden or global state, not from state itself.
 - Reading the specification before writing tests is not optional — it determines what the tests should assert makes any ambiguities obvious.

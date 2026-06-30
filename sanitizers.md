@@ -21,22 +21,6 @@ exercises: 2 # exercise time in minutes
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-::::: discussion
-## When to use other sanitizers?
-
-Only look at ASan, when and where could we use the others.
-
-::::: spoiler
-
-## Spoiler!
-
-Some examples of use
-
-::::::::::::::
-
-::::::::::::::::
-
-
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
