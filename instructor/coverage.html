@@ -280,12 +280,23 @@
 <div class="accordion accordion-flush" id="accordionFlushcurrent">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-headingcurrent">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsecurrent" aria-expanded="true" aria-controls="flush-collapsecurrent">
         <span class="visually-hidden">Current Chapter</span>
         <span class="current-chapter">
         10. Code coverage
         </span>
-      
+      </button>
     </div><!--/div.accordion-header-->
+
+    <div id="flush-collapsecurrent" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushcurrent">
+      <div class="accordion-body">
+        <ul><li><a href="#test-coverage">Test coverage</a></li>
+<li><a href="#setting-up-code-and-tests-to-measure-coverage">Setting up code and tests to measure coverage</a></li>
+<li><a href="#using-gcovr-to-generate-coverage-reports">Using <code>gcovr</code> to generate coverage reports</a></li>
+<li><a href="#increasing-coverage">Increasing coverage</a></li>
+<li><a href="#traps-and-pitfalls-with-coverage">Traps and pitfalls with Coverage</a></li>
+        </ul></div><!--/div.accordion-body-->
+    </div><!--/div.accordion-collapse-->
 
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
@@ -357,7 +368,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Code coverage</h1>
-        <p>Last updated on 2026-06-30 |
+        <p>Last updated on 2026-07-01 |
 
         <a href="https://github.com/drbenmorgan/cpp-unit-testing/edit/main/episodes/coverage.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -391,8 +402,8 @@ exercise?</li>
 <ul><li><p>Build a project with <code>gcov/lcov</code> instrumentation
 .</p></li>
 <li><p>Run gcovr and interpret line and branch coverage reports</p></li>
-<li><p>Identify at least one untested branch in the Histogram
-implementation from the coverage report</p></li>
+<li><p>Identify at least one untested branch in the
+<code>Histogram</code> implementation from the coverage report</p></li>
 <li><p>Write a test that increases branch coverage and verify the
 improvement in the report</p></li>
 <li><p>Explain the difference between line coverage and branch
@@ -400,6 +411,378 @@ coverage</p></li>
 <li><p>Describe at least one class of bug that 100% line coverage would
 not catch</p></li>
 </ul></div>
+</div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="test-coverage">Test coverage<a class="anchor" aria-label="anchor" href="#test-coverage"></a></h2>
+<hr class="half-width"><p>We’ve been adding tests for <code>Histogram</code> and as this has
+progressed you might have been thinking “how do I know I’ve tested
+everything?”. What you’ve been asking about is <strong>test
+coverage</strong>. We could define several forms of coverage, but in the
+context of this lesson, we are going to look at how we can measure which
+lines of the code we are testing were <em>actually executed</em> by
+tests. This helps us to find both functions we have missed, but also
+which <em>branches</em> (e.g. conditionals) are not being exercised by
+the tests.</p>
+</section><section><h2 class="section-heading" id="setting-up-code-and-tests-to-measure-coverage">Setting up code and tests to measure coverage<a class="anchor" aria-label="anchor" href="#setting-up-code-and-tests-to-measure-coverage"></a></h2>
+<hr class="half-width"><p>As you might guess, coverage measurement requires instrumenting the
+compiled code so a record can be made of which parts actually executed,
+and we therefore need to add flags to the build. The simplest way to do
+this in CMake is with a new <em>build type</em>. We saw these earlier
+when we used <code>CMAKE_BUILD_TYPE</code> with <code>Release</code> and
+<code>Debug</code>, and saw they added extra flags to the compile and
+link commands. Rather than use a pre-prepared type like these, we’re
+going to set one up ourselves to add the flags we’ll need for coverage.
+Open up the <code>CMakeLists.txt</code> again and add the lines:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a>...</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="co"># - C++ Standard setup</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_STANDARD</span> 17)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_STANDARD_REQUIRED</span> <span class="ot">ON</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_EXTENSIONS</span> <span class="ot">OFF</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a><span class="co"># - Coverage Build Type flags for C++ </span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_FLAGS_COVERAGE</span> <span class="st">"-O0 -g --coverage"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a>...</span></code></pre>
+</div>
+<div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>CMake organises compiler flags for C++ and each build type in the
+following <em>variables</em>:</p>
+<ul><li>
+<code>CMAKE_CXX_FLAGS</code>: always applied compiler flags.</li>
+<li>
+<code>CMAKE_CXX_FLAGS_&lt;TYPE&gt;</code>: additional flags to
+<code>CMAKE_CXX_FLAGS</code> used in build type
+<code>&lt;TYPE&gt;</code>.</li>
+</ul><p>There are many other ways to set this up, but these are beyond the
+scope of this lesson.</p>
+</div>
+</div>
+</div>
+<p>We’ve explicitly turned off optimization (<code>-O0</code>), added
+debugging symbols, and enabled instrumentation for coverage with
+<code>--coverage</code>. This flag is supported by both the GCC and
+Clang compilers, but others may vary. We can get CMake to handle this,
+but again is beyond the scope of this lesson.</p>
+<p>We can now configure, build and test using our new
+<code>Coverage</code> build type like as we did for
+<code>Release</code>:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> cmake <span class="at">-GNinja</span> <span class="at">-DCMAKE_BUILD_TYPE</span><span class="op">=</span>Coverage <span class="at">-S</span> . <span class="at">-B</span> build-coverage</span></code></pre>
+</div>
+<div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Note that the argument to <code>CMAKE_BUILD_TYPE</code> is
+case-insensitive! We could equally have used <code>coverage</code> or
+<code>CoVeRaGe</code>.</p>
+</div>
+</div>
+</div>
+<p>When building you should see the flags we defined added to the
+compile and link:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> cmake <span class="at">--build</span> build-coverage</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a><span class="ex">...</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a><span class="ex">[1/4]</span> /usr/bin/c++  <span class="at">-I</span>/tmp/ccptepp-test/src <span class="at">-O0</span> <span class="at">-g</span> <span class="at">--coverage</span> <span class="at">-std</span><span class="op">=</span>c++17 <span class="at">-arch</span> arm64 <span class="at">-MD</span> <span class="at">-MT</span> CMakeFiles/ccptepp.dir/src/invariant_mass.cpp.o <span class="at">-MF</span> CMakeFiles/ccptepp.dir/src/invariant_mass.cpp.o.d <span class="at">-o</span> CMakeFiles/ccptepp.dir/src/invariant_mass.cpp.o <span class="at">-c</span> /tmp/ccptepp-test/src/invariant_mass.cpp</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a><span class="ex">...</span></span></code></pre>
+</div>
+<p>and tests should run and pass just as before:</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> ctest <span class="at">--test-dir</span> build-coverage</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="ex">Test</span> project /tmp/ccptepp-test/build-coverage</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a>    <span class="ex">Start</span> 1: TestInvariantMass</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="ex">1/2</span> Test <span class="co">#1: TestInvariantMass ................   Passed    0.24 sec</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a>    <span class="ex">Start</span> 2: TestHistogram</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1" aria-label="code-block-4-6"></a><span class="ex">2/2</span> Test <span class="co">#2: TestHistogram ....................   Passed    0.14 sec</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1" aria-label="code-block-4-7"></a></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1" aria-label="code-block-4-8"></a><span class="ex">100%</span> tests passed, 0 tests failed out of 2</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1" aria-label="code-block-4-9"></a></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1" aria-label="code-block-4-10"></a><span class="ex">Total</span> Test time <span class="er">(</span><span class="ex">real</span><span class="kw">)</span> <span class="ex">=</span>   0.39 sec</span></code></pre>
+</div>
+<p>So far, so much the same, so what has changed? Compiling with
+coverage and then running the tests has actually generated two extra
+files per <code>.cpp</code> file. We can find these in
+<code>build-coverage</code> with:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> find build-coverage <span class="at">-name</span> <span class="st">"*.gc*"</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="ex">build-coverage/CMakeFiles/test_invariant_mass.dir/test/test_invariant_mass.cpp.gcno</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a><span class="ex">build-coverage/CMakeFiles/test_invariant_mass.dir/test/test_invariant_mass.cpp.gcda</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a><span class="ex">build-coverage/CMakeFiles/test_histogram.dir/test/test_histogram.cpp.gcno</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a><span class="ex">build-coverage/CMakeFiles/test_histogram.dir/test/test_histogram.cpp.gcda</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1" aria-label="code-block-5-6"></a><span class="ex">build-coverage/CMakeFiles/ccptepp.dir/src/invariant_mass.cpp.gcno</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1" aria-label="code-block-5-7"></a><span class="ex">build-coverage/CMakeFiles/ccptepp.dir/src/invariant_mass.cpp.gcda</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1" aria-label="code-block-5-8"></a><span class="ex">build-coverage/CMakeFiles/ccptepp.dir/src/histogram.cpp.gcno</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1" aria-label="code-block-5-9"></a><span class="ex">build-coverage/CMakeFiles/ccptepp.dir/src/histogram.cpp.gcda</span></span></code></pre>
+</div>
+<p>The <code>.gcno</code> files are output by the compiler when
+building, and the <code>.gcda</code> files when the programs actually
+run. These contain all the information we need about coverage, but are
+in binary format so we need a tool to help us make sense of them.</p>
+</section><section><h2 class="section-heading" id="using-gcovr-to-generate-coverage-reports">Using <code>gcovr</code> to generate coverage reports<a class="anchor" aria-label="anchor" href="#using-gcovr-to-generate-coverage-reports"></a></h2>
+<hr class="half-width"><p>We’re going to use the <a href="https://gcovr.com/en/stable/index.html" class="external-link"><code>gcovr</code></a>
+tool to help us make sense of the coverage outputs as it’s the simplest
+and easiest to use. It’s preinstalled in our Pixi development
+environment so we don’t need any further setup to use it.</p>
+<p>To produce a report, [<code>gcovr</code>] needs to know where to find
+both the <code>.cpp</code> files and the <code>.gcda</code> outputs
+generated for these. If we are running from <code>ccptepp-test/</code>
+as we’ve been doing so far, we can thus run <code>gcovr</code> as:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> gcovr <span class="at">--root</span> src/ build-coverage/</span></code></pre>
+</div>
+<div id="callout3" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<ul><li>
+<code>--root</code> tells <code>gcovr</code> where to look for
+source files.</li>
+<li>the locations for <code>.gcda</code> files are passed as additional
+paths at the end.</li>
+</ul><p>It will recurse into these directories, so we don’t need to provide
+multiple nested paths.</p>
+</div>
+</div>
+</div>
+<p>By default, <code>gcovr</code> just produces text output to the
+terminal, so we’ll see something like</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> gcovr <span class="at">--root</span> src/ build-coverage/</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a><span class="kw">(</span><span class="ex">INFO</span><span class="kw">)</span> <span class="ex">Reading</span> coverage data...</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a><span class="kw">(</span><span class="ex">INFO</span><span class="kw">)</span> <span class="ex">Writing</span> coverage report...</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a><span class="ex">------------------------------------------------------------------------------</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a>                           <span class="ex">GCC</span> Code Coverage Report</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a><span class="ex">Directory:</span> src</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a><span class="ex">------------------------------------------------------------------------------</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1" aria-label="code-block-7-8"></a><span class="ex">File</span>                                       Lines    Exec  Cover   Missing</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1" aria-label="code-block-7-9"></a><span class="ex">------------------------------------------------------------------------------</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1" aria-label="code-block-7-10"></a><span class="ex">histogram.cpp</span>                                 39      35    89%   24-25,53,55</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1" aria-label="code-block-7-11"></a><span class="ex">histogram.hpp</span>                                  0       0    <span class="at">--%</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1" aria-label="code-block-7-12"></a><span class="ex">invariant_mass.cpp</span>                             8       7    87%   21</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1" aria-label="code-block-7-13"></a><span class="ex">------------------------------------------------------------------------------</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1" aria-label="code-block-7-14"></a><span class="ex">TOTAL</span>                                         47      42    89%</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1" aria-label="code-block-7-15"></a><span class="ex">------------------------------------------------------------------------------</span></span></code></pre>
+</div>
+<p>So we get some details, even which lines are missed. Whilst complete,
+we can visualize this a bit more easily by getting <code>gcovr</code> to
+output an HTML report:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="kw">(</span><span class="ex">ccptepp-test</span><span class="kw">)</span> <span class="ex">$</span> gcovr <span class="at">--root</span> src/ build-coverage/ <span class="at">--html-details</span> build-coverage/coverage.html</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="kw">(</span><span class="ex">INFO</span><span class="kw">)</span> <span class="ex">Reading</span> coverage data...</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a><span class="kw">(</span><span class="ex">INFO</span><span class="kw">)</span> <span class="ex">Writing</span> coverage report...</span></code></pre>
+</div>
+<p>You can now open <code>build-coverage/coverage.html</code> in your
+browser of choice, and you should see:</p>
+<figure><img src="../fig/gcovr-step1.png" class="figure mx-auto d-block"></figure><p>This is basically the same table as printed to terminal, and we see a
+report for each file under src/:</p>
+<ol style="list-style-type: decimal"><li>
+<strong>Lines</strong>: Number of significant lines of code in total
+and that actually executed.</li>
+<li>
+<strong>Functions</strong>: Number of defined functions and how many
+of these executed.</li>
+<li>
+<strong>Branches</strong>: Similar metric as above, but
+<em>branch</em> is quite general here.
+<ul><li>Not just conditionals like <code>if()</code>, includes
+<code>for()</code>, <code>while()</code>, but exception handling, and
+compiler generated code dealing with them.</li>
+</ul></li>
+</ol><p>The ratio of actually executed lines/functions/branches to the total
+number of each is the <strong>coverage</strong> for that aspect. We see
+that we have <code>89%</code> line coverage but only <code>65%</code>
+branch coverage of <code>histogram.cpp</code> despite our efforts in
+testing, so what’s going on here? Clicking on the filename will take us
+to a line-by-line breakdown:</p>
+<figure><img src="../fig/gcovr-step2.png" class="figure mx-auto d-block"></figure><p>Green lines were executed by at least one test and and red lines were
+not executed by any test. Yellow lines shows a branch where one or more
+paths are missing - the branch column shows how many branches within a
+line were taken. The exec column show the total number of executions of
+that line.</p>
+<div id="caution1" class="callout caution">
+<div class="callout-square">
+<i class="callout-icon" data-feather="alert-triangle"></i>
+</div>
+<span class="callout-header">Caution</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Missing branches are not necessarily indicative of missing coverage.
+Look at lines 7, 9, and 34. These are related to the compiler generated
+code for exception handling - we can see our own branches are covered!
+This is a general problem with C++, and <a href="https://gcovr.com/en/stable/faq.html#why-does-c-code-have-so-many-uncovered-branches" class="external-link">gcovr’s
+FAQ covers this in detail</a>.</p>
+</div>
+</div>
+</div>
+<p>Allowing for that we can see two definite blocks of red in two
+different functions that indicate they have not been executed and thus
+we are <strong>missing coverage</strong> for them.</p>
+<div id="accordionInstructor1" class="accordion instructor-note accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
+  <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
+</button>
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div class="accordion-body">
+<p>Show the fill() function in the HTML report. The line if (x &gt;=
+x_max_) will appear green — because the line executed — but with
+incomplete branch coverage, because only the false branch was taken. The
+lines inside the if block will appear red. This illustrates the
+difference between line coverage and branch coverage. The if line is
+green because it ran. But the true branch — the path where x &gt;=
+x_max_ — was never taken. Line coverage alone would tell us this line is
+fine. Branch coverage tells us we only tested half of it.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="increasing-coverage">Increasing coverage<a class="anchor" aria-label="anchor" href="#increasing-coverage"></a></h2>
+<hr class="half-width"><div id="challenge1" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<ol style="list-style-type: decimal"><li>Look at the HTML coverage report for your <code>histogram.cpp</code>
+as tested by your <code>test_histogram.cpp</code>. If you have red
+lines, write test(s) that should result in these lines being executed by
+that test.</li>
+<li>Rebuild and rerun the tests to confirm that they pass, then
+regenerate the <code>gcovr</code> HTML report to confirm the line and
+branch coverage has increased.</li>
+<li>Go back to <code>histogram.hpp</code>. Does your test correspond to
+testing any part of the documented specification?</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<ol style="list-style-type: decimal"><li>
+<p>As written up to this point we have two gaps:</p>
+<ul><li>We had not called <code>fill</code> with a value greater than the
+histogram’s upper edge.</li>
+<li>We had not tried to call <code>mean</code> on an empty
+histogram.</li>
+</ul><p>The simplest tests would be to implement these in our
+<code>HistogramFillTest</code> suite:</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a>TEST_F<span class="op">(</span>HistogramFillTest<span class="op">,</span> ValueBelowXMinIsUnderflow<span class="op">)</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a><span class="op">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a>    h<span class="op">.</span>fill<span class="op">(</span><span class="fl">10.1</span><span class="bu">f</span><span class="op">);</span> <span class="co">// above x_max — should be underflow</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a>    EXPECT_EQ<span class="op">(</span>h<span class="op">.</span>n_overflow<span class="op">(),</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a>    EXPECT_EQ<span class="op">(</span>h<span class="op">.</span>n_entries<span class="op">(),</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a>    EXPECT_THAT<span class="op">(</span>h<span class="op">.</span>bin_counts<span class="op">(),</span> <span class="op">::</span>testing<span class="op">::</span>ContainerEq<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">float</span><span class="op">&gt;(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">)));</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a><span class="op">}</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1" aria-label="code-block-9-9"></a>TEST_F<span class="op">(</span>HistogramFillTest<span class="op">,</span> MeanOnEmptyHistogramThrows<span class="op">)</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1" aria-label="code-block-9-10"></a><span class="op">{</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1" aria-label="code-block-9-11"></a>   EXPECT_THROW<span class="op">(</span>h<span class="op">.</span>mean<span class="op">(),</span> <span class="bu">std::</span>runtime_error<span class="op">);</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1" aria-label="code-block-9-12"></a><span class="op">}</span></span></code></pre>
+</div>
+</li>
+<li><p>You should be able to get the coverage to around 97.4% on lines
+and 80% on branches. The remaining lines/branches are likely to be
+related to the compiler problems we noted earlier. Note at this point
+that even if you added more tests, the coverage would no longer increase
+- once a line or branch is covered, it’s covered. More testing covering
+the same code with different inputs increases confidence/robustness, but
+<em>not coverage</em>.</p></li>
+<li><p><strong>Yes</strong>! The overflow behaviour was described in the
+<code>fill</code> documentation, and that of <code>mean</code> in its
+own specification. It’s very easy to miss small aspects or some subtlely
+- measuring coverage gives us a helpful check/reminder here, plus a
+guide back to parts of the specification we might need to
+revisit.</p></li>
+</ol></div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="traps-and-pitfalls-with-coverage">Traps and pitfalls with Coverage<a class="anchor" aria-label="anchor" href="#traps-and-pitfalls-with-coverage"></a></h2>
+<hr class="half-width"><p>Coverage is a very helpful metric to measure, but it needs to be used
+with care and not in isolation. The first point is simple but critical:
+<em>coverage tells you a line ran, not that it was tested
+correctly</em>. Think about the following mistake:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a>TEST<span class="op">(</span>HistogramBinEdges<span class="op">,</span> BinEdgesAreCorrect<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a>    Histogram h<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">5.0</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a>    h<span class="op">.</span>fill<span class="op">(</span><span class="fl">2.5</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a>    h<span class="op">.</span>bin_edges<span class="op">();</span>  <span class="co">// no assertion</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>This would give 100% line and branch coverage for
+<code>bin_edges</code> but it tests <strong>nothing</strong>. Coverage
+cannot distinguish a test that checks the result from one that merely
+calls the function. A line being green means it ran. It does not mean
+the result was correct, or that the tests that executed it would catch a
+bug there.</p>
+<p>The second trap is related - 100% coverage does not mean all
+<em>inputs</em> are tested. We touched on this already when we talked
+about floating point numbers when we talked about boundary conditions
+providing clear areas for testing, and coverage cannot tell you anything
+about this.</p>
+<p>Even a project of this size we’ve seen getting to 100% coverage is
+tricky given the difficulties inherent in analysing C++ branches noted
+above. This only gets harder as project sizes increase, but the good
+news is that getting from 0% to 80% coverage is typically going to catch
+the most important tests. Getting from 80% to 95% requires more effort
+for fewer discoveries. Getting from 95% to 100% can require significant
+work for code paths that are might be genuinely hard to exercise — like
+error handling for external failures, or defensive checks that should
+never trigger in correct usage.</p>
+<div id="accordionInstructor2" class="accordion instructor-note accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor2" aria-expanded="false" aria-controls="collapseInstructor2">
+  <h3 class="accordion-header" id="headingInstructor2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
+</button>
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
+<div class="accordion-body">
+<p>Closing point is that coverage gives us an answer, albeit a limited,
+specific one, to the question of whether we have tested everything. 100%
+coverage is not the same as a complete test suite. In particular,
+neither answer the question of whether we have covered the input
+parameter (or numerical) space of what we are testing</p>
 </div>
 </div>
 </div>
@@ -429,10 +812,7 @@ missing, not as a measure of test quality</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-
-
-
-      </div> <!-- / div.lesson-content -->
+</section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter Bottom"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="../instructor/testingfixtures.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
         <a class="chapter-link float-end" href="../instructor/sanitizers.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
@@ -492,8 +872,8 @@ any links that you are not going to use.
   "url": "https://drbenmorgan.github.io/cpp-unit-testing/instructor/coverage.html",
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/instructor/coverage.html",
   "dateCreated": "2026-05-27",
-  "dateModified": "2026-06-30",
-  "datePublished": "2026-06-30"
+  "dateModified": "2026-07-01",
+  "datePublished": "2026-07-01"
 }
 
   </script><script>

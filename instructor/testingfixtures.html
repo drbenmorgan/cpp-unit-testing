@@ -271,12 +271,21 @@
 <div class="accordion accordion-flush" id="accordionFlushcurrent">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-headingcurrent">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsecurrent" aria-expanded="true" aria-controls="flush-collapsecurrent">
         <span class="visually-hidden">Current Chapter</span>
         <span class="current-chapter">
         9. Test fixtures
         </span>
-      
+      </button>
     </div><!--/div.accordion-header-->
+
+    <div id="flush-collapsecurrent" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushcurrent">
+      <div class="accordion-body">
+        <ul><li><a href="#introduction">Introduction</a></li>
+<li><a href="#writing-fixtures-in-googletest">Writing fixtures in GoogleTest</a></li>
+<li><a href="#more-complex-fixtures">More complex fixtures</a></li>
+        </ul></div><!--/div.accordion-body-->
+    </div><!--/div.accordion-collapse-->
 
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
@@ -397,12 +406,317 @@ is appropriate</li>
 that tests do not share state</li>
 <li>Refactor existing Histogram tests to use a fixture where
 appropriate</li>
-<li>Decide which tests belong in the fixture and which should remain as
-plain <code>TEST()</code> cases</li>
 <li>Explain why construction tests should remain outside the
 fixture</li>
 </ul></div>
 </div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a></h2>
+<hr class="half-width"><p>We’ve written quite an extensive series of tests for
+<code>Histogram</code>, and many of them follow the same pattern
+e.g.:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a>TEST<span class="op">(</span>HistogramFill<span class="op">,</span> WeightedFillProducesCorrectCounts<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a>    <span class="co">// 1. Construct histogram and comparison data</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a>    Histogram h<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">1.0</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">float</span><span class="op">&gt;</span> expected<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a>    <span class="co">// 2. Prepare state</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a>    h<span class="op">.</span>fill<span class="op">(</span><span class="fl">0.1</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.5</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a>    h<span class="op">.</span>fill<span class="op">(</span><span class="fl">0.6</span><span class="bu">f</span><span class="op">,</span> <span class="fl">1.5</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a>    expected<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0.5</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1" aria-label="code-block-1-10"></a>    expected<span class="op">[</span><span class="dv">5</span><span class="op">]</span> <span class="op">=</span> <span class="fl">1.5</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1" aria-label="code-block-1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1" aria-label="code-block-1-12"></a>    <span class="co">// 3. Run assertions</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1" aria-label="code-block-1-13"></a>    EXPECT_THAT<span class="op">(</span>h<span class="op">.</span>bin_counts<span class="op">(),</span> <span class="op">::</span>testing<span class="op">::</span>Pointwise<span class="op">(::</span>testing<span class="op">::</span>FloatEq<span class="op">(),</span> expected<span class="op">));</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1" aria-label="code-block-1-14"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>As our suite grew, we were unwittingly introducing a maintenance
+burden - if the <code>Histogram</code> constructor changes in the
+future, we would have to update it in every test, if we wanted to uses
+different binning/values, we’d also have to update those. There is a
+slightly subtler problem too: when a test fails, we have to read through
+the setup code to understand the starting state. <strong>Test
+Fixtures</strong> are a solution to this when a set of test cases need a
+common starting state.</p>
+</section><section><h2 class="section-heading" id="writing-fixtures-in-googletest">Writing fixtures in GoogleTest<a class="anchor" aria-label="anchor" href="#writing-fixtures-in-googletest"></a></h2>
+<hr class="half-width"><p>Fixtures have state, so are naturally programmed as classes in C++.
+GoogleTest provide a <em>base class</em> <code>::testing::Test</code>
+from which our fixture needs to inherit. As this in our case this is
+purely associated with the <code>Histogram</code> tests, we can put it
+in <code>tests/test_histogram.cpp</code> before we add any test
+cases:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="co">//! </span><span class="an">\file</span><span class="co"> </span><span class="cv">test_histogram.cpp</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a><span class="pp">#include </span><span class="im">"histogram.hpp"</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a><span class="pp">#include </span><span class="im">&lt;gtest/gtest.h&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a><span class="pp">#include </span><span class="im">&lt;gmock/gmock.h&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1" aria-label="code-block-2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1" aria-label="code-block-2-7"></a><span class="co">//! Setup a histogram and an expected result vector to test filling operations</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a><span class="kw">class</span> HistogramFillTest <span class="op">:</span> <span class="kw">public</span> <span class="op">::</span>testing<span class="op">::</span>Test <span class="op">{</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1" aria-label="code-block-2-9"></a><span class="kw">protected</span><span class="op">:</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1" aria-label="code-block-2-10"></a>    Histogram h<span class="op">{</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">1.0</span><span class="bu">f</span><span class="op">};</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1" aria-label="code-block-2-11"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">float</span><span class="op">&gt;</span> expected<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1" aria-label="code-block-2-12"></a><span class="op">};</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1" aria-label="code-block-2-13"></a></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1" aria-label="code-block-2-14"></a><span class="co">// Tests follow</span></span></code></pre>
+</div>
+<p>This is the close to the simplest possible fixture - just some basic
+structured data. Let’s immediately use this in one of our
+<code>HistogramFill</code> suite’s test cases:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a>TEST_F<span class="op">(</span>HistogramFillTest<span class="op">,</span> SingleFillLeavesOtherBinsZero<span class="op">)</span> </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a><span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a>    h<span class="op">.</span>fill<span class="op">(</span><span class="fl">0.45</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a>    expected<span class="op">[</span><span class="dv">4</span><span class="op">]</span> <span class="op">=</span> <span class="fl">1.0</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a>    EXPECT_THAT<span class="op">(</span>h<span class="op">.</span>bin_counts<span class="op">(),</span> <span class="op">::</span>testing<span class="op">::</span>ContainerEq<span class="op">(</span>expected<span class="op">));</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a><span class="op">}</span></span></code></pre>
+</div>
+<p>All we’ve done is use the <code>TEST_F</code> macro instead of
+<code>TEST</code>. Here, the first argument must be the type name of the
+<em>Test Fixture</em> class we want to use. Without going into the gory
+details, <code>TEST_F</code> essentially creates a new class
+<code>HistogramFillTest_SingleFillLeavesOtherBinsZero</code> that
+<em>inherits</em> from <code>HistogramFillTest</code> and sets up things
+so that running this test is roughly:</p>
+<ol style="list-style-type: decimal"><li>Construct an instance <code>X</code> of this class (runs its
+<em>constructor</em>)</li>
+<li>Run <code>X-&gt;SetUp()</code> (see later)</li>
+<li>Run the test body (what we coded between the <code>{...}</code>
+)</li>
+<li>Run <code>X-&gt;TearDown()</code> (see later)</li>
+<li>Destructs instance <code>X</code> (runs its
+<em>destructor</em>)</li>
+</ol><p>This is why we declared our fixture’s data members as
+<code>protected</code> - we can access them directly in any subclass. In
+addition the subclassing and execution pattern mean that all fixture
+state is isolated to a specific <em>test case</em> - note the
+<code>h</code> and <code>expected</code> variables in each test case
+will be <em>different</em>. That’s exactly what we had before with
+<code>TEST</code> and setting things up in each test case, but we’ve
+been able put that code in one place using the fixture mechanism. If we
+ever wanted to change the default set up for <code>Histogram</code>
+fill, we only need do it in one place.</p>
+<div id="challenge1" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<ol style="list-style-type: decimal"><li>Refactor your remaining <code>HistogramFill</code> test cases to use
+the fixture. Confirm they still work!</li>
+<li>Could/Should you use this fixture, or another, for the
+<code>HistogramConstruction</code> suite?</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<ol style="list-style-type: decimal"><li>This should just be a matter of find/replace in the
+<code>HistogramFill</code> suites</li>
+<li>We **shouldn’t* use the fixture, or create a new one, for the
+<code>HistogramConstruction</code> suite. A <code>Histogram</code>
+instance would already have been constructed by the fixture’s
+constructor, and we’d have no chance to actually put asserts around
+<code>Histogram{10,0,1}</code>.</li>
+</ol></div>
+</div>
+</div>
+</div>
+<div id="caution1" class="callout caution">
+<div class="callout-square">
+<i class="callout-icon" data-feather="alert-triangle"></i>
+</div>
+<span class="callout-header">Caution</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>It is possible to <a href="https://google.github.io/googletest/advanced.html#sharing-resources-between-tests-in-the-same-test-suite" class="external-link"><em>share</em>
+state between all test cases in a test suite/fixture</a> and at the <a href="https://google.github.io/googletest/advanced.html#global-set-up-and-tear-down" class="external-link">program
+levell too</a>. These are advanced topics for which care is needed.</p>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="more-complex-fixtures">More complex fixtures<a class="anchor" aria-label="anchor" href="#more-complex-fixtures"></a></h2>
+<hr class="half-width"><p>Test fixtures give us two pairs of places we can do more complex
+<em>setup</em> and <em>teardown</em> of the state. We can either:</p>
+<ol style="list-style-type: decimal"><li>
+<em>setup</em> the state either in the fixture class
+<em>constructor</em> and do <em>teardown</em> in the fixture’s
+<em>destructor</em>
+</li>
+<li>Override the virtual <code>SetUp()</code> member function to
+<em>setup</em> the state, and override the virtual
+<code>TearDown()</code> member function to <em>teardown</em> the state
+(Note the capitalization!)</li>
+</ol><p>These give us freedom to create complex but repeatable and isolated
+states. Let’s use the second method to create a new</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="co">//! </span><span class="an">\file</span><span class="co"> </span><span class="cv">test_histogram.cpp</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="pp">#include </span><span class="im">"histogram.hpp"</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="pp">#include </span><span class="im">&lt;gtest/gtest.h&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a><span class="pp">#include </span><span class="im">&lt;gmock/gmock.h&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1" aria-label="code-block-4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1" aria-label="code-block-4-7"></a><span class="kw">class</span> FilledHistogramTest <span class="op">:</span> <span class="kw">public</span> <span class="op">::</span>testing<span class="op">::</span>Test <span class="op">{</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1" aria-label="code-block-4-8"></a><span class="kw">protected</span><span class="op">:</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1" aria-label="code-block-4-9"></a>    <span class="dt">void</span> SetUp<span class="op">()</span> <span class="kw">override</span> <span class="op">{</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1" aria-label="code-block-4-10"></a>        <span class="co">// 10 bins over [0, 10): each bin covers 1 unit</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1" aria-label="code-block-4-11"></a>        <span class="co">// Fill the Ith bin I times</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1" aria-label="code-block-4-12"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> bin <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> bin <span class="op">&lt;</span> <span class="dv">10</span><span class="op">;</span> <span class="op">++</span>bin<span class="op">)</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1" aria-label="code-block-4-13"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> bin<span class="op">+</span><span class="dv">1</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1" aria-label="code-block-4-14"></a>                h<span class="op">.</span>fill<span class="op">(</span>bin <span class="op">+</span> <span class="fl">0.5</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1" aria-label="code-block-4-15"></a>        </span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1" aria-label="code-block-4-16"></a>        <span class="co">// Add one underflow entry</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1" aria-label="code-block-4-17"></a>        h<span class="op">.</span>fill<span class="op">(-</span><span class="fl">1.0</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1" aria-label="code-block-4-18"></a>    <span class="op">}</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1" aria-label="code-block-4-19"></a></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1" aria-label="code-block-4-20"></a>    Histogram h<span class="op">{</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">10.0</span><span class="bu">f</span><span class="op">};</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1" aria-label="code-block-4-21"></a><span class="op">};</span></span></code></pre>
+</div>
+<div id="accordionInstructor1" class="accordion instructor-note accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
+  <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
+</button>
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div class="accordion-body">
+<p>The fixture fills underflow but deliberately omits overflow. This
+leaves the overflow branch of <code>fill()</code> uncovered, which
+students will discover in episode 10. Do not draw attention to the
+omission — present the fixture as a natural choice of test data.</p>
+</div>
+</div>
+</div>
+</div>
+<p>We <em>don’t</em> need a <code>TearDown</code> in this fixture as
+we’re not doing anything that would require it like, for example, memory
+or temporary file management. We can then write a test case for this
+fixture:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a>TEST_F<span class="op">(</span>LinearHistogramTest<span class="op">,</span> TotalEntryCount<span class="op">)</span> </span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a>    <span class="co">// 50 in-range + 1 underflow</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a>    EXPECT_EQ<span class="op">(</span>h<span class="op">.</span>n_entries<span class="op">(),</span> <span class="dv">51</span><span class="op">);</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a><span class="op">}</span></span></code></pre>
+</div>
+<div id="challenge2" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<ol style="list-style-type: decimal"><li>Write <code>TEST_F</code> cases for <code>n_underflow()</code> and
+<code>n_overflow()</code>.</li>
+<li>Write one that checks <code>bin_counts()</code> using
+<code>Pointwise</code>.</li>
+<li>Write one that checks the mean is as expected.</li>
+</ol><p>Before writing, work out by hand what the expected values should be —
+the fixture setup tells you everything you need.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="co">// 1. Under/Overflow are trivial!</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a>TEST_F<span class="op">(</span>LinearHistogramTest<span class="op">,</span> UnderflowCount<span class="op">)</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a>    EXPECT_EQ<span class="op">(</span>h<span class="op">.</span>n_underflow<span class="op">(),</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a><span class="op">}</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1" aria-label="code-block-6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1" aria-label="code-block-6-7"></a>TEST_F<span class="op">(</span>LinearHistogramTest<span class="op">,</span> OverflowCount<span class="op">)</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1" aria-label="code-block-6-8"></a><span class="op">{</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1" aria-label="code-block-6-9"></a>    EXPECT_EQ<span class="op">(</span>h<span class="op">.</span>n_overflow<span class="op">(),</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1" aria-label="code-block-6-10"></a><span class="op">}</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1" aria-label="code-block-6-11"></a></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1" aria-label="code-block-6-12"></a><span class="co">// 2. Like before, we use `FloatEq`</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1" aria-label="code-block-6-13"></a>TEST_F<span class="op">(</span>LinearHistogramTest<span class="op">,</span> BinCounts<span class="op">)</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1" aria-label="code-block-6-14"></a><span class="op">{</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1" aria-label="code-block-6-15"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">float</span><span class="op">&gt;</span> expected<span class="op">{</span><span class="fl">1.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">2.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">3.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">4.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">5.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">6.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">7.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">8.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">9.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">10.0</span><span class="bu">f</span><span class="op">};</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1" aria-label="code-block-6-16"></a>    EXPECT_THAT<span class="op">(</span>h<span class="op">.</span>bin_counts<span class="op">(),</span> <span class="op">::</span>testing<span class="op">::</span>Pointwise<span class="op">(::</span>testing<span class="op">::</span>FloatEq<span class="op">(),</span> expected<span class="op">));</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1" aria-label="code-block-6-17"></a><span class="op">}</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1" aria-label="code-block-6-18"></a></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1" aria-label="code-block-6-19"></a><span class="co">// 3. `EXPECT_NEAR` given large number of operations</span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1" aria-label="code-block-6-20"></a>TEST_F<span class="op">(</span>LinearHistogramTest<span class="op">,</span> MeanIsNearCentreOfRange<span class="op">)</span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1" aria-label="code-block-6-21"></a><span class="op">{</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1" aria-label="code-block-6-22"></a>    <span class="co">// Nth bin filled N+1 times</span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1" aria-label="code-block-6-23"></a>    <span class="co">// Nth bin center at 1.0*N + 0.5 -&gt; Sum_{bins}(fill*bin_center) = 357.5</span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1" aria-label="code-block-6-24"></a>    <span class="co">// 55 fills in total (Underflow fill of -1.0f is excluded from mean)</span></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1" aria-label="code-block-6-25"></a>    EXPECT_NEAR<span class="op">(</span>h<span class="op">.</span>mean<span class="op">(),</span> <span class="fl">357.5</span><span class="bu">f</span><span class="op">/</span><span class="fl">55.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.01</span><span class="op">);</span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1" aria-label="code-block-6-26"></a><span class="op">}</span></span></code></pre>
+</div>
+<div id="accordionInstructor2" class="accordion instructor-note accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor2" aria-expanded="false" aria-controls="collapseInstructor2">
+  <h3 class="accordion-header" id="headingInstructor2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
+</button>
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
+<div class="accordion-body">
+<p><code>OverflowCount</code> asserting zero is a legitimate and useful
+test — it confirms the underflow fill did not accidentally increment the
+overflow counter. It also means a test exists that touches
+<code>n_overflow()</code> without covering the overflow branch of
+fill(), which is exactly the situation the coverage report will
+illuminate. later</p>
+</div>
+</div>
+</div>
+</div>
+<p>The key thing here is that whilst the tests are simple, they are only
+so because of the fixture. Imagine repeating that setup across five
+tests!</p>
+</div>
+</div>
+</div>
+</div>
+<p>We now have a well-organised test suite: construction tests that
+stand alone, behavioural tests grouped into suites, and a fixture that
+gives tests needing a realistic starting state a clean, shared setup.
+The next question is: how do we know whether this suite is thorough? We
+have been writing tests based on our reading of <code>Histogram</code>’s
+specification — but the specification may not have told us about every
+<em>branch</em> in the implementation. In the next episode we will look
+at the implementation itself for the first time, and use coverage tools
+to find the gaps.</p>
+<div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>This is where we stop on introducing further GoogleTest capabilities.
+There is much more it can do, so do take the time to read through its
+documentation and see what else it can do.</p>
 </div>
 </div>
 </div>
@@ -414,7 +728,7 @@ fixture</li>
 <div class="callout-inner">
 <div class="callout-content">
 <ul><li>A fixture eliminates repeated setup code and makes the intended
-starting state of each test explicit</li>
+starting state of each test using that fixture explicit.</li>
 <li>SetUp() runs before every individual test — each test starts from a
 clean, identical state regardless of what other tests do</li>
 <li>Fixtures do not change what is being tested, only how the starting
@@ -428,10 +742,7 @@ construction succeeds and tests behaviour from that point</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-
-
-
-      </div> <!-- / div.lesson-content -->
+</section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter Bottom"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="../instructor/testingclasses.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
         <a class="chapter-link float-end" href="../instructor/coverage.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
@@ -492,7 +803,7 @@ any links that you are not going to use.
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/instructor/testingfixtures.html",
   "dateCreated": "2026-05-27",
   "dateModified": "2026-06-30",
-  "datePublished": "2026-06-30"
+  "datePublished": "2026-07-01"
 }
 
   </script><script>

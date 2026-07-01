@@ -889,12 +889,14 @@ corresponding test case for this</p>
 <h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a>TEST<span class="op">(</span>HistogramFill<span class="op">,</span> WeightedFillProducesCorrectCounts<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a>    Histogram h<span class="op">(</span><span class="dv">4</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">1.0</span><span class="bu">f</span><span class="op">);</span>  <span class="co">// bins: [0,0.25), [0.25,0.5), [0.5,0.75), [0.75,1.0)</span></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a>    h<span class="op">.</span>fill<span class="op">(</span><span class="fl">0.1</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.5</span><span class="bu">f</span><span class="op">);</span>           <span class="co">// bin 0 gets weight 0.5</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a>    h<span class="op">.</span>fill<span class="op">(</span><span class="fl">0.6</span><span class="bu">f</span><span class="op">,</span> <span class="fl">1.5</span><span class="bu">f</span><span class="op">);</span>           <span class="co">// bin 2 gets weight 1.5</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1" aria-label="code-block-14-5"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">float</span><span class="op">&gt;</span> expected <span class="op">=</span> <span class="op">{</span><span class="fl">0.5</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">1.5</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">};</span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1" aria-label="code-block-14-6"></a>    EXPECT_THAT<span class="op">(</span>h<span class="op">.</span>bin_counts<span class="op">(),</span> <span class="op">::</span>testing<span class="op">::</span>Pointwise<span class="op">(::</span>testing<span class="op">::</span>FloatEq<span class="op">(),</span> expected<span class="op">));</span></span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1" aria-label="code-block-14-7"></a><span class="op">}</span></span></code></pre>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a>    Histogram h<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">1.0</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a>    h<span class="op">.</span>fill<span class="op">(</span><span class="fl">0.1</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.5</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a>    h<span class="op">.</span>fill<span class="op">(</span><span class="fl">0.6</span><span class="bu">f</span><span class="op">,</span> <span class="fl">1.5</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1" aria-label="code-block-14-5"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">float</span><span class="op">&gt;</span> expected<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1" aria-label="code-block-14-6"></a>    expected<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0.5</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1" aria-label="code-block-14-7"></a>    expected<span class="op">[</span><span class="dv">5</span><span class="op">]</span> <span class="op">=</span> <span class="fl">1.5</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1" aria-label="code-block-14-8"></a>    EXPECT_THAT<span class="op">(</span>h<span class="op">.</span>bin_counts<span class="op">(),</span> <span class="op">::</span>testing<span class="op">::</span>Pointwise<span class="op">(::</span>testing<span class="op">::</span>FloatEq<span class="op">(),</span> expected<span class="op">));</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1" aria-label="code-block-14-9"></a><span class="op">}</span></span></code></pre>
 </div>
 <p>This is much the same as the unweighted case, but we have swapped
 over to using a different Matcher. As weighted counts are going to
@@ -941,14 +943,13 @@ fills including those with weights other than 1.0.</li>
 <h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a>TEST<span class="op">(</span>HistogramFill<span class="op">,</span> MultipleWeightedFillsAccumulate<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a>    Histogram h<span class="op">(</span><span class="dv">4</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">1.0</span><span class="bu">f</span><span class="op">);</span></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a>    h<span class="op">.</span>fill<span class="op">(</span><span class="fl">0.1</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.1</span><span class="bu">f</span><span class="op">);</span></span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1" aria-label="code-block-16-4"></a>    h<span class="op">.</span>fill<span class="op">(</span><span class="fl">0.1</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.2</span><span class="bu">f</span><span class="op">);</span>  <span class="co">// same bin, different weight</span></span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1" aria-label="code-block-16-5"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">float</span><span class="op">&gt;</span> expected <span class="op">=</span> <span class="op">{</span><span class="fl">0.3</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">};</span></span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1" aria-label="code-block-16-6"></a>    EXPECT_THAT<span class="op">(</span>h<span class="op">.</span>bin_counts<span class="op">(),</span> <span class="op">::</span>testing<span class="op">::</span>Pointwise<span class="op">(::</span>testing<span class="op">::</span>FloatEq<span class="op">(),</span> expected<span class="op">));</span></span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1" aria-label="code-block-16-7"></a></span>
-<span id="cb16-8"><a href="#cb16-8" tabindex="-1" aria-label="code-block-16-8"></a>    <span class="co">// Or using ::testing::FloatNear</span></span>
-<span id="cb16-9"><a href="#cb16-9" tabindex="-1" aria-label="code-block-16-9"></a><span class="op">}</span></span></code></pre>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a>    Histogram h<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">1.0</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a>    h<span class="op">.</span>fill<span class="op">(</span><span class="fl">0.25</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.1</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1" aria-label="code-block-16-4"></a>    h<span class="op">.</span>fill<span class="op">(</span><span class="fl">0.25</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.2</span><span class="bu">f</span><span class="op">);</span>  <span class="co">// same bin, different weight</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1" aria-label="code-block-16-5"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">float</span><span class="op">&gt;</span> expected<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1" aria-label="code-block-16-6"></a>    expected<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0.3</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1" aria-label="code-block-16-7"></a>    EXPECT_THAT<span class="op">(</span>h<span class="op">.</span>bin_counts<span class="op">(),</span> <span class="op">::</span>testing<span class="op">::</span>Pointwise<span class="op">(::</span>testing<span class="op">::</span>FloatEq<span class="op">(),</span> expected<span class="op">));</span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1" aria-label="code-block-16-8"></a><span class="op">}</span></span></code></pre>
 </div>
 </li>
 <li>
@@ -957,7 +958,7 @@ fills including those with weights other than 1.0.</li>
 <h3 class="code-label">CPP<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode cpp" tabindex="0"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a>TEST<span class="op">(</span>HistogramFill<span class="op">,</span> NEntriesCountsAllFillsRegardlessOfWeight<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1" aria-label="code-block-17-2"></a>    Histogram h<span class="op">(</span><span class="dv">4</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">1.0</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1" aria-label="code-block-17-2"></a>    Histogram h<span class="op">(</span><span class="dv">10</span><span class="op">,</span> <span class="fl">0.0</span><span class="bu">f</span><span class="op">,</span> <span class="fl">1.0</span><span class="bu">f</span><span class="op">);</span></span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1" aria-label="code-block-17-3"></a>    h<span class="op">.</span>fill<span class="op">(</span><span class="fl">0.1</span><span class="bu">f</span><span class="op">,</span> <span class="fl">2.0</span><span class="bu">f</span><span class="op">);</span></span>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1" aria-label="code-block-17-4"></a>    h<span class="op">.</span>fill<span class="op">(</span><span class="fl">0.6</span><span class="bu">f</span><span class="op">,</span> <span class="fl">0.5</span><span class="bu">f</span><span class="op">);</span></span>
 <span id="cb17-5"><a href="#cb17-5" tabindex="-1" aria-label="code-block-17-5"></a>    EXPECT_EQ<span class="op">(</span>h<span class="op">.</span>n_entries<span class="op">(),</span> <span class="dv">2</span><span class="op">);</span></span>
@@ -1038,7 +1039,9 @@ fill.</li>
 <span id="cb20-7"><a href="#cb20-7" tabindex="-1" aria-label="code-block-20-7"></a><span class="op">}</span></span></code></pre>
 </div>
 </li>
-<li><p>Per the specification, `n_entries</p></li>
+<li><p>Per the specification, <code>n_entries()</code> actually returns
+the total number of fills, not how many are in the range. This is
+slightly subtle detail of the specification.</p></li>
 </ol></div>
 </div>
 </div>
@@ -1140,7 +1143,7 @@ any links that you are not going to use.
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/testingclasses.html",
   "dateCreated": "2026-05-27",
   "dateModified": "2026-06-30",
-  "datePublished": "2026-06-30"
+  "datePublished": "2026-07-01"
 }
 
   </script><script>

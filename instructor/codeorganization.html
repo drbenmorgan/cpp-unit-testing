@@ -368,7 +368,7 @@ implementation, and test program</a></li>
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Organizing code to enable unit testing</h1>
-        <p>Last updated on 2026-06-29 |
+        <p>Last updated on 2026-06-30 |
 
         <a href="https://github.com/drbenmorgan/cpp-unit-testing/edit/main/episodes/codeorganization.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -1013,9 +1013,9 @@ detector resolution on our calculated mass:</p>
 <code>process_candidates()</code> — it takes all inputs as parameters,
 there’s no I/O, and it returns a value. But it still has testability
 problems.</p>
-<ol style="list-style-type: decimal"><li>What would happen if you wrote
-<code>assert(estimate_mass_resolution(91.2, 0.0) == X)</code> for some
-value X you computed by hand?</li>
+<ol style="list-style-type: decimal"><li>What would happen if you tested
+<code>estimate_mass_resolution(91.2, 0.0) == X</code> for some value
+<code>X</code> you computed by hand?</li>
 <li>How would you restructure the function so that a test could produce
 a reproducible result? What is the minimal change needed?</li>
 <li>Even with that fix, what would your test actually be checking? Is
@@ -1036,10 +1036,10 @@ number generator from a hardware entropy source, so the sequence of
 random numbers is different on every execution. In addition, sequential
 calls to <code>estimate_mass_resolution()</code> with identical
 arguments will return different values.</p>
-<p>No fixed expected value exists to assert against. The assertion would
-pass or fail unpredictable depending on the random seed. Worse, it might
-pass nine times out of ten and fail occasionally — the hardest kind of
-bug to diagnose, because the failure is not reproducible.</p>
+<p>No fixed expected value exists to test against. The test would pass
+or fail unpredictably depending on the random seed. Worse, it might pass
+nine times out of ten and fail occasionally — the hardest kind of bug to
+diagnose, because the failure is not reproducible.</p>
 </li>
 <li>
 <p>The minimal fix is accept the random number generator as a
@@ -1185,8 +1185,8 @@ any links that you are not going to use.
   "url": "https://drbenmorgan.github.io/cpp-unit-testing/instructor/codeorganization.html",
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/instructor/codeorganization.html",
   "dateCreated": "2026-05-27",
-  "dateModified": "2026-06-29",
-  "datePublished": "2026-06-30"
+  "dateModified": "2026-06-30",
+  "datePublished": "2026-07-01"
 }
 
   </script><script>

@@ -530,8 +530,49 @@ while <code>mean()</code> uses only in-range values — a subtle but
 important aspect of the contract.</p>
 <hr>
 <br></section><section id="testingfixtures"><h2 class="section-heading"><a href="testingfixtures.html">Test fixtures</a></h2>
-<hr class="half-width"></section><section id="coverage"><h2 class="section-heading"><a href="coverage.html">Code coverage</a></h2>
-<hr class="half-width"></section><section id="sanitizers"><h2 class="section-heading"><a href="sanitizers.html">Sanitizers as another line of defence</a></h2>
+<hr class="half-width">
+<h3 id="testingfixtures-headingInstructor1">
+<a href="testingfixtures.html#headingInstructor1">Instructor Note</a><a class="anchor" aria-label="anchor" href="#testingfixtures-headingInstructor1"></a>
+</h3>
+<p>The fixture fills underflow but deliberately omits overflow. This
+leaves the overflow branch of <code>fill()</code> uncovered, which
+students will discover in episode 10. Do not draw attention to the
+omission — present the fixture as a natural choice of test data.</p>
+<hr>
+<br><h3 id="testingfixtures-headingInstructor2">
+<a href="testingfixtures.html#headingInstructor2">Instructor Note</a><a class="anchor" aria-label="anchor" href="#testingfixtures-headingInstructor2"></a>
+</h3>
+<p><code>OverflowCount</code> asserting zero is a legitimate and useful
+test — it confirms the underflow fill did not accidentally increment the
+overflow counter. It also means a test exists that touches
+<code>n_overflow()</code> without covering the overflow branch of
+fill(), which is exactly the situation the coverage report will
+illuminate. later</p>
+<hr>
+<br></section><section id="coverage"><h2 class="section-heading"><a href="coverage.html">Code coverage</a></h2>
+<hr class="half-width">
+<h3 id="coverage-headingInstructor1">
+<a href="coverage.html#headingInstructor1">Instructor Note</a><a class="anchor" aria-label="anchor" href="#coverage-headingInstructor1"></a>
+</h3>
+<p>Show the fill() function in the HTML report. The line if (x &gt;=
+x_max_) will appear green — because the line executed — but with
+incomplete branch coverage, because only the false branch was taken. The
+lines inside the if block will appear red. This illustrates the
+difference between line coverage and branch coverage. The if line is
+green because it ran. But the true branch — the path where x &gt;=
+x_max_ — was never taken. Line coverage alone would tell us this line is
+fine. Branch coverage tells us we only tested half of it.</p>
+<hr>
+<br><h3 id="coverage-headingInstructor2">
+<a href="coverage.html#headingInstructor2">Instructor Note</a><a class="anchor" aria-label="anchor" href="#coverage-headingInstructor2"></a>
+</h3>
+<p>Closing point is that coverage gives us an answer, albeit a limited,
+specific one, to the question of whether we have tested everything. 100%
+coverage is not the same as a complete test suite. In particular,
+neither answer the question of whether we have covered the input
+parameter (or numerical) space of what we are testing</p>
+<hr>
+<br></section><section id="sanitizers"><h2 class="section-heading"><a href="sanitizers.html">Sanitizers as another line of defence</a></h2>
 <hr class="half-width"></section></section>
 </div>
     </main>
@@ -582,8 +623,8 @@ important aspect of the contract.</p>
   "url": "https://drbenmorgan.github.io/cpp-unit-testing/instructor/instructor-notes.html",
   "identifier": "https://drbenmorgan.github.io/cpp-unit-testing/instructor/instructor-notes.html",
   "dateCreated": "2026-05-27",
-  "dateModified": "2026-06-30",
-  "datePublished": "2026-06-30"
+  "dateModified": "2026-07-01",
+  "datePublished": "2026-07-01"
 }
 
   </script><script>
